@@ -2,6 +2,10 @@ body{
     background-color: deepskyblue;
 }
 
+svg{
+    display: block;
+    margin: auto;
+}
 .mapdiv{
     width: 75%;
     margin: auto;
