@@ -1,0 +1,13 @@
+{
+    "nationInfo":{
+        "ITA":{"color":"green", "provinces":["ROM"]},
+        "FRA":{"color":"blue", "provinces":["PAR"]},
+        "ENG":{"color":"red", "provinces":[]},
+        "GER":{"color":"orange", "provinces":[]},
+        "SER":{"color":"brown", "provinces":[]}
+        },
+    "provinceInfo" : { 
+        "ROM" : {"owner":"ITA", "neighbors":["FLO", "PES", "NAP"]},
+        "PAR" : {"owner":"FRA", "neighbors":["AND", "LOI", "NAN", "EUR", "CAL"]}
+    }
+}
