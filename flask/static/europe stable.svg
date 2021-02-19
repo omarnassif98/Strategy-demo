@@ -17,7 +17,7 @@
    version="1.2"
    viewbox="0 0 1000 684"
    width="1000"
-   id="svg51"
+   id="gameMap"
    sodipodi:docname="europe stable.svg"
    inkscape:version="1.0.2 (e86c870879, 2021-01-15, custom)">
   <metadata
@@ -53,7 +53,7 @@
      inkscape:window-x="-8"
      inkscape:window-y="845"
      inkscape:window-maximized="1"
-     inkscape:current-layer="svg51" />
+     inkscape:current-layer="gameMap" />
   <path
      id="ROM"
      style="fill:#e7d5be;fill-opacity:1;stroke-width:0.4;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none"
