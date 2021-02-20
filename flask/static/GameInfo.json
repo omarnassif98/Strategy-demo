@@ -7,7 +7,12 @@
         "SER":{"color":"brown", "provinces":[]}
         },
     "provinceInfo" : { 
-        "ROM" : {"owner":"ITA", "neighbors":["FLO", "PES", "NAP"]},
-        "PAR" : {"owner":"FRA", "neighbors":["AND", "LOI", "NAN", "EUR", "CAL"]}
+        "ROM" : {"owner":"ITA", "neighbors":["FLO", "PES", "NAP"], "troopPresence":"ITA"},
+        "PAR" : {"owner":"FRA", "neighbors":["AND", "LOI", "NAN", "EUR", "CAL"], "troopPresence":"FRA"},
+        "FLO" : {"owner":"None", "neighbors":["PES","BOL","GEN","ROM"], "troopPresence":"None"},
+        "GEN" : {"owner":"None", "neighbors":["MIL", "BOL", "FLO", "CUN"], "troopPresence":"None"},
+        "CUN" : {"owner":"None", "neighbors":["GEN", "MIL", "ALP", "LOT", "MAR"], "troopPresence":"None"},
+        "LOT" : {"owner":"None", "neighbors":["TOU", "CHA", "ALP", "LOI", "MAR", "ARD", "MEU"], "troopPresence":"None"},
+        "LOI" : {"owner":"None", "neighbors":["NAN", "CHA", "LOT", "PAR", "MAR", "ARD"], "troopPresence":"None"}
     }
 }
