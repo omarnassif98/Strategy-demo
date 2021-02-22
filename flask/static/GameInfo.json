@@ -1,18 +1,21 @@
 {
     "nationInfo":{
-        "ITA":{"color":"green", "provinces":["ROM"]},
+        "ITA":{"color":"green", "provinces":["ROM","PES","FLO"]},
         "FRA":{"color":"blue", "provinces":["PAR"]},
         "ENG":{"color":"red", "provinces":[]},
         "GER":{"color":"orange", "provinces":[]},
         "SER":{"color":"brown", "provinces":[]}
         },
     "provinceInfo" : { 
-        "ROM" : {"owner":"ITA", "neighbors":["FLO", "PES", "NAP"], "troopPresence":"ITA"},
-        "PAR" : {"owner":"FRA", "neighbors":["AND", "LOI", "NAN", "EUR", "CAL"], "troopPresence":"FRA"},
-        "FLO" : {"owner":"None", "neighbors":["PES","BOL","GEN","ROM"], "troopPresence":"None"},
-        "GEN" : {"owner":"None", "neighbors":["MIL", "BOL", "FLO", "CUN"], "troopPresence":"None"},
-        "CUN" : {"owner":"None", "neighbors":["GEN", "MIL", "ALP", "LOT", "MAR"], "troopPresence":"None"},
-        "LOT" : {"owner":"None", "neighbors":["TOU", "CHA", "ALP", "LOI", "MAR", "ARD", "MEU"], "troopPresence":"None"},
-        "LOI" : {"owner":"None", "neighbors":["NAN", "CHA", "LOT", "PAR", "MAR", "ARD"], "troopPresence":"None"}
+        "ROM" : {"owner":"ITA", "neighbors":["FLO", "PES", "NAP"], "troopPresence":true},
+        "PES" : {"owner":"ITA", "neighbors":["FLO", "NAP", "ROM"], "troopPresence":true},
+        "NAP" : {"owner":null, "neighbors":["FLO", "PES", "ROM"], "troopPresence":false},
+        "PAR" : {"owner":"FRA", "neighbors":["AND", "LOI", "NAN", "EUR", "CAL"], "troopPresence":true},
+        "FLO" : {"owner":null, "neighbors":["PES","BOL","GEN","ROM"], "troopPresence":false},
+        "GEN" : {"owner":null, "neighbors":["MIL", "BOL", "FLO", "CUN"], "troopPresence":false},
+        "CUN" : {"owner":null, "neighbors":["GEN", "MIL", "ALP", "LOT", "MAR"], "troopPresence":false},
+        "LOT" : {"owner":null, "neighbors":["TOU", "CHA", "ALP", "LOI", "MAR", "ARD", "MEU"], "troopPresence":false},
+        "LOI" : {"owner":null, "neighbors":["NAN", "CHA", "LOT", "PAR", "MAR", "ARD"], "troopPresence":false}
+
     }
 }

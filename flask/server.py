@@ -7,8 +7,11 @@ def Landing():
 
 @app.route('/europe')
 def SendEuropeSVG():
-    print('SENDING THE SVG... HERE\'S HOPING!')
-    return send_from_directory('static', 'europe stable.svg')
+    return send_from_directory('static', 'europe.svg')
+
+@app.route('/tank')
+def SendTankGraphic():
+    return send_from_directory('static', 'tank.svg')
 
 
 @app.route('/gameState')
