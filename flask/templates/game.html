@@ -3,25 +3,28 @@
     <title>Europe</title>
     <link rel="stylesheet" href={{url_for('static', filename='style.css')}}>
     <script src={{url_for('static', filename='Helper.js')}}></script>
+    <script src={{url_for('static', filename='UIManager.js')}}></script>
     <script src={{url_for('static', filename='GameLogic.js')}}></script>
 </head>
 <body>
     <div id='gameArea'>
         <div id='overlayArea'>
             <div id ='overlayBox'>
-                <div id =subscreen1>
-                    <h1 >ACTION</h1>
-                    <button id="attack" class="selfDefiningBtn">Occupy</button>
-                    <a href="javascript:SwitchSubscreen(2)"><button>Support Offense</button></a>
-                    <button id="supportDfns" class="selfDefiningBtn">Support Defence</button>
-                    <button id="cancel" class="selfDefiningBtn">Cancel</button>
-                </div>
-                <div id =subscreen2 style="display: none;">
-                    <h1 >Who to support?</h1>
-                    <button id="supportAtk ITA" class="selfDefiningBtn">Italy</button>
-                    <button id="supportAtk FRA" class="selfDefiningBtn">France</button>
-                    <button id="supportAtk SER" class="selfDefiningBtn">Serbia</button>
-                    <a href="javascript:SwitchSubscreen(1)"><button>Back</button></a>
+                <div id='actionMenu' style="display: none;">    
+                    <div id =subscreen1 style="display: none;">
+                        <h1 >ACTION</h1>
+                        <button id="attack" class="selfDefiningBtn">Occupy</button>
+                        <a href="javascript:RevealSubscreen(1)"><button>Support Offense</button></a>
+                        <button id="supportDfns" class="selfDefiningBtn">Support Defence</button>
+                        <button id="cancel" class="selfDefiningBtn">Cancel</button>
+                    </div>
+                    <div id =subscreen2 style="display: none;">
+                        <h1 >Who to support?</h1>
+                        <button id="supportAtk ITA" class="selfDefiningBtn">Italy</button>
+                        <button id="supportAtk FRA" class="selfDefiningBtn">France</button>
+                        <button id="supportAtk SER" class="selfDefiningBtn">Serbia</button>
+                        <a href="javascript:RevealSubscreen(0)"><button>Back</button></a>
+                    </div>
                 </div>
             </div>
         </div>

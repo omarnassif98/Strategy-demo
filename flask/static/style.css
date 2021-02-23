@@ -1,10 +1,11 @@
-svg{
-    margin: auto;
+#gameMap{
+    height: 100%;
+    width: 100%;
 }
 #gameArea{
     width: 75%;
     background-color: deepskyblue;
-    border: 5px black;
+    border: 5px solid black;
     margin: auto;
     position: relative;
 }

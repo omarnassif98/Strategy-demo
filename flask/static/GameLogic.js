@@ -9,6 +9,7 @@ var gameInfo = {
     "playingAs":"ITA",
     "queuedMoves":{}
 }
+var enabledProvinces = [];
 var tankGraphic = null;
 const baseURL = window.origin;
 SetupGame();
@@ -71,6 +72,8 @@ async function LoadTankGraphic(){
 
 function EnableProvinces(provIDs){
     console.log(provIDs);
+    enabledProvinces = [];
+    enabledProvinces = [...provIDs];
     const svgObj = document.getElementById('gameMap');
     provIDs.forEach(provID => {
         const pathReference = document.getElementById(provID);
@@ -112,7 +115,8 @@ function UpdateMap(color, provID){
 async function ProvinceSelect(provID){
     if(!gameInfo.focused){
         if(gameInfo.nationInfo[gameInfo.playingAs].provinces.includes(provID) && gameInfo.provinceInfo[provID].troopPresence){
-            let action = (await PromptPlayerAction()).split(' ');
+            let action = (await RevealSubmenu('actionMenu')).split(' ');
+            console.log(action);
             gameInfo.queuedMoves[provID] = {"moveType": action[0]};
             switch(action[0]){
                 case 'supportAtk':
@@ -129,17 +133,19 @@ async function ProvinceSelect(provID){
             }
             gameInfo.focused = true;
             gameInfo.lastFocused = provID;
+            
         }
     }else{
         
-        if(gameInfo.provinceInfo[gameInfo.lastFocused].neighbors.includes(provID) && !gameInfo.nationInfo[gameInfo.playingAs].provinces.includes(provID)){
+        if(enabledProvinces.includes(provID) && provID != gameInfo.lastFocused){
             gameInfo.queuedMoves[gameInfo.lastFocused].destProv = provID;
         }else{
-            delete gameInfo.queuedMoves[provID];
+            delete gameInfo.queuedMoves[gameInfo.lastFocused];
         }
         ResetFocus();
         DisableProvinces(gameInfo.provinceInfo[gameInfo.lastFocused].neighbors);
         gameInfo.focused = false;
+        EnableProvinces(gameInfo.nationInfo[gameInfo.playingAs].provinces);
     }
 }
 
