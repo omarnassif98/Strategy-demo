@@ -105,11 +105,15 @@ function AddTerritoryToNation(nationID, provID){
     UpdateMap(gameInfo.nationInfo[nationID].color,provID);
 }
 
+function UpdateSendActionButtonStatus(){
+    let state = (Object.keys(gameInfo.queuedMoves).length > 0) ? 'flex':'none';
+    ChangeDisplayState(document.getElementById('sendOrdersButton'), state);
+}
+
 function UpdateMap(color, provID){
         const element = document.getElementById(provID);
         element.style.fill = color;
 }
-
 
 
 async function ProvinceSelect(provID){
@@ -129,6 +133,7 @@ async function ProvinceSelect(provID){
                     break;
                 default:
                     delete gameInfo.queuedMoves[provID];
+                    UpdateSendActionButtonStatus();
                     return;
             }
             gameInfo.focused = true;
@@ -142,6 +147,7 @@ async function ProvinceSelect(provID){
         }else{
             delete gameInfo.queuedMoves[gameInfo.lastFocused];
         }
+        UpdateSendActionButtonStatus();
         ResetFocus();
         DisableProvinces(gameInfo.provinceInfo[gameInfo.lastFocused].neighbors);
         gameInfo.focused = false;

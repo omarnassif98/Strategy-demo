@@ -1,23 +1,28 @@
 var currentSubmenu, currentSubscreen = 0;
 
 async function RevealSubmenu(MenuID){
-    document.getElementById('overlayArea').style.display = 'flex';
+    console.log(MenuID);
+    ChangeDisplayState(document.getElementById('backdrop'), 'flex');
     currentSubmenu = document.getElementById(MenuID);
-    currentSubmenu.style.display = 'flex';
+    ChangeDisplayState(currentSubmenu,'flex');
     RevealSubscreen(0);
     return PromptPlayerAction();
 }
 
 function RevealSubscreen(screenNumb){
-    currentSubmenu.children[currentSubscreen].style.display = 'none';
-    currentSubmenu.children[screenNumb].style.display = 'block';
+    ChangeDisplayState(currentSubmenu.children[currentSubscreen], 'none');
+    ChangeDisplayState(currentSubmenu.children[screenNumb], 'block');
     currentSubscreen= screenNumb;
 }
 
+function ChangeDisplayState(element, state){
+    element.style.display = state;
+}
+
 function DismissSubmenu(){
-    document.getElementById('overlayArea').style.display = 'none';
-    currentSubmenu.children[currentSubscreen].style.display = 'none';
-    currentSubmenu.style.display = 'none';
+    ChangeDisplayState(document.getElementById('backdrop'), 'none');
+    ChangeDisplayState(currentSubmenu.children[currentSubscreen], 'none');
+    ChangeDisplayState(currentSubmenu, 'none');
     currentSubmenu = null;
     currentSubscreen = 0;
     console.log('dismissed');
