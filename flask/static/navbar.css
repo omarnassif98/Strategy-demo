@@ -1,0 +1,89 @@
+body{
+    padding-top: 45px;
+}
+.navbar{
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    background-color: cornflowerblue;
+}
+
+.navbar > div{
+    float: left;
+    text-align: center;
+    font-size: 17px;
+}
+
+.navbar > div > span {
+    padding: 14px 16px;
+    display: block;
+    text-decoration: none;
+    color: #f2f2f2;
+    user-select: none;
+}
+
+.navbar div:hover{
+    background-color: darkslateblue;
+}
+
+.dropdownContent{
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    
+}
+
+.hugRight{
+    right: 0;
+}
+
+.dropdownContent > span{
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+}
+
+.dropdownContent:hover > span:hover{
+    background-color: gainsboro;
+}
+
+.dropdownContent:hover > span{
+    background-color: #f9f9f9;
+}
+
+#loginWindow{
+    width: max-content;
+    border: solid;
+}
+
+#profileSetup > button{
+    color: black;
+    transition: all 0.5s;
+    border: none;
+    background-color: #d5e1df;
+}
+
+#profileSetup > button:disabled{
+    color: white;
+    background-color: gray;
+}
+
+#profileSetup > button:enabled:hover{
+    background-color: #32de84;
+}
+
+
+#profileSetup > button:enabled:active{
+    background-color: #228B22;
+}
+
+a {
+    color: white;
+    text-decoration: none;
+}

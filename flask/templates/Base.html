@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<head>
+    {% block header %}
+    {% endblock %}
+    <link rel="stylesheet" href={{url_for('static', filename='navbar.css')}}>
+    <script src={{url_for('static', filename='CookieManager.js')}}></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/ui/4.7.3/firebase-ui-auth.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.7.3/firebase-ui-auth.css" />
+    <script src={{url_for('static', filename='FirebaseInitializer.js')}}></script>
+    
+</head>
+<body>
+    <div class="navbar">
+        <div id="playGame" onclick="RevealDropdown(this)" style="float: left;">
+            <span>Game</span>
+            <div class="dropdownContent">
+                <span onclick="window.location = window.origin + '/game'">Test Game (WIP)</span>
+                <span onclick="window.location = window.origin + '/browse'">Browse Games</span>
+            </div>
+        </div>
+        <div id="loginDropdown" onclick="RevealDropdown(this)" style="float: right;">
+            <span>Login</span>
+            <div id="loginWindow" class="dropdownContent hugRight">
+                <div id="profileSetup" style="display: none;">
+                    <label for="usernameEntry">Enter Username:</label>
+                    <br>
+                    <input type="text" id="usernameEntry" name="usernameEntry" class="lineInput" placeholder="Enter Username" oninput="UpdateInputProperty(this)">
+                    <br>
+                    <button id="b_usernameEntry" class="inputDependant" onclick="SubmitProfile(this.id)" disabled>Continue</button>
+                </div>
+                <div id="firebaseui-auth-container"></div>
+            </div>
+        </div>
+        <div id="profileDropdown" onclick="RevealDropdown(this)" style="display: none;">
+            <span>Profile</span>
+            <div class="dropdownContent hugRight">
+                <span id="user">UserInfo</span>
+            </div>
+        </div>
+    </div>    
+    <script src={{url_for('static', filename='Navbar.js')}}></script>
+    {% block body %}
+    {% endblock %}
+</body>
+  

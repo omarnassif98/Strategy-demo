@@ -1,0 +1,19 @@
+button.inputDependant{
+    transition: all 0.5s;
+}
+
+#profileSetup{
+    width: max-content;
+    margin: auto;
+    padding-top: 2em;
+    border: solid black 1px;
+}
+
+input[type=text]{
+    padding: 5px 10px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    transition: 0.5s;
+    outline: none;
+}

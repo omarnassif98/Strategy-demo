@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block header %}
+  <title>Browse Games</title>
+  <link rel="stylesheet" href={{url_for('static', filename='browse.css')}}>
+
+{% endblock %}
+{% block body %}
+<div class="gameGallery">
+  <div class="gameInstance">
+    <div class="gameInfoContainer">
+        <span class="gameTitle">Title</span>
+        <span class="vacancies">Vacancies</span>
+    </div>
+    <button>Join Game</class>
+  </div>
+</div>
+{% endblock %}
