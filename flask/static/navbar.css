@@ -27,6 +27,10 @@ body{
     background-color: darkslateblue;
 }
 
+.navbar div:hover *:hover{
+    background-color: revert;
+}
+
 .dropdownContent{
     display: none;
     position: absolute;
@@ -50,7 +54,7 @@ body{
 }
 
 .dropdownContent:hover > span:hover{
-    background-color: gainsboro;
+    background-color: gainsboro !important;
 }
 
 .dropdownContent:hover > span{
