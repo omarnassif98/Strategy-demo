@@ -2,7 +2,8 @@
 {% block header %}
   <title>Browse Games</title>
   <link rel="stylesheet" href={{url_for('static', filename='browse.css')}}>
-
+  <script src={{url_for('static', filename='Helper.js')}}></script>
+  <script src={{url_for('static', filename='BrowsePage.js')}}></script>
 {% endblock %}
 {% block body %}
 <div>
@@ -74,7 +75,29 @@
     <div id="extraInfo">
             <span id="statistics">Statistics</span>
             <br>
-            <a href="/create-game"><button>Create game</button></a>
+            <button onclick="document.getElementById('pageOverlay').style.display = 'flex'">Create game</button>
+    </div>
+</div>
+<div id="pageOverlay" style="display: none;">
+    <div id="overlayWindow">
+        <div id="subscreenManager">
+            <div id="gameCreation">
+                <form action="#">
+                    <div>
+                        <label for="sessionName">Lobby Title:</label>
+                        <div style="display: inline-block;">
+                            <input type="text" oninput="StaggeredNameCheck(this)" name="sessionName" id="sessionName" readonly onfocus="this.removeAttribute('readonly');">
+                            <span id="tooltip">TEXT</span>
+                        </div>
+                    </div>
+                    <div>
+                        <label for="lobbyPassword">Password:</label>
+                        <input type="password" placeholder="Optional" name="lobbyPassword" readonly onfocus="this.removeAttribute('readonly');">
+                    </div>
+                    <input type="submit" onclick="CreateGame(this.parentNode); return false" disabled>
+                </form>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}

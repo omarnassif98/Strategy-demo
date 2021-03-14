@@ -1,7 +1,7 @@
 function ResourceRequest(url, method = 'GET', data = {}){
     let contentHeader = (Object.keys(data).length > 0) ? 'application/json':'text/plain';
     console.log(data);
-    return new Promise ((resolve, reject) => {
+    return new Promise ((resolve) => {
         const req = new XMLHttpRequest();
         req.open(method, url);
         req.setRequestHeader('Content-type',contentHeader)
@@ -11,7 +11,7 @@ function ResourceRequest(url, method = 'GET', data = {}){
                 if(req.status == 200){
                     resolve(req.response);
                 }else{
-                    reject(req.response);
+                    resolve(req.status);
                 }
             }
         }

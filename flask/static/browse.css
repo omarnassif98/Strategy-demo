@@ -62,3 +62,29 @@
     padding: 10px;
     font-size: 12px;
 }
+#pageOverlay{
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    vertical-align: middle;
+}
+#overlayWindow{
+    position: relative;
+    width: 40em;
+    height: 30em;
+    margin: auto;
+    background-color: white;
+    border-radius: 1em;
+}
+#tooltip{
+    position: absolute;
+    display: block;
+    font-size: 0.7em;
+}
+
+form > div{
+    padding: 2em;
+}
