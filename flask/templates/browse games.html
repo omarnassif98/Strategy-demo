@@ -3,7 +3,7 @@
   <title>Browse Games</title>
   <link rel="stylesheet" href={{url_for('static', filename='browse.css')}}>
   <script src={{url_for('static', filename='Helper.js')}}></script>
-  <script src={{url_for('static', filename='BrowsePage.js')}}></script>
+  
 {% endblock %}
 {% block body %}
 <div>
@@ -75,29 +75,52 @@
     <div id="extraInfo">
             <span id="statistics">Statistics</span>
             <br>
-            <button onclick="document.getElementById('pageOverlay').style.display = 'flex'">Create game</button>
+            <button onclick="document.getElementById('pageOverlay').style.display = 'flex'" id="createButton" disabled>Create game</button>
     </div>
 </div>
 <div id="pageOverlay" style="display: none;">
     <div id="overlayWindow">
         <div id="subscreenManager">
             <div id="gameCreation">
-                <form action="#">
-                    <div>
-                        <label for="sessionName">Lobby Title:</label>
-                        <div style="display: inline-block;">
-                            <input type="text" oninput="StaggeredNameCheck(this)" name="sessionName" id="sessionName" readonly onfocus="this.removeAttribute('readonly');">
-                            <span id="tooltip">TEXT</span>
+                <form action="#" autocomplete="off">
+                    <fieldset>
+                        <legend>Lobby Creation</legend>
+                        <div class="horzontalFlex">
+                            <div>
+                                <label for="sessionName">Lobby Title:</label>
+                                <div style="display: inline-block;">
+                                    <input type="text" oninput="StaggeredNameCheck(this)" name="sessionName" id="sessionName" class="keyboardInput" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');">
+                                    <span id="tooltip"></span>
+                                </div>
+                            </div>
+                            <div>
+                                <label for="lobbyPassword">Password:</label>
+                                <input type="password" placeholder="Optional" name="lobbyPassword" class="keyboardInput" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');">
+                            </div>
                         </div>
-                    </div>
-                    <div>
-                        <label for="lobbyPassword">Password:</label>
-                        <input type="password" placeholder="Optional" name="lobbyPassword" readonly onfocus="this.removeAttribute('readonly');">
-                    </div>
-                    <input type="submit" onclick="CreateGame(this.parentNode); return false" disabled>
+                        <div class="horzontalFlex">
+                            <div>
+                                <label for="mapType">Map:</label>
+                                <select name="mapType" onchange="UpdateNationOptions(this)">
+                                    <option disabled selected>--Select a map--</option>
+                                    <option value="europa">Europe - 5 players</option>
+                                    <option value="roma">Mediteranean - 4 players</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="nationSelect">Playing as:</label>
+                                <select name="nationSelect" id="nationSelector" disabled>
+                                <option disabled selected hidden>--Select a map first--</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <input type="submit" onclick="CreateGame(this.parentNode.parentNode); return false" disabled>
+                    </fieldset>
                 </form>
             </div>
         </div>
     </div>
 </div>
+<script src={{url_for('static', filename='BrowsePage.js')}}></script>
 {% endblock %}

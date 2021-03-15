@@ -1,6 +1,6 @@
 from flask import render_template, send_from_directory
 from webapp import app
-print('View controller online')
+print('File server online')
 
 @app.route('/')
 def Landing():
@@ -26,3 +26,4 @@ def SendTankGraphic():
 def SendProvinceData():
     print('SENDING JSON... HERE GOES')
     return send_from_directory('static', 'GameInfo.json')
+

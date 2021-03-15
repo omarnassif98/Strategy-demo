@@ -1,3 +1,6 @@
+body{
+    min-width: 60em;
+}
 #gameGallery{
     margin: 0;
     padding: 0;
@@ -84,7 +87,54 @@
     display: block;
     font-size: 0.7em;
 }
+fieldset{
+    border: none;
+    margin: 0.5em;
+}
 
-form > div{
-    padding: 2em;
+fieldset > div{
+    padding: 1.5em;
+}
+
+fieldset > .horzontalFlex {
+    display: block;
+    position: relative;
+    margin: auto;
+}
+
+.horzontalFlex > div{
+    display: inline-flex;
+}
+label{
+    display: inline-block;
+    float: left;
+    text-align: right;
+    margin: 5px;
+    width: 100px;
+}
+
+legend{
+    margin: auto;
+}
+
+.keyboardInput{
+    border: 0.3em solid;
+    border-color: gray;
+    transition: 0.2s;
+    height: 1.5em;
+}
+
+.keyboardInput:hover{
+    border: 0.4em solid;
+    border-color: darkgray;
+}
+
+.keyboardInput:focus{
+    border-color: black;
+    border: 0.4em solid;
+    outline: none;
+}
+
+select{
+    min-width: 12em;
 }

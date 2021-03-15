@@ -13,12 +13,17 @@ def GetRoster(mapType):
     return gameConfigs[mapType]["roster"].copy()
 
 class GameSession:
+
     def __init__(self, gameSettings):
         self.gameSettings = gameSettings
         self.gameSettings["remaining"] = GetRoster(self.gameSettings["mapType"])
         self.participants = {}
+    
+
     def GetAvailableNations(self):
         return self.gameSettings["remaining"]
+    
+
     def AddParticipant(self, participantData):
         try:
             if participantData["passwordSupplied"] == self.gameSettings.lobbyPassword:
@@ -27,10 +32,12 @@ class GameSession:
             pass
         if participantData["nation"] in self.gameSettings["remaining"]:
             self.participants[participantData["nation"]] = participantData["data"]
-            self.gameSettings["remaining"].remove(participantData["data"])
+            self.gameSettings["remaining"].remove(participantData["nation"])
             return len(self.gameSettings["remaining"])
         else:
             return -2
+
+
 gamesForBrowsepage = []
 gamesInSession = {}
 
@@ -53,3 +60,7 @@ def CreateGame():
 def RecieveCommand():
     print(request.get_json())
     return 'hi'
+
+@app.route('/gameconfigs')
+def SendGameConfigs():
+    return gameConfigs

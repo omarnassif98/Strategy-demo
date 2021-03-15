@@ -1,5 +1,10 @@
 {
     "europa":{
-        "roster":["FRA","ITA","ENG","GER","SER"]
+        "roster":["FRA","ITA","ENG","GER","SER"],
+        "fullNames":["France", "Italy", "England", "Germany", "Serbia"]
+    },
+    "roma":{
+        "roster":["MOR","ITA","SYR","SPA"],
+        "fullNames":["Morocco", "Italy", "Syria", "Spain"]
     }
 }
