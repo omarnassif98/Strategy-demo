@@ -1,17 +1,16 @@
-<!DOCTYPE html>
-<head>
-    <title>Europe</title>
+{% extends 'base.html' %}
+
+{% block header %}
+    <title>Game</title>
     <link rel="stylesheet" href={{url_for('static', filename='game.css')}}>
     <script src={{url_for('static', filename='Helper.js')}}></script>
     <script src={{url_for('static', filename='UIManager.js')}}></script>
     <script src={{url_for('static', filename='GameLogic.js')}}></script>
     <script src={{url_for('static', filename='ServerConnectivity.js')}}></script>
-    
-</head>
-<body>
+{% endblock %}
+{% block body %}
     <div id='gameArea'>
-        <div id='overlayArea'>
-            
+        <div id='overlayArea'>       
             <div id="backdrop" style="display: none;">
                 <div id ='overlayBox'>
                     <div id='actionMenu' style="display: none;">    
@@ -36,4 +35,4 @@
             
         </div>
     </div>
-</body>
+{% endblock %}

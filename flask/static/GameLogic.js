@@ -12,6 +12,7 @@ var gameInfo = {
 var enabledProvinces = [];
 var tankGraphic = null;
 const baseURL = window.origin;
+const gameName = window.location.pathname.split('/').pop();
 SetupGame();
 
 async function SetupGame(){
@@ -20,12 +21,12 @@ async function SetupGame(){
     await LoadTankGraphic();
     for(nationID in gameInfo.nationInfo){
         gameInfo.nationInfo[nationID].provinces.forEach(provID => {
-            const pathReference = document.getElementById(provID);
+            let pathReference = document.getElementById(provID);
             UpdateMap(gameInfo.nationInfo[nationID].color, provID);
             if (gameInfo.provinceInfo[provID].troopPresence){
-                const tankInstance = tankGraphic.cloneNode(deep=true);
-                const pathRect = pathReference.getBBox();
-                const [centerX, centerY] = [pathRect.x + pathRect.width/2, pathRect.y + pathRect.height/2];
+                let tankInstance = tankGraphic.cloneNode(deep=true);
+                let pathRect = pathReference.getBBox();
+                let [centerX, centerY] = [pathRect.x + pathRect.width/2, pathRect.y + pathRect.height/2];
                 tankInstance.setAttribute('x',`${centerX - (tankGraphic.getAttribute("width")/2)}`);
                 tankInstance.setAttribute('y',`${centerY - (tankGraphic.getAttribute("height")/2)}`);
                 tankInstance.style.fill = gameInfo.nationInfo[nationID].color;
@@ -39,7 +40,7 @@ async function SetupGame(){
 }
 
 async function LoadGameConfiguration(){
-    const resJSON = JSON.parse(await ResourceRequest(baseURL +  '/gameState'));
+    let resJSON = JSON.parse(await ResourceRequest(baseURL +  '/game/' + gameName + '/mapData'));
     for(let key in resJSON){
         gameInfo[key] = {...resJSON[key]}
     }

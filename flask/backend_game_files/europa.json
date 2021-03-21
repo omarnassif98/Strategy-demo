@@ -1,17 +1,17 @@
 {
     "nationInfo":{
-        "ITA":{"color":"green", "provinces":["ROM","PES","FLO"]},
-        "FRA":{"color":"blue", "provinces":["PAR"]},
-        "ENG":{"color":"red", "provinces":[]},
-        "GER":{"color":"orange", "provinces":[]},
-        "SER":{"color":"brown", "provinces":[]}
+        "ITA":{"color":"green", "provinces":["ROM","PES","FLO"], "cores":["ROM","PES"], "occupying":["ROM","PES"]},
+        "FRA":{"color":"blue", "provinces":["PAR"], "cores":["PAR"], "occupying":["PAR"]},
+        "ENG":{"color":"red", "provinces":[], "cores":[], "occupying":[]},
+        "GER":{"color":"orange", "provinces":[], "cores":[], "occupying":[]},
+        "SER":{"color":"brown", "provinces":[], "cores":[], "occupying":[]}
         },
     "provinceInfo" : { 
         "ROM" : {"owner":"ITA", "neighbors":["FLO", "PES", "NAP"], "troopPresence":true},
         "PES" : {"owner":"ITA", "neighbors":["FLO", "NAP", "ROM"], "troopPresence":true},
         "NAP" : {"owner":null, "neighbors":["FLO", "PES", "ROM"], "troopPresence":false},
-        "PAR" : {"owner":"FRA", "neighbors":["AND", "LOI", "NAN", "EUR", "CAL"], "troopPresence":true},
-        "FLO" : {"owner":null, "neighbors":["PES","BOL","GEN","ROM"], "troopPresence":false},
+        "PAR" : {"owner":"PAR", "neighbors":["AND", "LOI", "NAN", "EUR", "CAL"], "troopPresence":true},
+        "FLO" : {"owner":"ITA", "neighbors":["PES","BOL","GEN","ROM"], "troopPresence":false},
         "GEN" : {"owner":null, "neighbors":["MIL", "BOL", "FLO", "CUN"], "troopPresence":false},
         "CUN" : {"owner":null, "neighbors":["GEN", "MIL", "ALP", "LOT", "MAR"], "troopPresence":false},
         "LOT" : {"owner":null, "neighbors":["TOU", "CHA", "ALP", "LOI", "MAR", "ARD", "MEU"], "troopPresence":false},

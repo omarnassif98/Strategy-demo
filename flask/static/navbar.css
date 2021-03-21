@@ -24,13 +24,10 @@ body{
     user-select: none;
 }
 
-.navbar div:hover{
+.navbar > div:hover{
     background-color: darkslateblue;
 }
 
-.navbar div:hover *:hover{
-    background-color: revert;
-}
 
 .dropdownContent{
     display: none;

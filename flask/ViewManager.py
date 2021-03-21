@@ -10,8 +10,8 @@ def Landing():
 def Login():
     return render_template('browse games.html')
 
-@app.route('/game')
-def Game():
+@app.route('/game/<gameName>')
+def Game(gameName):
     return render_template('game.html')
 
 @app.route('/europe')
@@ -21,9 +21,3 @@ def SendEuropeSVG():
 @app.route('/tank')
 def SendTankGraphic():
     return send_from_directory('static', 'tank.svg')
-
-@app.route('/gameState')
-def SendProvinceData():
-    print('SENDING JSON... HERE GOES')
-    return send_from_directory('static', 'GameInfo.json')
-

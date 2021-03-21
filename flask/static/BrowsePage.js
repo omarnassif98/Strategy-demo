@@ -31,7 +31,7 @@ async function NameCheck(input, submitButton){
 function StaggeredNameCheck(input){
     input.parentNode.lastElementChild.innerHTML = '';
     input.style.removeProperty('border-color');
-    let submitButton = input.parentNode.parentNode.parentNode.lastElementChild;
+    let submitButton = document.getElementById('formSubmit');
     submitButton.disabled = true;
     clearTimeout(staggeredInputTimeout);
     if(input.value == ""){
@@ -41,16 +41,25 @@ function StaggeredNameCheck(input){
     staggeredInputTimeout = setTimeout(function(){NameCheck(input, submitButton)}, 400);
 }
 
-async function CreateGame(field){
+async function CreateGame(form){
     let data = new FormData(form);
     let jsonData = {
         'gameName':data.get('sessionName'),
-        'gameSettings':{},
-        'participantData':{'data':{}}}
-    field.getElementsByTagName('div').forEach()
-    console.log(jsonData);
-    //await ResourceRequest(window.origin + '/game-create', method='POST', data={'name':firebase.auth().currentUser.uid});
-    //console.log('Game created?');
+        'gameSettings':{'mapType':data.get('mapType')},
+        'participantData':
+        {
+            'uid':firebase.auth().currentUser.uid,
+            'data':
+            {
+                'nation':data.get('nationSelect'),
+                'username':sessionStorage.getItem('userName')
+            }
+        }
+    }
+    let res = await ResourceRequest(window.origin + '/game-create', 'POST', jsonData);
+    if(res==201){
+        window.location = window.origin + '/game/' + data.get('sessionName');
+    }
 }
 
 async function UpdateNationOptions(selector){
