@@ -11,17 +11,34 @@ var gameInfo = {
 }
 var enabledProvinces = [];
 var tankGraphic = null;
+let instantiatedGraphics = {}
 const baseURL = window.origin;
 const gameName = window.location.pathname.split('/').pop();
-SetupGame();
+
+window.onload = function(){SetupGame()};
 
 async function SetupGame(){
     await LoadGameConfiguration();
     await LoadMap();
     await LoadTankGraphic();
+    ApplyConfiguration();
+    EnableProvinces(gameInfo.nationInfo[gameInfo.playingAs].provinces);
+    if(gameInfo.turnNumb < 1){
+        RevealSubmenu('PreGame');
+    }
+}
+
+function ApplyConfiguration(){
+    for(provID in instantiatedGraphics){
+        if(gameInfo.provinceInfo[provID].owner != instantiatedGraphics[provID].owner){
+            instantiatedGraphics[provID].ref.parentNode.removeChild(instantiatedGraphics[provID].ref)
+        }
+    }
+
     for(nationID in gameInfo.nationInfo){
         gameInfo.nationInfo[nationID].provinces.forEach(provID => {
             let pathReference = document.getElementById(provID);
+            
             UpdateMap(gameInfo.nationInfo[nationID].color, provID);
             if (gameInfo.provinceInfo[provID].troopPresence){
                 let tankInstance = tankGraphic.cloneNode(deep=true);
@@ -30,45 +47,12 @@ async function SetupGame(){
                 tankInstance.setAttribute('x',`${centerX - (tankGraphic.getAttribute("width")/2)}`);
                 tankInstance.setAttribute('y',`${centerY - (tankGraphic.getAttribute("height")/2)}`);
                 tankInstance.style.fill = gameInfo.nationInfo[nationID].color;
-                pathReference.parentElement.appendChild(tankInstance);
+                let instantiatedGraphic = pathReference.parentElement.appendChild(tankInstance);
+                instantiatedGraphics[provID] = {'ref':instantiatedGraphic, 'owner':nationID};
             }
         });
-        
     }
-    
-    EnableProvinces(gameInfo.nationInfo[gameInfo.playingAs].provinces);
-}
 
-async function LoadGameConfiguration(){
-    let resJSON = JSON.parse(await ResourceRequest(baseURL +  '/game/' + gameName + '/mapData'));
-    for(let key in resJSON){
-        gameInfo[key] = {...resJSON[key]}
-    }
-}
-
-async function LoadMap() {
-        const resXML = new DOMParser().parseFromString(await ResourceRequest(baseURL + '/europe'), 'image/svg+xml');
-        console.log(resXML);
-        const svgObj = resXML.getElementById('gameMap');
-        svgObj.querySelectorAll('path').forEach(element => {
-            const provID = element.getAttribute('id');
-            element.removeAttribute('style');
-            element.classList.add('province');
-            element.addEventListener('click',function(){
-                ProvinceSelect(provID);
-            });
-            const wrapperGroup = document.createElementNS("http://www.w3.org/2000/svg","g");
-            element.parentElement.replaceChild(wrapperGroup, element);
-            wrapperGroup.appendChild(element);
-        });
-        const overlay = document.getElementById('gameArea').replaceChild(svgObj, document.getElementById('gameArea').firstChild);
-        document.getElementById('gameArea').appendChild(overlay);
-    }
-async function LoadTankGraphic(){
-    const resXML = new DOMParser().parseFromString(await ResourceRequest(baseURL + '/tank'), 'image/svg+xml');
-    const svgObj = resXML.getElementsByClassName('tank')[0];
-    console.log(svgObj);
-    tankGraphic = svgObj;
 }
 
 function EnableProvinces(provIDs){

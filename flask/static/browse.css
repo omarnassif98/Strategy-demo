@@ -1,6 +1,9 @@
 body{
     min-width: 60em;
 }
+span{
+    cursor: default;
+}
 #gameGallery{
     margin: 0;
     padding: 0;
@@ -39,16 +42,20 @@ body{
 
 .gameInfoContainer{
     display: block;
+    width: 100%;
+    height: 20px;
 }
 
 .gameTitle{
     float: left;
 }
 
-.vacancies{
+.host{
     float: right;
 }
-
+.topBar{
+    display: block;
+}
 .gameInstance button{
     position: absolute;
     right: 0;
@@ -96,20 +103,23 @@ fieldset > div{
     padding: 1.5em;
 }
 
-fieldset > .horzontalFlex {
+fieldset > .horizontalFlex {
     display: block;
     position: relative;
     margin: auto;
 }
 
-.horzontalFlex > div{
+.horizontalFlex{
+    margin: 10px;
+}
+
+.horizontalFlex > div{
     display: inline-flex;
 }
 label{
     display: inline-block;
     float: left;
     text-align: right;
-    margin: 5px;
     width: 100px;
 }
 

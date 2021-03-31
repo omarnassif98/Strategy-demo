@@ -1,16 +1,112 @@
 var staggeredInputTimeout = null;
 var configData;
-EnsureConfigs();
+let createButtonLock = [false, false]
+document.addEventListener('authComplete', function(){TickButtonLock(1)})
+window.onload = function(){
+    LoadGames();
+    EnsureConfigs();
+}
+
+async function LoadGames(){
+    var res = await ResourceRequest(window.origin + '/gameList');
+    if (res == 204){
+        alert('Server connectivity issue');
+        return;
+    }
+    console.log('heyyo, filling in browse page');
+    res = JSON.parse(res);
+    let games = res.content;
+    console.log(games);
+    let gameGallery = document.getElementById('gameGallery');
+    games.forEach(session => {
+        console.log(session);
+        let sessionWrapper = document.createElement('div');
+        sessionWrapper.className = 'gameInstance';
+
+        let gameInfoContainer = document.createElement('div');
+        gameInfoContainer.className = 'gameInfoContainer';
+
+        let gameTitle = document.createElement('span');
+        gameTitle.className = 'gameTitle';
+        gameTitle.innerHTML = session["sessionName"];
+        let host = document.createElement('span');
+        host.className = 'host';
+        host.innerHTML = session["host"];
+
+        gameInfoContainer.appendChild(gameTitle);
+        gameInfoContainer.appendChild(host);
+        
+        let vacancies = document.createElement('div');
+        vacancies.className = 'vacancies';
+        let joinButton = document.createElement('button');
+        joinButton.addEventListener('click', function(){JoinGameScreen(session['sessionName'], session['remaining'])});
+        joinButton.innerHTML = 'Join Game';
+
+        sessionWrapper.appendChild(gameInfoContainer);
+        sessionWrapper.appendChild(vacancies);
+        sessionWrapper.appendChild(joinButton);
+        
+        gameGallery.appendChild(sessionWrapper)
+        
+    });
+}
+
+async function JoinGameScreen(sessionName, remaining){
+    document.getElementById('pageOverlay').style.display = 'flex';
+    document.getElementById('JoinGameScreen').style.display = 'block';
+    let selection = document.getElementById('joinGameNationSelect');
+    remaining.forEach(tag => {
+        let nationOption = document.createElement('option');
+        nationOption.innerHTML = tag;
+        selection.appendChild(nationOption);
+    });
+
+    let choice = await new Promise((resolve) => {
+        document.getElementById('joinGameScreenButton').addEventListener('click', function(){
+            resolve(selection.options[selection.selectedIndex].text);
+        });
+    });
+    console.log(choice);
+
+    let jsonData = {
+        'gameName':sessionName,
+        'participantData':
+        {
+            'uid':firebase.auth().currentUser.uid,
+            'data':
+            {
+                'nation':choice,
+                'username':sessionStorage.getItem('userName')
+            }
+        }
+    }
+    let res = await ResourceRequest(window.origin + '/game-join', 'POST', jsonData);
+    if(res == 201){
+        window.location = window.origin + '/game/' + sessionName;
+    }
+}
+
+
 
 async function EnsureConfigs(){
-    let jsonData = await ResourceRequest(window.origin + '/gameconfigs');
+    if(localStorage.getItem('mapConfigs') == null){
+        let jsonData = await ResourceRequest(window.origin + '/gameconfigs');
         localStorage.setItem('mapConfigs', jsonData);
-    if(localStorage.getItem('mapConfigs') == null || true){
-        
-        
     }
     configData = JSON.parse(localStorage.getItem('mapConfigs'));
-    document.getElementById('createButton').disabled = false;
+    TickButtonLock(0);
+}
+
+function TickButtonLock(idx){
+    console.log('ticked ' + idx);
+    createButtonLock[idx] = true;
+    for(let i = 0; i <createButtonLock.length; i++){
+        if(createButtonLock[i] == false){
+            return;
+        }
+    }
+    console.log('Enabling');
+    Array.from(document.getElementsByClassName('clickLock')).forEach(elem => elem.disabled = false)
 }
 
 async function NameCheck(input, submitButton){

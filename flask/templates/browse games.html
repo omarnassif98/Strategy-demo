@@ -8,80 +8,18 @@
 {% block body %}
 <div>
     <div id="gameGallery">
-        <div class="gameInstance">
-            <div class="gameInfoContainer">
-                <span class="gameTitle">Title</span>
-                <span class="vacancies">Vacancies</span>
-            </div>
-            <button>Join Game</class>
-        </div>
-
-        <div class="gameInstance">
-            <div class="gameInfoContainer">
-                <span class="gameTitle">Title</span>
-                <span class="vacancies">Vacancies</span>
-            </div>
-            <button>Join Game</class>
-        </div>
-
-        <div class="gameInstance">
-            <div class="gameInfoContainer">
-                <span class="gameTitle">Title</span>
-                <span class="vacancies">Vacancies</span>
-            </div>
-            <button>Join Game</class>
-        </div>
-
-        <div class="gameInstance">
-            <div class="gameInfoContainer">
-                <span class="gameTitle">Title</span>
-                <span class="vacancies">Vacancies</span>
-            </div>
-            <button>Join Game</class>
-        </div>
-
-        <div class="gameInstance">
-            <div class="gameInfoContainer">
-                <span class="gameTitle">Title</span>
-                <span class="vacancies">Vacancies</span>
-            </div>
-            <button>Join Game</class>
-        </div>
-
-        <div class="gameInstance">
-            <div class="gameInfoContainer">
-                <span class="gameTitle">Title</span>
-                <span class="vacancies">Vacancies</span>
-            </div>
-            <button>Join Game</class>
-        </div>
-
-        <div class="gameInstance">
-            <div class="gameInfoContainer">
-                <span class="gameTitle">Title</span>
-                <span class="vacancies">Vacancies</span>
-            </div>
-            <button>Join Game</class>
-        </div>
-
-        <div class="gameInstance">
-            <div class="gameInfoContainer">
-                <span class="gameTitle">Title</span>
-                <span class="vacancies">Vacancies</span>
-            </div>
-            <button>Join Game</class>
-        </div>
+        
     </div>
     <div id="extraInfo">
             <span id="statistics">Statistics</span>
             <br>
-            <button onclick="document.getElementById('pageOverlay').style.display = 'flex'" id="createButton" disabled>Create game</button>
+            <button onclick="{document.getElementById('pageOverlay').style.display = 'flex'; document.getElementById('gameCreation').style.display='block'}" class="clickLock" disabled>Create Game</button>
     </div>
 </div>
 <div id="pageOverlay" style="display: none;">
     <div id="overlayWindow">
         <div id="subscreenManager">
-            <div id="gameCreation">
+            <div id="gameCreation" style="display: none;">
                 <form action="#" autocomplete="off">
                     <fieldset>
                         <legend>Lobby Creation</legend>
@@ -92,10 +30,6 @@
                                     <input type="text" oninput="StaggeredNameCheck(this)" name="sessionName" id="sessionName" class="keyboardInput" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');">
                                     <span id="tooltip"></span>
                                 </div>
-                            </div>
-                            <div>
-                                <label for="lobbyPassword">Password:</label>
-                                <input type="password" placeholder="Optional" name="lobbyPassword" class="keyboardInput" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');">
                             </div>
                         </div>
                         <div class="horzontalFlex">
@@ -118,6 +52,13 @@
                         <input type="submit" id="formSubmit" onclick="CreateGame(this.parentNode.parentNode); return false" disabled>
                     </fieldset>
                 </form>
+            </div>
+            <div id="JoinGameScreen" style="display: none;">
+                <div class="horizontalFlex">
+                    <label for="nation">Select Nation:</label>
+                    <select name='nation' id='joinGameNationSelect'></select>
+                </div>
+                <button id="joinGameScreenButton">Join Game</button>
             </div>
         </div>
     </div>

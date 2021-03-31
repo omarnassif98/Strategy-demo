@@ -34,13 +34,14 @@ document.addEventListener('click', function(event){
 });
 
 firebase.auth().onAuthStateChanged(function(user) {
-  console.log(user);
     if (user) {
+      console.log(user);
       database.ref('users/'+user.uid).get().then(function(snapshot){
-        console.log(snapshot);
         if(snapshot.exists()){
             sessionStorage.setItem('userName', snapshot.val().username);
             AddProfileDropdown();
+            var loginEvent = new Event('authComplete');
+            document.dispatchEvent(loginEvent);
         }else{
           document.getElementById('loginWindow').style.display =  'block';
           document.getElementById('firebaseui-auth-container').style.display = 'none';
