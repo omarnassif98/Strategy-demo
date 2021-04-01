@@ -4,7 +4,7 @@ body{
 span{
     cursor: default;
 }
-#gameGallery{
+.gameGallery{
     margin: 0;
     padding: 0;
     width: 100%;
@@ -32,7 +32,7 @@ span{
     transition: all 0.2s;
 }
 
-.gameInstance button:hover{
+.gameInstance button:enabled:hover{
     background-color: cadetblue;
 }
 

@@ -1,53 +1,97 @@
 var staggeredInputTimeout = null;
 var configData;
 let createButtonLock = [false, false]
-document.addEventListener('authComplete', function(){TickButtonLock(1)})
+let listingNodes = {'public':{},'user':{}}
+document.addEventListener('authComplete', function(){
+       
+    var loadListings = async function(){
+        await LoadGames('userGames', firebase.auth().currentUser.uid + '/get-games', true);
+        await LoadGames('joinableGames', 'gameList');
+        TickButtonLock(1);
+    }
+    loadListings();
+});
+
+document.addEventListener('noAuth', function(){
+    var loadListings = async function(){
+        await LoadGames('joinableGames', 'gameList');
+    }
+    loadListings();
+});
+
 window.onload = function(){
-    LoadGames();
+    document.getElementById('createSession').disabled = true;
     EnsureConfigs();
 }
 
-async function LoadGames(){
-    var res = await ResourceRequest(window.origin + '/gameList');
-    if (res == 204){
-        alert('Server connectivity issue');
-        return;
-    }
-    console.log('heyyo, filling in browse page');
-    res = JSON.parse(res);
-    let games = res.content;
-    console.log(games);
-    let gameGallery = document.getElementById('gameGallery');
-    games.forEach(session => {
-        console.log(session);
-        let sessionWrapper = document.createElement('div');
-        sessionWrapper.className = 'gameInstance';
+async function LoadGames(gameGalleryID, endpoint, buttonIsLink = false){
+    let res = await ResourceRequest(window.origin + '/' + endpoint);
+    return new Promise(resolve =>{
+        if (res == 204){
+            resolve();
+        }
+        console.log('Initial');
+        games = JSON.parse(res);
+        console.log(games);
+        console.log(gameGalleryID);
+        let gameGallery = document.getElementById(gameGalleryID);
+        if(Object.keys(games).length > 0){
+            gameGallery.parentNode.style.display = 'block';
+        }
+        for(gameName in games){
+            if(gameName in listingNodes.public && !buttonIsLink){
+                continue;
+            }
+            
+            session = games[gameName]
+            console.log(session);
+            let sessionWrapper = document.createElement('div');
+            sessionWrapper.className = 'gameInstance';
 
-        let gameInfoContainer = document.createElement('div');
-        gameInfoContainer.className = 'gameInfoContainer';
+            let gameInfoContainer = document.createElement('div');
+            gameInfoContainer.className = 'gameInfoContainer';
 
-        let gameTitle = document.createElement('span');
-        gameTitle.className = 'gameTitle';
-        gameTitle.innerHTML = session["sessionName"];
-        let host = document.createElement('span');
-        host.className = 'host';
-        host.innerHTML = session["host"];
+            let gameTitle = document.createElement('span');
+            gameTitle.className = 'gameTitle';
+            gameTitle.innerHTML = gameName;
+            let host = document.createElement('span');
+            host.className = 'host';
+            host.innerHTML = session["host"];
 
-        gameInfoContainer.appendChild(gameTitle);
-        gameInfoContainer.appendChild(host);
-        
-        let vacancies = document.createElement('div');
-        vacancies.className = 'vacancies';
-        let joinButton = document.createElement('button');
-        joinButton.addEventListener('click', function(){JoinGameScreen(session['sessionName'], session['remaining'])});
-        joinButton.innerHTML = 'Join Game';
+            gameInfoContainer.appendChild(gameTitle);
+            gameInfoContainer.appendChild(host);
+            
+            
+            let joinButton = document.createElement('button');
+            
+            joinButton.innerHTML = 'Join Game';
+            
 
-        sessionWrapper.appendChild(gameInfoContainer);
-        sessionWrapper.appendChild(vacancies);
-        sessionWrapper.appendChild(joinButton);
-        
-        gameGallery.appendChild(sessionWrapper)
-        
+            sessionWrapper.appendChild(gameInfoContainer);
+            if(!buttonIsLink && !(gameName in listingNodes.user)){
+                listingNodes.public[gameName] = sessionWrapper;
+                joinButton.addEventListener('click', function(){JoinGameScreen(gameName, session['remaining'])});
+                joinButton.className = 'clickLock';
+                joinButton.disabled = true;
+                let vacancies = document.createElement('div');
+                vacancies.className = 'vacancies';
+                sessionWrapper.appendChild(vacancies);
+
+            }else{
+                joinButton.addEventListener('click', function(){window.location = window.origin + '/game/' + gameName});
+                listingNodes.user[gameName] = true;
+                if(gameName in listingNodes.public){
+                    listingNodes.public[gameName].parentElement.removeChild(listingNodes.public[gameName]);
+                    delete listingNodes.public[gameName];
+                }
+            }
+            sessionWrapper.appendChild(joinButton);
+            gameGallery.appendChild(sessionWrapper)
+        }
+        if(Object.keys(listingNodes.public).length == 0){
+            document.getElementById('joinableGames').parentElement.style.display = 'none';
+        }
+        resolve();
     });
 }
 
@@ -67,8 +111,8 @@ async function JoinGameScreen(sessionName, remaining){
         });
     });
     console.log(choice);
-
-    let jsonData = {
+    console.log(sessionName);
+    let joinData = {
         'gameName':sessionName,
         'participantData':
         {
@@ -80,7 +124,7 @@ async function JoinGameScreen(sessionName, remaining){
             }
         }
     }
-    let res = await ResourceRequest(window.origin + '/game-join', 'POST', jsonData);
+    let res = await ResourceRequest(window.origin + '/game-join', 'POST', joinData);
     if(res == 201){
         window.location = window.origin + '/game/' + sessionName;
     }
@@ -153,6 +197,7 @@ async function CreateGame(form){
         }
     }
     let res = await ResourceRequest(window.origin + '/game-create', 'POST', jsonData);
+    console.log('Got response ' + res);
     if(res==201){
         window.location = window.origin + '/game/' + data.get('sessionName');
     }
@@ -171,5 +216,5 @@ async function UpdateNationOptions(selector){
         nationChoice.innerHTML = subConfig.fullNames[i];
         nationSelector.appendChild(nationChoice);
     }
-    nationSelector.disabled = false
+    nationSelector.disabled = false;
 }

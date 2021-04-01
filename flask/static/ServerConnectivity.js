@@ -6,8 +6,13 @@ async function SendCommandsToServer(buttonRef){
     }
 }
 
-async function LoadGameConfiguration(){
-    let resJSON = JSON.parse(await ResourceRequest(baseURL +  '/game/' + gameName + '/data'));
+async function LoadGameConfiguration(auth){
+    var resJSON = null;
+    if(auth){
+        resJSON = JSON.parse(await ResourceRequest(baseURL +  '/game/' + gameName + '/data', 'POST', {'uid':auth}));
+    }else{
+        resJSON = JSON.parse(await ResourceRequest(baseURL +  '/game/' + gameName + '/data'));
+    }
     console.log(resJSON);
     if(gameInfo.turnNumb != resJSON.turnNumb){
         gameInfo = {...gameInfo, ...resJSON};
@@ -32,7 +37,7 @@ async function LoadMap() {
         });
         const overlay = document.getElementById('gameArea').replaceChild(svgObj, document.getElementById('gameArea').firstChild);
         document.getElementById('gameArea').appendChild(overlay);
-        
+
     }
 async function LoadTankGraphic(){
     const resXML = new DOMParser().parseFromString(await ResourceRequest(baseURL + '/tank'), 'image/svg+xml');

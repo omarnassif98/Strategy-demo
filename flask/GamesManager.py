@@ -36,11 +36,15 @@ class GameSession:
             self.gameSettings["remaining"].remove(participantData['data']["nation"])
             return len(self.gameSettings["remaining"])
         else:
+            print('Remaining:')
+            print(self.gameSettings['remaining'])
             return -2
         
+    def GetPlayerNation(self, uid):
+        return self.participants[uid]['nation']
     
     def GetMapData(self):
-        return self.mapData
+        return self.mapData.copy()
     
     def BeginNewTurn(self):
         self.TurnManager = {"expectingFrom":list(self.participants.keys()), "QueuedMoves":{}}
@@ -94,53 +98,87 @@ class GameSession:
                 skirmishLedger[support['destProv']]['defence'] += 1
             except:
                 continue
-        print(skirmishLedger)
         
         
-gamesForBrowsepage = []
-gamesInSession = {}
+        for prov in skirmishLedger:
+            localSkirmishLedger = skirmishLedger[prov]
+            defencePower = localSkirmishLedger['defence']
+            maxStrength = [0, []]
+            attacks = localSkirmishLedger['attacks']
+            for attackingNation in attacks:
+                attack = attacks[attackingNation]
+                if attack['strength'] > maxStrength[0]:
+                    maxStrength[1].clear()
+                    maxStrength[0] = attack['strength']
+                    print(attackingNation + ' is the greatest threat to ' + prov)
+                    maxStrength[1].append(attackingNation)
+                elif attack['strength'] == maxStrength[0]:
+                    maxStrength[1].append(attackingNation)
+            if maxStrength[0] > defencePower and len(maxStrength[1]) == 1:
+                print('moving troop from ' + attacks[maxStrength[1][0]]['fromProv'] + ' to ' + prov)
+                self.MoveTroop(attacks[maxStrength[1][0]]['fromProv'], prov)
+        self.BeginNewTurn()
 
+
+
+    def MoveTroop(self, fromProv, toProv):
+        source = self.mapData['provinceInfo'][fromProv]
+        destination = self.mapData['provinceInfo'][toProv]
+        print('Source:')
+        print(source)
+        print('Dest:')
+        print(destination)
+        if destination['owner'] in self.mapData['nationInfo']:
+            self.mapData['nationInfo'][destination['owner']]['provinces'].remove(toProv)
+        destination['owner'] = source['owner']
+        self.mapData['nationInfo'][source['owner']]['provinces'].append(toProv)
+        source['troopPresence'] = False
+        destination['troopPresence'] = True
+        
+        
+gamesForBrowsepage = {}
+gamesInSession = {}
+playerSessions = {}
 @app.route('/gameList')
 def ListGames():
-    return json.dumps({'content': gamesForBrowsepage})
-
-@app.route('/kickoff/<gameName>')
-def KickGameOff(gameName):
-    gamesInSession[gameName].BeginGame()
-    return 'kicked off'
+    return json.dumps(gamesForBrowsepage)
 
 @app.route('/game-check/<gameName>')
 def CheckGameExistence(gameName):
     if(gameName in gamesInSession):
-        return '', 204
+        return 'exists', 204
     else:
-        return '', 201
+        return 'does not exist', 201
 
 @app.route('/game-create', methods=['POST'])
 def CreateGame():
     body = request.get_json()
     print(body)
-    gamesInSession[body["gameName"]] = GameSession(body["gameSettings"])
-    gamesInSession[body["gameName"]].AddParticipant(body["participantData"])
-    gamesForBrowsepage.append({'sessionName': body["gameName"], 'remaining': gamesInSession[body["gameName"]].GetAvailableNations(), 'host': body['participantData']['data']['username']})
-    return '', 201
+    if(body['gameName'] not in gamesInSession):
+        gamesInSession[body["gameName"]] = GameSession(body["gameSettings"])
+        gamesForBrowsepage[body["gameName"]] = {"host":body['participantData']['data']['username'], 'remaining':gamesInSession[body["gameName"]].gameSettings["remaining"]}
+        AddPlayerToGame(body['gameName'], body['participantData'])
+        return '', 201
+    else:
+        return '', 204
 
 @app.route('/game-join', methods=['POST'])
 def JoinGame():
     body = request.get_json()
     print(body)
-    try:
-        res = gamesInSession[body['sessionName']].AddParticipant(body['participantData'])
-        if res < 0:
-            return '', 204
-        else:
-            return '', 201
-    except:
-        return '', 204
+    return AddPlayerToGame(body['gameName'], body['participantData'])
+    
 
-@app.route('/game/<gameName>/data')
+@app.route('/game/<gameName>/data', methods=['POST'])
 def GetGameMapData(gameName):
-    return gamesInSession[gameName].GetMapData()
+    response = gamesInSession[gameName].GetMapData()
+    if request.method == 'POST':
+        body = request.get_json()
+        try:
+            response['playingAs'] = gamesInSession[gameName].GetPlayerNation(body['uid'])
+        except:
+            print('oopsie whoopsie')
+    return response
 
 @app.route('/clientDeliver', methods=['POST'])
 def RecieveCommand():
@@ -152,11 +190,38 @@ def RecieveCommand():
     else:
         return '', 204
 
+@app.route('/<user>/get-games')
+def GetUserGames(user):
+    try:
+        print(playerSessions)
+        return json.dumps(playerSessions[user])
+    except:
+        return '', 204
 
-def SendGameConfigs():
-    return metaMaps
-
-@app.route('/execute/<gameName>')
-def Execute(gameName):
+@app.route('/game/<gameName>/advance')
+def ExecuteNextTurn(gameName):
     gamesInSession[gameName].ExecuteQueuedMoves()
-    return 'metaMaps'
+    return '', 201
+
+
+def AddPlayerToGame(sessionName, data):
+    uid = data['uid']
+    if(uid not in playerSessions):
+        playerSessions[uid] = {}
+    try:
+        playerSessions[uid][sessionName] = {'turnNumb': gamesInSession[sessionName].mapData['turnNumb'], 'nation':data['data']['nation']}
+        rem = gamesInSession[sessionName].AddParticipant(data)
+        if rem == 0:
+            KickGameOff(sessionName)
+        elif rem < 0:
+            return '', 204
+        return '', 201
+    except:
+        return '', 404
+
+
+@app.route('/game/<gameName>/begin')
+def KickGameOff(gameName):
+    gamesInSession[gameName].BeginGame()
+    del gamesForBrowsepage[gameName]
+    return 'kicked off game ' + gameName

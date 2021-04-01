@@ -7,13 +7,21 @@
 {% endblock %}
 {% block body %}
 <div>
-    <div id="gameGallery">
-        
+    <div style="display: none;">
+        <h1>User Games</h1>
+        <div id="userGames" class="gameGallery">
+            
+        </div>
+    </div>
+    <div style="display: none;">
+        <h1>Joinable Games</h1>
+        <div id="joinableGames" class="gameGallery">
+        </div>
     </div>
     <div id="extraInfo">
             <span id="statistics">Statistics</span>
             <br>
-            <button onclick="{document.getElementById('pageOverlay').style.display = 'flex'; document.getElementById('gameCreation').style.display='block'}" class="clickLock" disabled>Create Game</button>
+            <button onclick="{document.getElementById('pageOverlay').style.display = 'flex'; document.getElementById('gameCreation').style.display='block'}" class="clickLock" id="createSession">Create Game</button>
     </div>
 </div>
 <div id="pageOverlay" style="display: none;">

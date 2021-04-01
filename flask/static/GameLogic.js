@@ -6,7 +6,7 @@ var gameInfo = {
     "focused":false,
     "lastFocused":"",
     "turnComplete":false,
-    "playingAs":"ITA",
+    "playingAs":"spectator",
     "queuedMoves":{}
 }
 var enabledProvinces = [];
@@ -15,10 +15,15 @@ let instantiatedGraphics = {}
 const baseURL = window.origin;
 const gameName = window.location.pathname.split('/').pop();
 
-window.onload = function(){SetupGame()};
+document.addEventListener('authComplete', function(){
+    SetupGame(firebase.auth().currentUser.uid);
+});
 
-async function SetupGame(){
-    await LoadGameConfiguration();
+document.addEventListener('noAuth', function(){
+    SetupGame();
+});
+async function SetupGame(authUID = null){
+    await LoadGameConfiguration(authUID);
     await LoadMap();
     await LoadTankGraphic();
     ApplyConfiguration();

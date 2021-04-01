@@ -35,7 +35,6 @@ document.addEventListener('click', function(event){
 
 firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
-      console.log(user);
       database.ref('users/'+user.uid).get().then(function(snapshot){
         if(snapshot.exists()){
             sessionStorage.setItem('userName', snapshot.val().username);
@@ -50,6 +49,9 @@ firebase.auth().onAuthStateChanged(function(user) {
       }).catch(function(error){
         console.log(error);
     });
+    }else{
+      var noAuth = new Event('noAuth');
+      document.dispatchEvent(noAuth);
     }
   }
 );
