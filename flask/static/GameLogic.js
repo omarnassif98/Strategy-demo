@@ -67,9 +67,11 @@ function EnableProvinces(provIDs){
     const svgObj = document.getElementById('gameMap');
     provIDs.forEach(provID => {
         const pathReference = document.getElementById(provID);
-        pathReference.classList.add('enabledProvince');
-        svgObj.removeChild(pathReference.parentElement);
-        svgObj.appendChild(pathReference.parentElement);
+        if(pathReference){
+            pathReference.classList.add('enabledProvince');
+            svgObj.removeChild(pathReference.parentElement);
+            svgObj.appendChild(pathReference.parentElement);
+        }
     });
 }
 function DisableProvinces(provIDs){
@@ -101,8 +103,9 @@ function UpdateSendActionButtonStatus(){
 }
 
 function UpdateMap(color, provID){
-        const element = document.getElementById(provID);
-        element.style.fill = color;
+    console.log([color, provID]);
+    const element = document.getElementById(provID);
+    element.style.fill = color;
 }
 
 

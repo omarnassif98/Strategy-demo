@@ -68,14 +68,18 @@ async function LoadGames(gameGalleryID, endpoint, buttonIsLink = false){
             
 
             sessionWrapper.appendChild(gameInfoContainer);
-            if(!buttonIsLink && !(gameName in listingNodes.user)){
-                listingNodes.public[gameName] = sessionWrapper;
-                joinButton.addEventListener('click', function(){JoinGameScreen(gameName, session['remaining'])});
-                joinButton.className = 'clickLock';
-                joinButton.disabled = true;
-                let vacancies = document.createElement('div');
-                vacancies.className = 'vacancies';
-                sessionWrapper.appendChild(vacancies);
+            if(!buttonIsLink){
+                if (!(gameName in listingNodes.user)){
+                    listingNodes.public[gameName] = sessionWrapper;
+                    joinButton.addEventListener('click', function(){JoinGameScreen(gameName, session['remaining'])});
+                    joinButton.className = 'clickLock';
+                    joinButton.disabled = true;
+                    let vacancies = document.createElement('div');
+                    vacancies.className = 'vacancies';
+                    sessionWrapper.appendChild(vacancies);
+                }else{
+                    continue;
+                }
 
             }else{
                 joinButton.addEventListener('click', function(){window.location = window.origin + '/game/' + gameName});
@@ -86,7 +90,7 @@ async function LoadGames(gameGalleryID, endpoint, buttonIsLink = false){
                 }
             }
             sessionWrapper.appendChild(joinButton);
-            gameGallery.appendChild(sessionWrapper)
+            gameGallery.appendChild(sessionWrapper);
         }
         if(Object.keys(listingNodes.public).length == 0){
             document.getElementById('joinableGames').parentElement.style.display = 'none';
@@ -133,11 +137,8 @@ async function JoinGameScreen(sessionName, remaining){
 
 
 async function EnsureConfigs(){
-    if(localStorage.getItem('mapConfigs') == null){
-        let jsonData = await ResourceRequest(window.origin + '/gameconfigs');
-        localStorage.setItem('mapConfigs', jsonData);
-    }
-    configData = JSON.parse(localStorage.getItem('mapConfigs'));
+    let jsonData = await ResourceRequest(window.origin + '/gameconfigs');
+    configData = JSON.parse(jsonData);
     TickButtonLock(0);
 }
 

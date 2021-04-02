@@ -4,7 +4,7 @@
         "fullNames":["France", "Italy", "England", "Germany", "Serbia"]
     },
     "roma":{
-        "roster":["MOR","ITA","SYR","SPA"],
-        "fullNames":["Morocco", "Italy", "Syria", "Spain"]
+        "roster":["CAR","ROM","SYR","EGY"],
+        "fullNames":["Carthage", "Rome", "Assyria", "Egypt"]
     }
 }

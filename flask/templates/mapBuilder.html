@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    <title>Game</title>
+    <link rel="stylesheet" href={{url_for('static', filename='game.css')}}>
+    <script src={{url_for('static', filename='Helper.js')}}></script>
+    <script src={{url_for('static', filename='UIManager.js')}}></script>
+    <script src={{url_for('static', filename='MapSandbox.js')}}></script>
+
+    {% endblock %}
+{% block body %}
+<button onclick="ExportJson()">Export</button>
+    <div id='gameArea'>
+        <div id='overlayArea'>       
+            <div id="backdrop" style="display: none;">
+                <div id ='overlayBox'>
+                    <div id='actionMenu' style="display: none;">    
+                        <div id ="subscreen1" style="display: none;">
+                            <h1 >Who to support?</h1>
+                            <button id="ITA" class="selfDefiningBtn">Italy</button>
+                            <button id="FRA" class="selfDefiningBtn">France</button>
+                            <button id="SER" class="selfDefiningBtn">Serbia</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="sendOrdersButton" onclick="ChangeInputMode()" style="display: grid;">Input Mode</div>
+        </div>
+    </div>
+{% endblock %}

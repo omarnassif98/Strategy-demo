@@ -21,13 +21,20 @@ async function LoadGameConfiguration(auth){
 }
 
 async function LoadMap() {
-        const resXML = new DOMParser().parseFromString(await ResourceRequest(baseURL + '/europe'), 'image/svg+xml');
+        const resXML = new DOMParser().parseFromString(await ResourceRequest(baseURL + '/mapResources/' + gameInfo.mapType), 'image/svg+xml');
+        return new Promise(resolve =>{
         console.log(resXML);
         const svgObj = resXML.getElementById('gameMap');
         svgObj.querySelectorAll('path').forEach(element => {
+            console.log('path?');
             const provID = element.getAttribute('id');
             element.removeAttribute('style');
             element.classList.add('province');
+            if(element.getAttribute("id").split('_').length < 2){
+                element.classList.add('land');
+            }else{
+                element.classList.add('ocean');
+            }
             element.addEventListener('click',function(){
                 ProvinceSelect(provID);
             });
@@ -37,8 +44,9 @@ async function LoadMap() {
         });
         const overlay = document.getElementById('gameArea').replaceChild(svgObj, document.getElementById('gameArea').firstChild);
         document.getElementById('gameArea').appendChild(overlay);
-
-    }
+        resolve();
+    });
+}
 async function LoadTankGraphic(){
     const resXML = new DOMParser().parseFromString(await ResourceRequest(baseURL + '/tank'), 'image/svg+xml');
     const svgObj = resXML.getElementsByClassName('tank')[0];

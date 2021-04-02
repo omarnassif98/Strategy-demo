@@ -14,10 +14,16 @@ def Login():
 def Game(gameName):
     return render_template('game.html')
 
-@app.route('/europe')
-def SendEuropeSVG():
-    return send_from_directory('static', 'europe.svg')
+@app.route('/game/<gameName>/debug')
+def MapBuilder(gameName):
+    return render_template('mapBuilder.html')
 
+@app.route('/mapResources/<mapName>')
+def SendEuropeSVG(mapName):
+    try:
+        return send_from_directory('static', mapName+'.svg')
+    except:
+        return '', 204
 @app.route('/tank')
 def SendTankGraphic():
     return send_from_directory('static', 'tank.svg')

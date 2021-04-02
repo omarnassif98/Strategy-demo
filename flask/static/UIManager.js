@@ -1,12 +1,12 @@
 var currentSubmenu, currentSubscreen = 0;
 
-async function RevealSubmenu(MenuID){
+async function RevealSubmenu(MenuID, vals){
     console.log(MenuID);
     ChangeDisplayState(document.getElementById('backdrop'), 'flex');
     currentSubmenu = document.getElementById(MenuID);
     ChangeDisplayState(currentSubmenu,'flex');
     RevealSubscreen(0);
-    return PromptPlayerAction();
+    return PromptPlayerAction(vals);
 }
 
 function RevealSubscreen(screenNumb){
@@ -28,17 +28,20 @@ function DismissSubmenu(){
     console.log('dismissed');
 }
 
-async function PromptPlayerAction(){
-    let selfDefiningBtns = currentSubmenu.getElementsByClassName("selfDefiningBtn");
+async function PromptPlayerAction(resolutionVals){
+    wrapper = currentSubmenu.children[currentSubscreen];
+    while(wrapper.childElementCount > 1){
+        wrapper.removeChild(wrapper.lastChild);
+    }
     return new Promise(resolve => {
-        Array.from(selfDefiningBtns).forEach(btn => {
-            let parentObj = btn.parentElement;
-            let newBtn = btn.cloneNode(true);
+        resolutionVals.forEach(resVal => {
+            let newBtn = document.createElement('button');
+            newBtn.innerHTML = resVal;
             newBtn.addEventListener('click', function(){
                 DismissSubmenu();
-                resolve(btn.getAttribute('id'))
+                resolve(newBtn.innerHTML);
             });
-            parentObj.replaceChild(newBtn,btn);
-        })
+            wrapper.appendChild(newBtn);
+        });
     });
 }

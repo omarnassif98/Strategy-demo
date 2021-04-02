@@ -10,6 +10,11 @@ def GetDataFromFile(fname):
         return json.load(f)
 
 metaMaps = GetDataFromFile('mapRosters.json')
+
+@app.route('/gameconfigs')
+def GetRosters():
+    return metaMaps
+
 def GetRoster(mapType):
     return metaMaps[mapType]["roster"].copy()
 
@@ -18,7 +23,7 @@ class GameSession:
     def __init__(self, gameSettings):
         self.gameSettings = gameSettings
         self.gameSettings["remaining"] = GetRoster(self.gameSettings["mapType"])
-        self.mapData = GetDataFromFile('europa.json')
+        self.mapData = GetDataFromFile(gameSettings['mapType'] + '.json')
         self.mapData['turnNumb'] = 0
         self.participants = {}
         self.TurnManager = {}
@@ -169,15 +174,17 @@ def JoinGame():
     return AddPlayerToGame(body['gameName'], body['participantData'])
     
 
-@app.route('/game/<gameName>/data', methods=['POST'])
+@app.route('/game/<gameName>/data', methods=['GET', 'POST'])
 def GetGameMapData(gameName):
     response = gamesInSession[gameName].GetMapData()
     if request.method == 'POST':
         body = request.get_json()
+        print(body)
         try:
             response['playingAs'] = gamesInSession[gameName].GetPlayerNation(body['uid'])
         except:
             print('oopsie whoopsie')
+            pass
     return response
 
 @app.route('/clientDeliver', methods=['POST'])

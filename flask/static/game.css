@@ -3,8 +3,7 @@
     width: 100%;
 }
 #gameArea{
-    width: 75%;
-    background-color: deepskyblue;
+    width: 50%;
     border: 5px solid black;
     margin: auto;
     position: relative;
@@ -58,23 +57,29 @@
 }
 
 .province{
+    transition: fill 0.5s;
+    stroke-width:2px;
     z-index: -1;
     stroke: white;
+    vector-effect: non-scaling-stroke;
+}
+
+.land{
     fill: lightgray;
-    stroke-width:2px;
-    transition: fill 0.2s;
+}
+
+.ocean{
+    fill: skyblue;
 }
 .enabledProvince{
     stroke: black;
-    transition: stroke 0.5s;
 }
 .enabledProvince:hover{
-    fill: lightgray !important;
-    stroke-width: 3px;
+    stroke-width: 2px;
+    fill: lightslategray !important;
 }
-.disabledProvince{
+.disabledProvince:not(:hover){
     fill: gray !important;
-    transition: fill 0.5s;
     stroke-width: 2px;
 }
 
