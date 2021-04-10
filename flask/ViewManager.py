@@ -14,6 +14,10 @@ def Login():
 def Game(gameName):
     return render_template('game.html')
 
+@app.route('/rules')
+def Rules():
+    return render_template('Rule.html')
+
 @app.route('/game/<gameName>/debug')
 def MapBuilder(gameName):
     return render_template('mapBuilder.html')
