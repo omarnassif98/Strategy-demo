@@ -67,8 +67,9 @@ class GameSession:
         supportAtkBuffer = []
         supportDefBuffer = []
         for nationTag in self.TurnManager["QueuedMoves"]:
-            for fromProv in self.TurnManager["QueuedMoves"][nationTag]:
-                destProv = self.TurnManager["QueuedMoves"][nationTag][fromProv]['destProv']
+            currentNationMoves = self.TurnManager["QueuedMoves"][nationTag]
+            for fromProv in currentNationMoves:
+                destProv = currentNationMoves[fromProv]['destProv']
                 if destProv not in skirmishLedger:
                     skirmishLedger[destProv] = {'attacks':{nationTag:{'fromProv':None, 'strength':0}}}
                     if self.mapData['provinceInfo'][destProv]['troopPresence'] == True:
@@ -77,14 +78,18 @@ class GameSession:
                     else:
                          skirmishLedger[destProv]['defence'] = 0
                          print(destProv + ' has no troop presence')
-                if self.TurnManager["QueuedMoves"][nationTag][fromProv]['moveType'] == 'attack':
+                if currentNationMoves[fromProv]['moveType'] == 'Attack':
                     skirmishLedger[destProv]['attacks'][nationTag]['fromProv'] = fromProv
                     skirmishLedger[destProv]['attacks'][nationTag]['strength'] += 1
-                elif self.TurnManager["QueuedMoves"][nationTag][fromProv]['moveType'] == 'supportAtk':
-                    supportAtkBuffer.append({'nationTag': nationTag, 'fromProv': fromProv, 'destProv': destProv, 'supporting': self.TurnManager["QueuedMoves"][nationTag][fromProv]['supporting']})
+                elif currentNationMoves[fromProv]['moveType'] == 'Support Attack':
+                    supportAtkBuffer.append({'nationTag': nationTag, 'fromProv': fromProv, 'destProv': destProv, 'supporting': currentNationMoves[fromProv]['supporting']})
                 else:
                     supportDefBuffer.append({'nationTag': nationTag, 'fromProv': fromProv, 'destProv': destProv})
-
+        
+        print('COMBINING ALL QUEUED MOVES INTO BUFFERS YIELDED')
+        print(supportAtkBuffer)
+        print(supportDefBuffer)
+        
         for support in supportAtkBuffer:
             destNation = self.mapData['provinceInfo'][support['destProv']]['owner']
             try:
@@ -104,7 +109,9 @@ class GameSession:
             except:
                 continue
         
-        
+        print('COMBINING ALL BUFFERS INTO SKIRMISHES YIELDED')
+        print(skirmishLedger)
+
         for prov in skirmishLedger:
             localSkirmishLedger = skirmishLedger[prov]
             defencePower = localSkirmishLedger['defence']

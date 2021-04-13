@@ -1,0 +1,77 @@
+{
+    "mapType": "europa",
+    "keyProvinces": [
+        "ROM",
+        "VEN",
+        "PAR"
+    ],
+    "nationInfo": {
+        "ITA": {
+            "color": "green",
+            "provinces": [
+                "ROM",
+                "TUS",
+                "VEN"
+            ],
+            "cores": [
+                "ROM",
+                "VEN"
+            ]
+        },
+        "FRA": {
+            "color": "blue",
+            "provinces": [
+                "PAR"
+            ],
+            "cores": [
+                "PAR"
+            ]
+        },
+        "ENG": {
+            "color": "red",
+            "provinces": [],
+            "cores": []
+        },
+        "GER": {
+            "color": "orange",
+            "provinces": [],
+            "cores": []
+        },
+        "SER": {
+            "color": "brown",
+            "provinces": [],
+            "cores": []
+        }
+    },
+    "provinceInfo": {
+        "ROM": {
+            "owner": "ITA",
+            "neighbors": [
+                "TUS",
+                "VEN"
+            ],
+            "troopPresence": false
+        },
+        "TUS": {
+            "owner": "ITA",
+            "neighbors": [
+                "ROM",
+                "VEN"
+            ],
+            "troopPresence": false
+        },
+        "VEN": {
+            "owner": "ITA",
+            "neighbors": [
+                "ROM",
+                "TUS"
+            ],
+            "troopPresence": false
+        },
+        "PAR": {
+            "owner": "FRA",
+            "neighbors": [],
+            "troopPresence": false
+        }
+    }
+}

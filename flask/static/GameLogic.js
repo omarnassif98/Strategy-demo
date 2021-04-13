@@ -9,9 +9,13 @@ var gameInfo = {
     "playingAs":"spectator",
     "queuedMoves":{}
 }
+let allProvIDs = [];
 var enabledProvinces = [];
 var tankGraphic = null;
-let instantiatedGraphics = {}
+var starGraphic = null;
+let instantiatedTanks = {}
+let instantiatedStars = {}
+let instantiatedPlans = {}
 const baseURL = window.origin;
 const gameName = window.location.pathname.split('/').pop();
 
@@ -26,6 +30,7 @@ async function SetupGame(authUID = null){
     await LoadGameConfiguration(authUID);
     await LoadMap();
     await LoadTankGraphic();
+    await LoadStarGraphic();
     ApplyConfiguration();
     EnableProvinces(gameInfo.nationInfo[gameInfo.playingAs].provinces);
     if(gameInfo.turnNumb < 1){
@@ -34,54 +39,67 @@ async function SetupGame(authUID = null){
 }
 
 function ApplyConfiguration(){
-    for(provID in instantiatedGraphics){
-        if(gameInfo.provinceInfo[provID].owner != instantiatedGraphics[provID].owner){
-            instantiatedGraphics[provID].ref.parentNode.removeChild(instantiatedGraphics[provID].ref)
+    for(provID in instantiatedTanks){
+        if(gameInfo.provinceInfo[provID].owner != instantiatedTanks[provID].owner){
+            instantiatedTanks[provID].ref.parentNode.removeChild(instantiatedTanks[provID].ref)
         }
     }
 
+    gameInfo.keyProvinces.forEach(provID => {
+        console.log(`${provID} is a key province`)      
+        let pathReference = document.getElementById(provID);
+        let pathRect = pathReference.getBBox();
+        let [centerX, centerY] = [gameInfo.provinceInfo[provID].tokenLocation.x, gameInfo.provinceInfo[provID].tokenLocation.y];
+        let starInstance = starGraphic.cloneNode(deep=true);
+        starInstance.setAttribute('x',`${centerX - (starGraphic.getAttribute("width")/2)}`)
+        starInstance.setAttribute('y',`${centerY - (starGraphic.getAttribute("height")/2)}`)
+        pathReference.parentElement.appendChild(starInstance);
+    });
+
     for(nationID in gameInfo.nationInfo){
-        gameInfo.nationInfo[nationID].provinces.forEach(provID => {
-            let pathReference = document.getElementById(provID);
-            
+        gameInfo.nationInfo[nationID].provinces.forEach(provID => {            
             UpdateMap(gameInfo.nationInfo[nationID].color, provID);
+            let pathReference = document.getElementById(provID);
+            let pathRect = pathReference.getBBox();
+            let [centerX, centerY] = [pathRect.x + pathRect.width/2, pathRect.y + pathRect.height/2];
             if (gameInfo.provinceInfo[provID].troopPresence){
                 let tankInstance = tankGraphic.cloneNode(deep=true);
-                let pathRect = pathReference.getBBox();
-                let [centerX, centerY] = [pathRect.x + pathRect.width/2, pathRect.y + pathRect.height/2];
                 tankInstance.setAttribute('x',`${centerX - (tankGraphic.getAttribute("width")/2)}`);
                 tankInstance.setAttribute('y',`${centerY - (tankGraphic.getAttribute("height")/2)}`);
                 tankInstance.style.fill = gameInfo.nationInfo[nationID].color;
                 let instantiatedGraphic = pathReference.parentElement.appendChild(tankInstance);
-                instantiatedGraphics[provID] = {'ref':instantiatedGraphic, 'owner':nationID};
+                instantiatedTanks[provID] = {'ref':instantiatedGraphic, 'owner':nationID};
             }
         });
     }
-
 }
 
-function EnableProvinces(provIDs){
-    console.log(provIDs);
+function EnableProvinces(provIDs, includingWater = true){
     enabledProvinces = [];
     enabledProvinces = [...provIDs];
     const svgObj = document.getElementById('gameMap');
     provIDs.forEach(provID => {
         const pathReference = document.getElementById(provID);
-        if(pathReference){
+        if(pathReference.classList.contains('land') || (includingWater == pathReference.classList.contains('ocean'))){
             pathReference.classList.add('enabledProvince');
-            svgObj.removeChild(pathReference.parentElement);
-            svgObj.appendChild(pathReference.parentElement);
         }
     });
 }
+
+function BringGraphicsToFront(){
+    const svgObj = document.getElementById('gameMap');
+    for(provID in instantiatedTanks){
+        svgObj.removeChild(instantiatedTanks[provID].ref);
+        svgObj.append(instantiatedTanks[provID].ref)
+    }
+}
+
 function DisableProvinces(provIDs){
     const svgObj = document.getElementById('gameMap');
     provIDs.forEach(provID => {
         if(!gameInfo.nationInfo[gameInfo.playingAs].provinces.includes(provID)){
             const pathReference = document.getElementById(provID);
             pathReference.classList.remove('enabledProvince');
-            svgObj.removeChild(pathReference.parentElement);
-            svgObj.insertBefore(pathReference.parentElement, svgObj.firstChild)
     }
     });
 }
@@ -112,16 +130,17 @@ function UpdateMap(color, provID){
 async function ProvinceSelect(provID){
     if(!gameInfo.focused){
         if(gameInfo.nationInfo[gameInfo.playingAs].provinces.includes(provID) && gameInfo.provinceInfo[provID].troopPresence){
-            let action = (await RevealSubmenu('actionMenu')).split(' ');
+            let action = (await RevealSubmenu('actionMenu', ['Attack', 'Support Defense', 'Support Attack']))
             console.log(action);
-            gameInfo.queuedMoves[provID] = {"moveType": action[0]};
-            switch(action[0]){
-                case 'supportAtk':
-                    gameInfo.queuedMoves[provID].supporting = action[1];
-                case 'attack':
+            gameInfo.queuedMoves[provID] = {"moveType": action};
+            switch(action){
+                case 'Support Attack':
+                    let supporting = (await RevealSubmenu('actionMenu', [...Object.keys(gameInfo.nationInfo)]))
+                    gameInfo.queuedMoves[provID].supporting = supporting;
+                case 'Attack':
                     FocusProvince(provID,false);
                     break;
-                case 'supportDfns':
+                case 'Support Defense':
                     FocusProvince(provID,true);
                     break;
                 default:
@@ -137,18 +156,39 @@ async function ProvinceSelect(provID){
         
         if(enabledProvinces.includes(provID) && provID != gameInfo.lastFocused){
             gameInfo.queuedMoves[gameInfo.lastFocused].destProv = provID;
+            if(Object.keys(instantiatedPlans).includes(gameInfo.lastFocused)){
+                instantiatedPlans[gameInfo.lastFocused].remove()
+                delete instantiatedPlans[gameInfo.lastFocused]
+            }
+            Drawline(gameInfo.lastFocused, provID);
         }else{
             delete gameInfo.queuedMoves[gameInfo.lastFocused];
+            if(Object.keys(instantiatedPlans).includes(gameInfo.lastFocused)){
+                instantiatedPlans[gameInfo.lastFocused].remove()
+                delete instantiatedPlans[gameInfo.lastFocused]
+            }
         }
         UpdateSendActionButtonStatus();
         ResetFocus();
         DisableProvinces(gameInfo.provinceInfo[gameInfo.lastFocused].neighbors);
         gameInfo.focused = false;
-        EnableProvinces(gameInfo.nationInfo[gameInfo.playingAs].provinces);
+        EnableProvinces(gameInfo.nationInfo[gameInfo.playingAs].provinces, false);
     }
 }
 
-
+function Drawline(fromProv, toProv){
+    var newLine = document.createElementNS('http://www.w3.org/2000/svg','line');
+            newLine.setAttribute('id','line2');
+            newLine.setAttribute('x1', gameInfo.provinceInfo[fromProv].tokenLocation.x);
+            newLine.setAttribute('y1',gameInfo.provinceInfo[fromProv].tokenLocation.y);
+            newLine.setAttribute('x2',gameInfo.provinceInfo[toProv].tokenLocation.x);
+            newLine.setAttribute('y2',gameInfo.provinceInfo[toProv].tokenLocation.y);
+            newLine.setAttribute("stroke-width", "3px")
+            newLine.setAttribute("stroke", gameInfo.nationInfo[gameInfo.playingAs].color)
+            newLine.setAttribute("marker-end", "url(#arrow)");
+            document.getElementById('gameMap').append(newLine);
+            instantiatedPlans[fromProv] = newLine;
+}
 
 function FocusProvince(provID, onlyTroops){
     const allProvs = [...document.getElementsByClassName('province')];
@@ -166,7 +206,6 @@ function FocusProvince(provID, onlyTroops){
             e.classList.remove("enabledProvince")
         }
     });
-    
     EnableProvinces(whiteList);
 }
 

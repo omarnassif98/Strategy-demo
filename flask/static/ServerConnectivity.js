@@ -21,39 +21,50 @@ async function LoadGameConfiguration(auth){
 }
 
 async function LoadMap() {
-        const resXML = new DOMParser().parseFromString(await ResourceRequest(baseURL + '/mapResources/' + gameInfo.mapType), 'image/svg+xml');
-        return new Promise(resolve =>{
-        console.log(resXML);
-        const svgObj = resXML.getElementById('gameMap');
-        svgObj.querySelectorAll('path').forEach(element => {
-            console.log('path?');
-            const provID = element.getAttribute('id');
-            element.removeAttribute('style');
-            element.classList.add('province');
-            if(element.getAttribute("id").split('_').length < 2){
-                element.classList.add('land');
-            }else{
-                element.classList.add('ocean');
-            }
-            element.addEventListener('click',function(){
-                ProvinceSelect(provID);
-            });
-            const wrapperGroup = document.createElementNS("http://www.w3.org/2000/svg","g");
-            element.parentElement.replaceChild(wrapperGroup, element);
-            wrapperGroup.appendChild(element);
+    let req = await ResourceRequest(baseURL + '/mapResources/' + gameInfo.mapType);
+    const resXML = new DOMParser().parseFromString(req, 'image/svg+xml');
+    const wrapperGroup = document.createElementNS("http://www.w3.org/2000/svg","g");
+    const svgObj = resXML.getElementById('gameMap');
+    svgObj.querySelectorAll('#gameMap > path').forEach(element => {
+        const provID = element.getAttribute('id');
+        allProvIDs.push(provID)
+        console.log(provID);
+        console.log(element);
+        element.removeAttribute('style');
+        element.classList.add('province');
+        if(element.getAttribute("id").split('_').length < 2){
+            element.classList.add('land');
+        }else{
+            element.classList.add('ocean');
+        }
+        element.addEventListener('click',function(){
+            ProvinceSelect(provID, true);
         });
-        const overlay = document.getElementById('gameArea').replaceChild(svgObj, document.getElementById('gameArea').firstChild);
-        document.getElementById('gameArea').appendChild(overlay);
-        resolve();
+        
+        element.addEventListener('contextmenu',function(event){
+            ProvinceSelect(provID, false);
+            event.preventDefault();
+        });
     });
+    svgObj.appendChild(wrapperGroup);
+    const overlay = document.getElementById('gameArea').replaceChild(svgObj, document.getElementById('gameArea').firstChild);
+    document.getElementById('gameArea').appendChild(overlay);
+
 }
 async function LoadTankGraphic(){
     const resXML = new DOMParser().parseFromString(await ResourceRequest(baseURL + '/tank'), 'image/svg+xml');
     const svgObj = resXML.getElementsByClassName('tank')[0];
     console.log(svgObj);
     tankGraphic = svgObj;
+    tankGraphic.style.pointerEvents = 'none';
 }
-
+async function LoadStarGraphic(){
+    const resXML = new DOMParser().parseFromString(await ResourceRequest(baseURL + '/star'), 'image/svg+xml');
+    const svgObj = resXML.getElementById('star');
+    console.log(svgObj);
+    starGraphic = svgObj;
+    starGraphic.style.pointerEvents = "none";
+}
 async function RefreshGame(){
     await LoadGameConfiguration();
 

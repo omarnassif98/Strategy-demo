@@ -8,7 +8,9 @@ var gameInfo = {
 let allProvIDs = [];
 var enabledProvinces = [];
 var tankGraphic = null;
-let instantiatedGraphics = {}
+var starGraphic = null;
+let instantiatedTanks = {}
+let instantiatedStars = {}
 const baseURL = window.origin;
 const gameName = window.location.pathname.split('/').pop();
 
@@ -19,8 +21,10 @@ async function SetupGame(authUID = null){
     console.log('hello?');
     await LoadGameConfiguration(authUID);
     await LoadMap();
-    await LoadTankGraphic();
+    await LoadStarGraphic();
+    await LoadTankGraphic();    
     ApplyConfiguration();
+    BringGraphicsToFront();
     EnableProvinces(allProvIDs);
 }
 
@@ -35,61 +39,96 @@ async function LoadGameConfiguration(auth){
 }
 
 async function LoadMap() {
-    const resXML = new DOMParser().parseFromString(await ResourceRequest(baseURL + '/mapResources/' + gameInfo.mapType), 'image/svg+xml');        console.log(resXML);
-        const svgObj = resXML.getElementById('gameMap');
-        svgObj.querySelectorAll('path').forEach(element => {
-            const provID = element.getAttribute('id');
-            allProvIDs.push(provID)
-            element.removeAttribute('style');
-            element.classList.add('province');
-            if(element.getAttribute("id").split('_').length < 2){
-                element.classList.add('land');
-            }else{
-                element.classList.add('ocean');
-            }
-            element.addEventListener('click',function(){
-                ProvinceSelect(provID, true);
-            });
-            
-            element.addEventListener('contextmenu',function(event){
-                ProvinceSelect(provID, false);
-                event.preventDefault();
-            });
-            
-            const wrapperGroup = document.createElementNS("http://www.w3.org/2000/svg","g");
-            element.parentElement.replaceChild(wrapperGroup, element);
-            wrapperGroup.appendChild(element);
+    console.log(baseURL + '/mapResources/' + gameInfo.mapType);
+    let req = await ResourceRequest(baseURL + '/mapResources/' + gameInfo.mapType);
+    const resXML = new DOMParser().parseFromString(req, 'image/svg+xml');
+    const wrapperGroup = document.createElementNS("http://www.w3.org/2000/svg","g");
+    const svgObj = resXML.getElementById('gameMap');
+    svgObj.querySelectorAll('#gameMap > path').forEach(element => {
+        const provID = element.getAttribute('id');
+        allProvIDs.push(provID)
+        console.log(element);
+        element.removeAttribute('style');
+        element.classList.add('province');
+        if(element.getAttribute("id").split('_').length < 2){
+            element.classList.add('land');
+        }else{
+            element.classList.add('ocean');
+        }
+        element.addEventListener('click',function(){
+            ProvinceSelect(provID, true);
         });
-        const overlay = document.getElementById('gameArea').replaceChild(svgObj, document.getElementById('gameArea').firstChild);
-        document.getElementById('gameArea').appendChild(overlay);
+        
+        element.addEventListener('contextmenu',function(event){
+            ProvinceSelect(provID, false);
+            event.preventDefault();
+        });
+    });
+    svgObj.appendChild(wrapperGroup);
+    const overlay = document.getElementById('gameArea').replaceChild(svgObj, document.getElementById('gameArea').firstChild);
+    document.getElementById('gameArea').appendChild(overlay);
 
     }
-async function LoadTankGraphic(){
-    const resXML = new DOMParser().parseFromString(await ResourceRequest(baseURL + '/tank'), 'image/svg+xml');
-    const svgObj = resXML.getElementsByClassName('tank')[0];
-    console.log(svgObj);
-    tankGraphic = svgObj;
+    async function LoadTankGraphic(){
+        const resXML = new DOMParser().parseFromString(await ResourceRequest(baseURL + '/tank'), 'image/svg+xml');
+        const svgObj = resXML.getElementsByClassName('tank')[0];
+        console.log(svgObj);
+        tankGraphic = svgObj;
+        tankGraphic.style.pointerEvents = "none";
+    }
+    async function LoadStarGraphic(){
+        const resXML = new DOMParser().parseFromString(await ResourceRequest(baseURL + '/star'), 'image/svg+xml');
+        const svgObj = resXML.getElementById('star');
+        console.log(svgObj);
+        starGraphic = svgObj;
+        starGraphic.style.pointerEvents = "none";
+    }
+
+function RelayerMap(){
+    for(provID in instantiatedTanks){
+        BringProvToFront(provID);
+    }
+    gameInfo.keyProvinces.forEach(provID => {
+        BringProvToFront(provID);
+    });
 }
+
+//CHANGES TO THIS FUNCTION
 function ApplyConfiguration(){
-    for(provID in instantiatedGraphics){
-        if(gameInfo.provinceInfo[provID].owner != instantiatedGraphics[provID].owner){
-            instantiatedGraphics[provID].ref.parentNode.removeChild(instantiatedGraphics[provID].ref)
+    for(provID in instantiatedTanks){
+        if(gameInfo.provinceInfo[provID].owner != instantiatedTanks[provID].owner){
+            instantiatedTanks[provID].ref.parentNode.removeChild(instantiatedTanks[provID].ref)
         }
     }
 
+    allProvIDs.forEach(provID => {
+        console.log(`${provID} is a key province`)     
+        if  (gameInfo.provinceInfo[provID]){
+        let pathReference = document.getElementById(provID);
+        let pathRect = pathReference.getBBox();
+        let [centerX, centerY] = [pathRect.x + pathRect.width/2, pathRect.y + pathRect.height/2];
+        let starInstance = starGraphic.cloneNode(deep=true);
+        starInstance.setAttribute('x',`${centerX - (starGraphic.getAttribute("width")/2)}`)
+        starInstance.setAttribute('y',`${centerY - (starGraphic.getAttribute("height")/2)}`)
+        gameInfo.provinceInfo[provID].tokenLocation = {'x': centerX, 'y':centerY};
+        instantiatedStars[provID] = starInstance;
+        pathReference.parentElement.appendChild(starInstance);
+    }
+    });
+
     for(nationID in gameInfo.nationInfo){
-        gameInfo.nationInfo[nationID].provinces.forEach(provID => {
-            let pathReference = document.getElementById(provID);
+        gameInfo.nationInfo[nationID].provinces.forEach(provID => {            
             UpdateMap(nationID, provID);
+            let pathReference = document.getElementById(provID);
+            let pathRect = pathReference.getBBox();
+            let [centerX, centerY] = [pathRect.x + pathRect.width/2, pathRect.y + pathRect.height/2];
             if (gameInfo.provinceInfo[provID].troopPresence){
                 let tankInstance = tankGraphic.cloneNode(deep=true);
-                let pathRect = pathReference.getBBox();
-                let [centerX, centerY] = [pathRect.x + pathRect.width/2, pathRect.y + pathRect.height/2];
                 tankInstance.setAttribute('x',`${centerX - (tankGraphic.getAttribute("width")/2)}`);
                 tankInstance.setAttribute('y',`${centerY - (tankGraphic.getAttribute("height")/2)}`);
                 tankInstance.style.fill = gameInfo.nationInfo[nationID].color;
                 let instantiatedGraphic = pathReference.parentElement.appendChild(tankInstance);
-                instantiatedGraphics[provID] = {'ref':instantiatedGraphic, 'owner':nationID};
+                instantiatedTanks[provID] = {'ref':instantiatedGraphic, 'owner':nationID};
             }
         });
     }
@@ -97,17 +136,23 @@ function ApplyConfiguration(){
 }
 
 function EnableProvinces(provIDs){
-    console.log(provIDs);
     enabledProvinces = [];
     enabledProvinces = [...provIDs];
     const svgObj = document.getElementById('gameMap');
     provIDs.forEach(provID => {
         const pathReference = document.getElementById(provID);
         pathReference.classList.add('enabledProvince');
-        svgObj.removeChild(pathReference.parentElement);
-        svgObj.appendChild(pathReference.parentElement);
     });
 }
+
+function BringGraphicsToFront(){
+    const svgObj = document.getElementById('gameMap');
+    for(provID in instantiatedTanks){
+        svgObj.removeChild(instantiatedTanks[provID].ref);
+        svgObj.append(instantiatedTanks[provID].ref)
+    }
+}
+
 function DisableProvinces(provIDs){
     const svgObj = document.getElementById('gameMap');
     console.log('does this ever happen?');
@@ -161,6 +206,7 @@ async function ChangeInputMode(){
 
 
 async function ProvinceSelect(provID, rebase){
+    console.log(instantiatedStars[provID]);
     if(!(provID in gameInfo.provinceInfo)){
         gameInfo.provinceInfo[provID] = {
             "owner":null,
@@ -177,8 +223,6 @@ async function ProvinceSelect(provID, rebase){
         }else{
             EditProvinceNeighbor(provID);
         }
-    }else{
-        ChangeInputMode();
     }
 }
 
