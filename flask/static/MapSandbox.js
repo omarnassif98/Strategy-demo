@@ -262,11 +262,21 @@ function ResetFocus(){
     });
 }
 
+
+
 function ExportJson(){
+    WriteAllTokenAreas();
     var blob = new Blob([JSON.stringify({'nationInfo':gameInfo.nationInfo, 'provinceInfo':gameInfo.provinceInfo})], {type: 'text/plain'});
     var url = window.URL.createObjectURL(blob);
     let temp = document.createElement('a');
     temp.href = url;
     temp.download = 'export.json';
     temp.click();
+}
+
+function WriteAllTokenAreas(){
+    for(provID in instantiatedStars){
+        gameInfo.provinceInfo[provID].tokenLocation.x = instantiatedStars[provID].getAttribute("x");
+        gameInfo.provinceInfo[provID].tokenLocation.y = instantiatedStars[provID].getAttribute("y");
+    }
 }
