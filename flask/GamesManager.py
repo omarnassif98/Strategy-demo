@@ -54,7 +54,7 @@ class GameSession:
     
     def BeginNewTurn(self):
         if self.mapData['lockStep'] == True:
-            requiredMoves = [nation for nation in self.mapData['nationInfo'] if self.mapData['nationInfo'][nation]['score'] != self.mapData['nationInfo'][nation]['troopsDeployed'] or len(self.mapData['nationInfo'][nation]['defeats']) > 0 ]
+            requiredMoves = [nation for nation in self.mapData['nationInfo'] if self.mapData['nationInfo'][nation]['score'] != len(self.mapData['nationInfo'][nation]['troopsDeployed']) or len(self.mapData['nationInfo'][nation]['defeats']) > 0 ]
             self.TurnManager = {"expectingFrom":requiredMoves, "QueuedMoves":{}}
             print('We locksteppin\'')
             print(requiredMoves)
@@ -222,11 +222,9 @@ class GameSession:
     def MoveTroop(self, fromProv, toProv):
         source = self.mapData['provinceInfo'][fromProv]
         destination = self.mapData['provinceInfo'][toProv]
-        print('Source:')
-        print(fromProv)
-        print('Dest:')
-        print(toProv)
         movingNation = self.mapData['nationInfo'][source['owner']]
+        movingNation['troopsDeployed'].remove(fromProv)
+        movingNation['troopsDeployed'].append(toProv)
         if toProv in self.mapData['keyProvinces']:
                 movingNation['score'] += 1
         if destination['owner'] in self.mapData['nationInfo']:

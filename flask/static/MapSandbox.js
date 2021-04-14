@@ -108,8 +108,8 @@ function ApplyConfiguration(){
         let pathRect = pathReference.getBBox();
         let [centerX, centerY] = [pathRect.x + pathRect.width/2, pathRect.y + pathRect.height/2];
         let starInstance = starGraphic.cloneNode(deep=true);
-        starInstance.setAttribute('x',`${centerX - (starGraphic.getAttribute("width")/2)}`)
-        starInstance.setAttribute('y',`${centerY - (starGraphic.getAttribute("height")/2)}`)
+        starInstance.setAttribute('x',centerX)
+        starInstance.setAttribute('y',centerY)
         gameInfo.provinceInfo[provID].tokenLocation = {'x': centerX, 'y':centerY};
         instantiatedStars[provID] = starInstance;
         pathReference.parentElement.appendChild(starInstance);

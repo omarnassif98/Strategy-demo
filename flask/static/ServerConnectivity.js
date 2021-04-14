@@ -36,6 +36,7 @@ async function LoadMap() {
             element.classList.add('land');
         }else{
             element.classList.add('ocean');
+            gameInfo.provinceInfo[provID].owner = null;
         }
         element.addEventListener('click',function(){
             ProvinceSelect(provID, true);

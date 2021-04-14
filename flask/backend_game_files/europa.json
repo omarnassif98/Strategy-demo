@@ -51,8 +51,8 @@
                 "SER",
                 "ALB"
             ],
-            "score": 3,
-            "troopsDeployed": 3
+            "score": 0,
+            "troopsDeployed": []
         },
         "ENG": {
             "color": "red",
@@ -66,16 +66,15 @@
                 "YOR",
                 "LVP"
             ],
-            "score": 3,
-            "troopsDeployed": 3
+            "score": 0,
+            "troopsDeployed": []
         },
         "FRA": {
             "color": "deepskyblue",
             "cores": [
                 "PAR",
                 "BRE",
-                "BUR",
-                "GAS"
+                "MAR"
             ],
             "defeats": [],
             "provinces": [
@@ -87,7 +86,11 @@
                 "MAR"
             ],
             "score": 3,
-            "troopsDeployed": 3
+            "troopsDeployed": [
+                "PAR",
+                "BRE",
+                "MAR"
+            ]
         },
         "GER": {
             "color": "orange",
@@ -101,8 +104,8 @@
                 "SIL",
                 "PRU"
             ],
-            "score": 3,
-            "troopsDeployed": 3
+            "score": 0,
+            "troopsDeployed": []
         },
         "ITA": {
             "color": "green",
@@ -120,8 +123,8 @@
                 "APU",
                 "SIC"
             ],
-            "score": 3,
-            "troopsDeployed": 3
+            "score": 1,
+            "troopsDeployed": ["ROM"]
         },
         "RUS": {
             "color": "white",
@@ -135,8 +138,8 @@
                 "LVN",
                 "WAR"
             ],
-            "score": 4,
-            "troopsDeployed": 4
+            "score": 0,
+            "troopsDeployed": []
         },
         "TUR": {
             "color": "gold",
@@ -149,8 +152,8 @@
                 "ARM",
                 "SYR"
             ],
-            "score": 3,
-            "troopsDeployed": 3
+            "score": 0,
+            "troopsDeployed": []
 
         }
     },
@@ -1102,7 +1105,7 @@
                 "SAR",
                 "S_WES"
             ],
-            "owner": "ITA",
+            "owner": null,
             "tokenLocation": {
                 "x": "369.8891906738281",
                 "y": "618.261474609375"
