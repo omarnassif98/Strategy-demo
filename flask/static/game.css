@@ -60,7 +60,7 @@
     transition: fill 0.5s;
     stroke-width:2px;
     z-index: -1;
-    stroke: white;
+    stroke: bisque;
     vector-effect: non-scaling-stroke;
 }
 

@@ -25,6 +25,7 @@ class GameSession:
         self.gameSettings["remaining"] = GetRoster(self.gameSettings["mapType"])
         self.mapData = GetDataFromFile(gameSettings['mapType'] + '.json')
         self.mapData['turnNumb'] = 0
+        self.mapData['lockStep'] = False
         self.participants = {}
         self.TurnManager = {}
         
@@ -52,40 +53,55 @@ class GameSession:
         return self.mapData.copy()
     
     def BeginNewTurn(self):
-        self.TurnManager = {"expectingFrom":list(self.participants.keys()), "QueuedMoves":{}}
-        self.mapData['turnNumb'] += 1
+        if self.mapData['lockStep'] == True:
+            requiredMoves = [nation for nation in self.mapData['nationInfo'] if self.mapData['nationInfo'][nation]['score'] != self.mapData['nationInfo'][nation]['troopsDeployed'] or len(self.mapData['nationInfo'][nation]['defeats']) > 0 ]
+            self.TurnManager = {"expectingFrom":requiredMoves, "QueuedMoves":{}}
+            print('We locksteppin\'')
+            print(requiredMoves)
+        else:
+            self.TurnManager = {"expectingFrom":list(self.participants.keys()), "QueuedMoves":{}}
+            self.mapData['turnNumb'] += 1
 
     def QueueMove(self, uid, queuedMoves):
         nationTag = self.participants[uid]['nation']
         print('recieved moves for ' + nationTag)
         self.TurnManager['QueuedMoves'][nationTag] = queuedMoves
-        self.TurnManager["expectingFrom"].remove(uid)
+        if uid in self.TurnManager['expectingFrom']:
+            self.TurnManager["expectingFrom"].remove(uid)
         print(self.TurnManager)
     
     def ExecuteQueuedMoves(self):
+        #before executing the moves, skirmishes must be constructed
+        #skirmishes are objects which will track all moves done onto a province
+        #A skirmish occurs if there is atleast one direct attacker  
         skirmishLedger = {}
+        #support moves are buffered because they occur after attacks
+        #supports on a province without a skirmish will do nothing
         supportAtkBuffer = []
         supportDefBuffer = []
+        #this keeps track of what toops are actively attacking
+        #any province not on this list automatically has a defence of 1
+        activeTroops = []
         for nationTag in self.TurnManager["QueuedMoves"]:
             currentNationMoves = self.TurnManager["QueuedMoves"][nationTag]
             for fromProv in currentNationMoves:
                 destProv = currentNationMoves[fromProv]['destProv']
-                if destProv not in skirmishLedger:
-                    skirmishLedger[destProv] = {'attacks':{nationTag:{'fromProv':None, 'strength':0}}}
-                    if self.mapData['provinceInfo'][destProv]['troopPresence'] == True:
-                        skirmishLedger[destProv]['defence'] = 1
-                        print(destProv + ' has a troop')
-                    else:
-                         skirmishLedger[destProv]['defence'] = 0
-                         print(destProv + ' has no troop presence')
                 if currentNationMoves[fromProv]['moveType'] == 'Attack':
-                    skirmishLedger[destProv]['attacks'][nationTag]['fromProv'] = fromProv
-                    skirmishLedger[destProv]['attacks'][nationTag]['strength'] += 1
+                    activeTroops.append(fromProv)
+                    #all skirmishes start with an attack strength of 1 and a defence strength of zero
+                    #defence is calculated later, it depends on the actions of the 'defender'
+                    if destProv not in skirmishLedger:
+                        skirmishLedger[destProv] = {'attacks':{}, 'defence':0}
+                    skirmishLedger[destProv]['attacks'][nationTag] = {'fromProv': fromProv, "strength":1}
                 elif currentNationMoves[fromProv]['moveType'] == 'Support Attack':
                     supportAtkBuffer.append({'nationTag': nationTag, 'fromProv': fromProv, 'destProv': destProv, 'supporting': currentNationMoves[fromProv]['supporting']})
                 else:
                     supportDefBuffer.append({'nationTag': nationTag, 'fromProv': fromProv, 'destProv': destProv})
+                    print('Adding the supporting move from ' + fromProv + ' to the support buffer')
         
+        for provinceID in skirmishLedger:
+            skirmishLedger[provinceID]['defence'] = 1 if provinceID not in activeTroops and self.mapData['provinceInfo'][provinceID]['troopPresence'] == True else 0
+
         print('COMBINING ALL QUEUED MOVES INTO BUFFERS YIELDED')
         print(supportAtkBuffer)
         print(supportDefBuffer)
@@ -93,42 +109,112 @@ class GameSession:
         for support in supportAtkBuffer:
             destNation = self.mapData['provinceInfo'][support['destProv']]['owner']
             try:
-                if support['fromProv'] in skirmishLedger.keys() and skirmishLedger[support['fromProv']]['attacks'][destNation]['fromProv'] != support['destProv']:
+                #this if statement handles support cutting
+                if support['fromProv'] in skirmishLedger.keys() and len(skirmishLedger[support['fromProv']]['attacks'].keys()) > 0 and skirmishLedger[support['fromProv']]['attacks'][destNation]['fromProv'] != support['destProv']:
+                    print(support['fromProv'] + '\'s support HAS BEEN CUT')
                     continue
                 skirmishLedger[support['destProv']]['attacks'][support['supporting']]['strength'] += 1
             except:
+                print('it just crashed')
                 continue
         
         for support in supportDefBuffer:
-            destNation = self.mapData['provinceInfo'][support['destProv']]['owner']
             try:
-                if support['fromProv'] in skirmishLedger.keys() and skirmishLedger[support['fromProv']]['attacks'][destNation]['fromProv'] != support['destProv']:
+                if support['fromProv'] in skirmishLedger.keys():
+                    print(support['fromProv'] + '\'s support HAS BEEN CUT')
                     continue
-                print('defence of ' + nationTag + ' + 1')
-                skirmishLedger[support['destProv']]['defence'] += 1
+                if skirmishLedger[support['destProv']]['defence'] > 0: 
+                    skirmishLedger[support['destProv']]['defence'] += 1
             except:
+                #if the supported province is not on the ledger, defence doesn't even matter
+                print('unnecessary support for ' + support['destProv'])
                 continue
         
         print('COMBINING ALL BUFFERS INTO SKIRMISHES YIELDED')
         print(skirmishLedger)
 
-        for prov in skirmishLedger:
-            localSkirmishLedger = skirmishLedger[prov]
+        moveChains = []
+        chainStarts = {}
+        chainEnds = {}
+
+        for provinceID in skirmishLedger:
+            localSkirmishLedger = skirmishLedger[provinceID]
             defencePower = localSkirmishLedger['defence']
-            maxStrength = [0, []]
+            maxStrength = 0
+            overpoweringProvince = ''
+            bounceFlag = False
             attacks = localSkirmishLedger['attacks']
             for attackingNation in attacks:
                 attack = attacks[attackingNation]
-                if attack['strength'] > maxStrength[0]:
-                    maxStrength[1].clear()
-                    maxStrength[0] = attack['strength']
-                    print(attackingNation + ' is the greatest threat to ' + prov)
-                    maxStrength[1].append(attackingNation)
-                elif attack['strength'] == maxStrength[0]:
-                    maxStrength[1].append(attackingNation)
-            if maxStrength[0] > defencePower and len(maxStrength[1]) == 1:
-                print('moving troop from ' + attacks[maxStrength[1][0]]['fromProv'] + ' to ' + prov)
-                self.MoveTroop(attacks[maxStrength[1][0]]['fromProv'], prov)
+                if attack['strength'] > maxStrength:
+                    maxStrength = attack['strength']
+                    overpoweringProvince = attack['fromProv']
+                    print(attackingNation + ' is the greatest threat to ' + provinceID)
+                    bounceFlag = False
+                elif attack['strength'] == maxStrength:
+                    try:
+                        skirmishLedger[overpoweringProvince]['defence'] = True
+                    except:
+                        pass
+                    bounceFlag = True
+                    skirmishLedger[attack['fromProv']]['defence'] = True
+            if maxStrength > defencePower and bounceFlag == False:
+                if provinceID in chainStarts:
+                    print('adding ' + overpoweringProvince + 'to start of a list')
+                    moveChains[chainStarts[provinceID]].insert(0, (overpoweringProvince, maxStrength))
+                    chainStarts[overpoweringProvince] = chainStarts[provinceID]
+                    del chainStarts[provinceID]
+
+                    try:
+                        moveChains[chainEnds[overpoweringProvince]].pop()
+                        moveChains[chainEnds[overpoweringProvince]] += moveChains[chainStarts[overpoweringProvince]].copy()
+                        moveChains[chainStarts[overpoweringProvince]].clear()
+                        chainEnds[moveChains[chainEnds[overpoweringProvince][-1][0]]] = chainEnds[overpoweringProvince]
+                        del chainEnds[overpoweringProvince]
+                        del chainStarts[overpoweringProvince]
+                    except:
+                        pass
+                elif overpoweringProvince in chainEnds:
+                    print('adding ' + overpoweringProvince + 'to end of a list')
+                    moveChains[chainEnds[overpoweringProvince]][-1] = (overpoweringProvince, maxStrength)
+                    moveChains[chainEnds[overpoweringProvince]].append((provinceID, -1))
+                    chainEnds[provinceID] = chainEnds[overpoweringProvince]
+                    del chainEnds[overpoweringProvince]
+
+                    if provinceID in chainStarts:
+                        moveChains[chainEnds[overpoweringProvince]].pop()
+                        moveChains[chainEnds[overpoweringProvince]] += moveChains[chainStarts[overpoweringProvince]].copy()
+                        moveChains[chainStarts[overpoweringProvince]].clear()
+                        chainEnds[moveChains[chainEnds[overpoweringProvince]]] = chainEnds[overpoweringProvince]
+                        del chainEnds[overpoweringProvince]
+                        del chainStarts[overpoweringProvince]
+                        
+                else:
+                    moveChains.append([(overpoweringProvince, maxStrength),(provinceID, -1)])
+                    idx = len(moveChains)-1
+                    chainStarts[overpoweringProvince] = idx
+                    chainEnds[provinceID] = idx
+            else:
+                print('bounce occured over ' + provinceID)
+                try:
+                    skirmishLedger[overpoweringProvince]['defence'] = 1
+                except:
+                    pass
+        print(moveChains)
+        for moveChain in moveChains:
+            try:
+                destinationTuple = moveChain.pop() 
+                while len(moveChain) > 0:
+                    sourceTuple = moveChain.pop()
+                    if sourceTuple[1] > skirmishLedger[destinationTuple[0]]['defence']:
+                        self.MoveTroop(sourceTuple[0], destinationTuple[0])
+                        destinationTuple = sourceTuple
+                    else:
+                        #The attack fails and it defends against those behind it on the chain
+                        #Note that defence was 0 until now
+                        skirmishLedger[sourceTuple[0]]['defence'] = 1
+            except:
+                continue
         self.BeginNewTurn()
 
 
@@ -137,13 +223,23 @@ class GameSession:
         source = self.mapData['provinceInfo'][fromProv]
         destination = self.mapData['provinceInfo'][toProv]
         print('Source:')
-        print(source)
+        print(fromProv)
         print('Dest:')
-        print(destination)
+        print(toProv)
+        movingNation = self.mapData['nationInfo'][source['owner']]
+        if toProv in self.mapData['keyProvinces']:
+                movingNation['score'] += 1
         if destination['owner'] in self.mapData['nationInfo']:
-            self.mapData['nationInfo'][destination['owner']]['provinces'].remove(toProv)
+            overrunNation = self.mapData['nationInfo'][destination['owner']]
+            overrunNation['provinces'].remove(toProv)
+            if toProv in self.mapData['keyProvinces']:
+                overrunNation['score'] -= 1
+            if self.mapData['provinceInfo'][toProv]['troopPresence'] == True:
+                self.mapData['nationInfo'][destination['owner']]['defeats'].append(toProv)
+                self.mapData['lockStep'] = True
+        
         destination['owner'] = source['owner']
-        self.mapData['nationInfo'][source['owner']]['provinces'].append(toProv)
+        movingNation['provinces'].append(toProv)
         source['troopPresence'] = False
         destination['troopPresence'] = True
         

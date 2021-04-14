@@ -67,6 +67,7 @@ function ApplyConfiguration(){
                 tankInstance.setAttribute('x',`${centerX - (tankGraphic.getAttribute("width")/2)}`);
                 tankInstance.setAttribute('y',`${centerY - (tankGraphic.getAttribute("height")/2)}`);
                 tankInstance.style.fill = gameInfo.nationInfo[nationID].color;
+                gameInfo.provinceInfo[provID].owner = nationID;
                 let instantiatedGraphic = pathReference.parentElement.appendChild(tankInstance);
                 instantiatedTanks[provID] = {'ref':instantiatedGraphic, 'owner':nationID};
             }
