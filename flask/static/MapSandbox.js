@@ -199,7 +199,7 @@ function UpdateMap(newNationID, provID){
 async function ChangeInputMode(){
     ResetFocus();
     EnableProvinces(allProvIDs);
-    gameInfo.inputMode = await RevealSubmenu('actionMenu', ['territory', 'neighbors']);
+    gameInfo.inputMode = await RevealSubmenu('actionMenu', ['territory', 'neighbors', 'troops', 'keys']);
     if (gameInfo.inputMode == 'territory'){
         gameInfo.desiredNation = await RevealSubmenu('actionMenu', [...Object.keys(gameInfo.nationInfo), 'None'])
     }
@@ -223,6 +223,20 @@ async function ProvinceSelect(provID, rebase){
             FocusProvince(provID);
         }else{
             EditProvinceNeighbor(provID);
+        }
+    }else if(gameInfo.inputMode == 'troops'){
+        if(rebase){
+            gameInfo.nationInfo[gameInfo.provinceInfo[provID].owner].troopsDeployed.push(provID);
+            gameInfo.provinceInfo[provID].troopPresence = true;
+        }else{
+            gameInfo.nationInfo[gameInfo.provinceInfo[provID].owner].troopsDeployed = gameInfo.nationInfo[gameInfo.provinceInfo[provID].owner].troopsDeployed.filter(prov => provID != prov);
+            gameInfo.provinceInfo[provID].troopPresence = false;
+        }
+    }else{
+        if(rebase){
+            gameInfo.keyProvinces.push(provID);
+        }else{
+            gameInfo.keyProvinces = gameInfo.keyProvinces.filter(prov => prov != provID);
         }
 
     }
