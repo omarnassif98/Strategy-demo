@@ -1,0 +1,34 @@
+
+body{
+    min-width: 60em;
+    font-family: Helvetica;
+    background: cornsilk;
+}
+h2 {
+    background-color: #d3d3d3;
+    width: 80%;
+    border-radius: 10px;
+    border: 15px solid #666565;
+    padding: 50px;
+    margin: 20px;
+    margin-left: auto;
+    margin-right: auto;
+}
+p {
+    text-decoration: underline;
+}
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+  }
+  
+  tr:nth-child(even) {
+    background-color: #dddddd;
+  }

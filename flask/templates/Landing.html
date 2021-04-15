@@ -1,1 +1,103 @@
 {% extends 'base.html' %}
+{% block header %}
+<title>Browse Games</title>
+<link rel="stylesheet" href={{url_for('static', filename='rules.css' )}}>
+<script src={{url_for('static', filename='Helper.js' )}}></script>
+
+{% endblock %}
+{% block body %}
+
+<h2>
+  <p><span style="font-size:175%;">Game Rules:</span></p>
+  <p>Maps, Troops, Objective:</p>
+  <ol>
+    <li>Either 5 (Europe) or 4(Mediteranian) players represent major powers at the time</li>
+
+    <table>
+      <tr>
+        <th>Europe</th>
+        <th>Mediteranian </th>
+      </tr>
+      <tr>
+        <td>France </td>
+        <td>Carthage </td>
+      </tr>
+      <tr>
+        <td>Italy </td>
+        <td>Rome </td>
+      </tr>
+      <tr>
+        <td>England </td>
+        <td>Sparta </td>
+      </tr>
+      <tr>
+        <td>Germany</td>
+        <td>Egypt</td>
+      </tr>
+      <tr>
+        <td>Austia-Hungary</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>The Ottomans</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>Russia</td>
+        <td></td>
+      </tr>
+      
+    </table>
+
+    <li>The map is divided into several provinces consisting of: sea, and coastal regions</li>
+    <li>All provinces only allow one unit at a time</li>
+    <li>All units are equivalent with a force of one.</li>
+    <li>Players create allianceses through chat communication and use those allianceses to support a specific unit during a conflict, the more supports you have the stronger you are</li>
+    <li>There are 34 provinces marked with stars, these are supply centers. The players can start with 3-4 supply centers -- > These are called the Home Centers </li>
+    <li>In order to win, A player must get 18 of the supply centers, the game can then either be forfitted if agreed apon or continued</li>
+  </ol>
+
+  <p>Player order:</p>
+  <ol>
+    <li>Each turn has two phases; the action phase, were players order their troops, and the resolution phase; where the players retreat if they can</li>
+    <li>Players can communicate in chat during any point of the game</li>
+    <li>All order are entered in secret and only revealed after all players have finished their action phase</li>
+  </ol>
+
+  <p>Moves order:</p>
+  <li>There are several actions that a player can take on their turn:</li>
+  <ol>
+    <li>Holding: troops do not move</li>
+    <li>Move: move troops to an adjacent province; if the troops are in convoy and in a coastal province, they may move to non-adjacent coastal provinces. Fleets in coastal provinces can only move to adjacent coastline provences</li>
+    <li>Support: Units do not move; instead adding it's force to another adjacent unit </li>
+  </ol>
+  <li>If a unit is told to move it may not support or hold. A unit ordered to hold support or convoy may be supported to hold</li>
+
+  <p>Turn Resolution:</p>
+  <ol>
+    <li>If two player attempt to move to the same province with the same number of forces they are both denied and returned back; otherwise if once force is great it successfully takes the land</li>
+    <li>If units are ordered to each others provinces they bounce and return to their original location </li>
+    <li>If a unit is bounced from a move order, they return to their original position with one unit </li>
+    <li>A player can remove a player from a populated space if their force + support is higher than the defenders force + support; i.e. attacker with 3 support and a defender with 2: 1 + 3 > 1 + 2</li>
+    <li>A players support to another unit is cut if the supporting unit is attacked from any province other than the one they are supporting</li>
+    <li>If removed from a province, that player no longer has any control over it</li>
+    <li>A removed unit can still cut support to or bounce in a seperate province from where they were removed</li>
+    <li>You can not cut support to you own units, nor can you remove yourself from a province</li>
+    <li>If a unit remains in a province after a bounce occurs it remains intact </li>
+  </ol>
+
+  <p>Retreating:</p>
+  <ol>
+    <li>If a unit is removed it must retreat to a friendly vacant province or be destroyed ( Armies may not retreat to a sea.)</li>
+    <li>Units can not retreat to the attacking province nor one where there was a bounce </li>
+    <li>If two units attempt to retreat to the same province they are both destroyed</li>
+  </ol>
+
+  <p>Supply Centers:</p>
+  <ol>
+    <li>For every supply center you control, you may have one unit on the board. During the resolution phase, if you are short units, you may build new ones in unoccupied home centers, while if you have too many units, you must disband the excess.</li>
+  </ol>
+</h2>
+
+
+{% endblock %}

@@ -45,3 +45,45 @@ async function PromptPlayerAction(resolutionVals){
         });
     });
 }
+
+
+
+let chatMessages = {'all':[]}
+chatFocused = 'all'
+
+function SwitchChatFocus(newFocus){
+    chatFocused = newFocus;
+    let chatWrapper = document.getElementById('messages');
+    while(chatWrapper.children.length > 0){
+        chatWrapper.removeChild(chatWrapper.lastChild)
+    }
+    chatMessages[newFocus].forEach(chatMessage => {
+        let msgObj = document.createElement('li');
+        msgObj.innerHTML = chatMessage;
+        chatWrapper.appendChild(msgObj);
+    })
+}
+function PopulateChatOptions(){
+    let select = document.getElementById('otherPlayers')
+    for (nationID in gameInfo.nationInfo){
+        chatMessages[nationID] = []
+        if(nationID == gameInfo.playingAs){
+            continue;
+        }
+        let option = document.createElement('option');
+        option.innerHTML = gameInfo.nationInfo[nationID].properName;
+        option.value = nationID;
+        select.appendChild(option)
+    }
+}
+
+function AppendToChat(chat, message, sender){
+    console.log([chat, message, chat]);
+    let newMsg = `<span style='color:${gameInfo.nationInfo[sender].color}'>${sender}:</span> ${message}`;
+    chatMessages[chat].push(newMsg);
+    if(chat == chatFocused){
+        let msgObj = document.createElement('li');
+        msgObj.innerHTML = newMsg;
+        document.getElementById('messages').appendChild(msgObj);
+    }
+}

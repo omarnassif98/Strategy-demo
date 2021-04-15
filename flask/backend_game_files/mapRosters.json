@@ -1,10 +1,10 @@
 {
     "europa":{
-        "roster":["FRA","ITA","ENG","GER","SER"],
-        "fullNames":["France", "Italy", "England", "Germany", "Serbia"]
+        "roster":["FRA","ITA","ENG","GER","AUS", "TUR", "RUS"],
+        "fullNames":["France", "Italy", "England", "Germany", "Austria-Hungary", "The Ottomans", "Russia"]
     },
     "roma":{
-        "roster":["CAR","ROM","SYR","EGY"],
-        "fullNames":["Carthage", "Rome", "Assyria", "Egypt"]
+        "roster":["CAR","ROM","SPA","EGY"],
+        "fullNames":["Carthage", "Rome", "Sparta", "Egypt"]
     }
 }

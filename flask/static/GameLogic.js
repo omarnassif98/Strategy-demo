@@ -2,7 +2,6 @@ var gameInfo = {
     "provinceInfo":{},
     "nationInfo":{},
     "turnNumb":-1,
-    "deadline": "01 September 1939 12:00 GMT",
     "focused":false,
     "lastFocused":"",
     "turnComplete":false,
@@ -33,63 +32,94 @@ async function SetupGame(authUID = null){
     await LoadTankGraphic();
     await LoadStarGraphic();
     ApplyConfiguration();
-    if(gameInfo.lockStep){
-        gameInfo.lockCondition = {}
-        if(gameInfo.nationInfo[gameInfo.playingAs].defeats.length > 0){
-            //filter out provinces that don'n have anywhere to retreat to
-            let eligibleProvs = gameInfo.nationInfo[gameInfo.playingAs].defeats.filter(provID => gameInfo.provinceInfo[provID].neighbors.filter(prov => gameInfo.provinceInfo[prov].troopPresence == false && gameInfo.provinceInfo[prov].owner == gameInfo.playingAs).length > 0)
-            gameInfo.nationInfo[gameInfo.playingAs].defeats = eligibleProvs;
-            console.log('eligible retreats:');
-            console.log(eligibleProvs);
-            EnableProvinces(eligibleProvs);
-            gameInfo.lockCondition.retreat = {'checker': function(){
-                gameInfo.lockCondition.retreat.value = (gameInfo.nationInfo[gameInfo.playingAs].defeats.length == 0)
-                Checklock();
-            },
-                'value':(eligibleProvs.length == 0)
-            }
+    if(authUID){
+        PopulateChatOptions();
+        if(gameInfo.lockStep){
+            SetupLockConditions();
+        }else{
+            EnableProvinces(gameInfo.nationInfo[gameInfo.playingAs].provinces);
         }
-        if(gameInfo.nationInfo[gameInfo.playingAs].troopsDeployed.length < gameInfo.nationInfo[gameInfo.playingAs].score){
-            //filter out occupied and conquered cores
-            let eligibleProvs = gameInfo.nationInfo[gameInfo.playingAs].cores.filter(provID => gameInfo.nationInfo[gameInfo.playingAs].provinces.includes(provID) && gameInfo.provinceInfo[provID].troopPresence == false);
-            EnableProvinces(eligibleProvs);
-            gameInfo.lockCondition.deploy = {'checker': function(){
-                gameInfo.lockCondition.deploy.value = (gameInfo.nationInfo[gameInfo.playingAs].troopsDeployed.length == gameInfo.nationInfo[gameInfo.playingAs].score)
-                Checklock();
-                },
-                'value':(eligibleProvs.length == 0),
-                'resolution':DisableProvinces(eligibleProvs)
-            }
-        }else if(gameInfo.nationInfo[gameInfo.playingAs].troopsDeployed.length > gameInfo.nationInfo[gameInfo.playingAs].score){
-            EnableProvinces(gameInfo.nationInfo[gameInfo.playingAs].troopsDeployed);
-            gameInfo.lockCondition.delete = {'checker': function(){
-                gameInfo.lockCondition.delete.value = (gameInfo.nationInfo[gameInfo.playingAs].troopsDeployed.length == gameInfo.nationInfo[gameInfo.playingAs].score)
-                Checklock();
-            },
-                'value':false,
-                'resolution':DisableProvinces(gameInfo.nationInfo[gameInfo.playingAs].troopsDeployed)
-            }
-        }
-        //
-        if(Object.keys(gameInfo.lockCondition).length == 0){
-            console.log('All good here');;
-        }
-    }else{
-        EnableProvinces(gameInfo.nationInfo[gameInfo.playingAs].provinces);
-       
     }
     if(gameInfo.turnNumb < 1){
         RevealSubmenu('PreGame');
     }
 }
 
+async function RefreshGame(authUID = null){
+    DismissSubmenu();
+    await LoadGameConfiguration(authUID);
+    for(prov in instantiatedPlans){
+        instantiatedPlans[prov].remove()
+        delete instantiatedPlans[prov]
+    }
+    for(prov in instantiatedTanks){
+        instantiatedTanks[prov]['ref'].remove()
+        delete instantiatedTanks[prov]
+    }
+    ApplyConfiguration();
+    
+    gameInfo.queuedMoves = {}
+}
+
+function SetupLockConditions(){
+    gameInfo.lockCondition = {}
+    if(gameInfo.nationInfo[gameInfo.playingAs].defeats.length > 0){
+        //filter out provinces that don'n have anywhere to retreat to
+        let eligibleProvs = gameInfo.nationInfo[gameInfo.playingAs].defeats.filter(provID => gameInfo.provinceInfo[provID].neighbors.filter(prov => gameInfo.provinceInfo[prov].troopPresence == false && gameInfo.provinceInfo[prov].owner == gameInfo.playingAs).length > 0)
+        gameInfo.nationInfo[gameInfo.playingAs].defeats = eligibleProvs;
+        console.log('eligible retreats:');
+        console.log(eligibleProvs);
+        EnableProvinces(eligibleProvs);
+        gameInfo.lockCondition.retreat = {'checker': function(){
+                 gameInfo.lockCondition.retreat.value = (gameInfo.nationInfo[gameInfo.playingAs].defeats.length == 0)
+                Checklock();
+            },
+                'value':(eligibleProvs.length == 0)
+            }
+        }
+    if(gameInfo.nationInfo[gameInfo.playingAs].troopsDeployed.length < gameInfo.nationInfo[gameInfo.playingAs].score){
+        //filter out occupied and conquered cores
+        let eligibleProvs = gameInfo.nationInfo[gameInfo.playingAs].cores.filter(provID => gameInfo.nationInfo[gameInfo.playingAs].provinces.includes(provID) && gameInfo.provinceInfo[provID].troopPresence == false);
+        EnableProvinces(eligibleProvs);
+
+        gameInfo.lockCondition.deploy = {'checker': function(){
+            console.log('checking')
+            gameInfo.lockCondition.deploy.value = (gameInfo.nationInfo[gameInfo.playingAs].troopsDeployed.length == gameInfo.nationInfo[gameInfo.playingAs].score)
+            console.log(gameInfo.lockCondition.deploy.value);
+            Checklock();
+            },
+            'value':(eligibleProvs.length == 0),
+            'resolution':function(){DisableProvinces(eligibleProvs)}
+        }
+    }else if(gameInfo.nationInfo[gameInfo.playingAs].troopsDeployed.length > gameInfo.nationInfo[gameInfo.playingAs].score){
+        EnableProvinces(gameInfo.nationInfo[gameInfo.playingAs].troopsDeployed);
+
+        gameInfo.lockCondition.delete = {'checker': function(){
+            gameInfo.lockCondition.delete.value = (gameInfo.nationInfo[gameInfo.playingAs].troopsDeployed.length == gameInfo.nationInfo[gameInfo.playingAs].score)
+            Checklock();
+        },
+            'value':false,
+            'resolution':function(){DisableProvinces(gameInfo.nationInfo[gameInfo.playingAs].troopsDeployed)}
+        }
+    }
+}
+
 function Checklock(){
-    for(key in gameInfo.lockStep){
+    for(key in gameInfo.lockCondition){
+        console.log('servicing' + key);
         if(gameInfo.lockCondition[key].value == true){
+            console.log('true');
+            if(gameInfo.lockCondition[key].resolution){
+                gameInfo.lockCondition[key].resolution();
+                console.log('resolved')
+            }
             delete gameInfo.lockCondition[key];
         }
     }
-    
+    if(Object.keys(gameInfo.lockCondition).length == 0){
+        console.log('getting button');
+        UpdateSendActionButtonStatus();
+    }
 }
 
 function ApplyConfiguration(){
@@ -101,12 +131,12 @@ function ApplyConfiguration(){
     }
 
     gameInfo.keyProvinces.forEach(provID => {
-        console.log(`${provID} is a key province`)      
+        //console.log(`${provID} is a key province`)      
         let pathReference = document.getElementById(provID);
         let [centerX, centerY] = [Number(gameInfo.provinceInfo[provID].tokenLocation.x), Number(gameInfo.provinceInfo[provID].tokenLocation.y)];
         let starInstance = starGraphic.cloneNode(deep=true);
         pathReference.parentElement.appendChild(starInstance);
-        console.log(starInstance.getBoundingClientRect());
+        //console.log(starInstance.getBoundingClientRect());
         let [height, width] = [starInstance.getBoundingClientRect().height, starInstance.getBoundingClientRect().width];
         starInstance.setAttribute('x',centerX - width/2)
         starInstance.setAttribute('y',centerY - height/2)
@@ -154,10 +184,11 @@ function ApplyConfiguration(){
 
 function EnableProvinces(provIDs, includingWater = true){
     enabledProvinces = enabledProvinces.concat(provIDs);
-    const svgObj = document.getElementById('gameMap');
     provIDs.forEach(provID => {
         const pathReference = document.getElementById(provID);
+        console.log(pathReference);
         if(pathReference.classList.contains('land') || (includingWater == pathReference.classList.contains('ocean'))){
+            console.log('come again?');
             pathReference.classList.add('enabledProvince');
         }
     });
@@ -172,13 +203,11 @@ function BringGraphicsToFront(){
 }
 
 function DisableProvinces(provIDs){
-    const svgObj = document.getElementById('gameMap');
     enabledProvinces = enabledProvinces.filter(provID => (provIDs.includes(provID) == false))
     provIDs.forEach(provID => {
-        if(!gameInfo.nationInfo[gameInfo.playingAs].provinces.includes(provID)){
+        console.log('disabling ' + provID);
             const pathReference = document.getElementById(provID);
             pathReference.classList.remove('enabledProvince');
-    }
 
     });
 }
@@ -200,7 +229,7 @@ function UpdateSendActionButtonStatus(){
 }
 
 function UpdateMap(color, provID){
-    console.log([color, provID]);
+    //console.log([color, provID]);
     const element = document.getElementById(provID);
     element.style.fill = color;
 }
@@ -268,21 +297,57 @@ async function ProvinceSelect(provID){
                             break;
                         case 'Destroy':
                             console.log('de_stroyed');
+                            DisableProvinces([provID])
+                            gameInfo.nationInfo[gameInfo.playingAs].defeats = gameInfo.nationInfo[gameInfo.playingAs].defeats.filter(prov => prov != provID)
+                            gameInfo.lockCondition.retreat.checker();
                             break;
                     }
-
-
-
+                }else if(gameInfo.nationInfo[gameInfo.playingAs].cores.includes(provID)){
+                    let action = (await RevealSubmenu('actionMenu', ['Confirm', 'Cancel']))
+                    if(action=='Confirm'){
+                        let pathReference = document.getElementById(provID);
+                        let [centerX, centerY] = [Number(gameInfo.provinceInfo[provID].tokenLocation.x), gameInfo.provinceInfo[provID].tokenLocation.y];
+                        var tankInstance = tankGraphic.cloneNode(deep=true);
+                        let instantiatedGraphic = pathReference.parentElement.appendChild(tankInstance);
+                        let [height, width] = [instantiatedGraphic.getBoundingClientRect().height, instantiatedGraphic.getBoundingClientRect().width];
+                        instantiatedGraphic.setAttribute('x',centerX - width/2)
+                        instantiatedGraphic.setAttribute('y',centerY - height/2)
+                        instantiatedGraphic.style.fill = gameInfo.nationInfo[gameInfo.playingAs].color;
+                        gameInfo.queuedMoves[provID] = {'lockMove':'create'};
+                        gameInfo.nationInfo[gameInfo.playingAs].troopsDeployed.push(provID);
+                        DisableProvinces([provID]);
+                        gameInfo.lockCondition.deploy.checker();
+                    }
+                }else{
+                    let action = (await RevealSubmenu('actionMenu', ['Confirm', 'Cancel']))
+                    if(action=='Confirm'){
+                        gameInfo.nationInfo[gameInfo.playingAs].troopsDeployed = gameInfo.nationInfo[gameInfo.playingAs].troopsDeployed.filter(prov => prov != provID);
+                        gameInfo.queuedMoves[provID] = {'lockMove':'destroy'};
+                        DisableProvinces([provID]);
+                        gameInfo.lockCondition.delete.checker();
+                    }
                 }
             }
         }else{
-                if(provID != gameInfo.lastFocused){
+                if(enabledProvinces.includes(provID) && provID != gameInfo.lastFocused){
                         gameInfo.queuedMoves[gameInfo.lastFocused] = {'lockMove':'retreat', 'destProv':provID};
-                        gameInfo.nationInfo[gameInfo.playingAs].defeats.filter(prov => prov != provID)
+                        gameInfo.nationInfo[gameInfo.playingAs].defeats = gameInfo.nationInfo[gameInfo.playingAs].defeats.filter(prov => prov != gameInfo.lastFocused)
+                        DisableProvinces(enabledProvinces)
+
                         gameInfo.lockCondition.retreat.checker();
                         gameInfo.lockFocus = null;
                         ResetFocus();
                         Drawline(gameInfo.lastFocused, provID);
+                        if(gameInfo.lockCondition.deploy){
+                            EnableProvinces(gameInfo.nationInfo[gameInfo.playingAs].cores.filter(prov => gameInfo.provinceInfo[prov].troopPresence == false && provID != prov));
+                        }
+                        if(gameInfo.nationInfo[gameInfo.playingAs].cores.includes(provID)){
+                            gameInfo.nationInfo[gameInfo.playingAs].score -= 1;
+                            gameInfo.lockCondition.deploy.checker()
+                            if (gameInfo.lockCondition.deploy){
+                                
+                            }
+                        }
                     }
             }
         }

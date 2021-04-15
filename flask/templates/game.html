@@ -3,14 +3,30 @@
 {% block header %}
     <title>Game</title>
     <link rel="stylesheet" href={{url_for('static', filename='game.css')}}>
-    <script src={{url_for('static', filename='Helper.js')}}></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous"></script>    <script src={{url_for('static', filename='Helper.js')}}></script>
     <script src={{url_for('static', filename='UIManager.js')}}></script>
     <script src={{url_for('static', filename='GameLogic.js')}}></script>
     <script src={{url_for('static', filename='ServerConnectivity.js')}}></script>
+    <script src={{url_for('static', filename='SocketHandler.js')}}></script>
+    
 {% endblock %}
 {% block body %}
-<button onclick="">Refresh</button>
-    <div id='gameArea'>
+<div>
+    <div id='chat'>
+        <div id='recipientSelect'>
+            <select id='otherPlayers' onchange="SwitchChatFocus(this.value)">
+                <option value="all">Everyone</option>
+            </select>
+        </div>
+        <ul id='messages'>
+            
+        </ul>
+        <div id='inputArea'>
+            <textarea id="textInput"></textarea>
+            <button onclick="SendMessage(document.getElementById('textInput'), document.getElementById('otherPlayers').value)">Send Message</button>
+        </div>
+    </div>
+    <div id='gameArea' style="display: none;">
         <div id='overlayArea'>       
             <div id="backdrop" style="display: none;">
                 <div id ='overlayBox'>
@@ -23,7 +39,7 @@
                             <button id="cancel" class="selfDefiningBtn">Cancel</button>
                         </div>
                         <div id ="subscreen2" style="display: none;">
-                            <h1 >Who to support?</h1>
+                            <h1 id="instructions">Who to support?</h1>
                             <button id="supportAtk ITA" class="selfDefiningBtn">Italy</button>
                             <button id="supportAtk FRA" class="selfDefiningBtn">France</button>
                             <button id="supportAtk SER" class="selfDefiningBtn">Serbia</button>
@@ -39,4 +55,5 @@
             
         </div>
     </div>
+</div>
 {% endblock %}

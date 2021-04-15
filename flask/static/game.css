@@ -1,12 +1,46 @@
+#chat{
+    background: beige;
+    width: 20em;
+    position: fixed;
+    height: 100%;
+}
+
+#recipientSelect{
+    background: bisque;
+    text-align: center;
+}
+
+#otherPlayers{
+    width: 80%;
+    padding: 1em;
+}
+
+#inputArea{
+    position: fixed;
+    bottom: 0;
+    width: 20em;
+    display: flex;
+    justify-content: space-around;
+}
+
+#inputArea > textarea{
+    resize: none;
+}
+
+#inputArea > button{
+    padding: 1em;
+}
+
 #gameMap{
     height: 100%;
     width: 100%;
 }
 #gameArea{
-    width: 50%;
     border: 5px solid black;
     margin: auto;
-    position: relative;
+    position: absolute;
+    right: 0;
+    left: 20em;
 }
 #overlayArea{
     width: 100%;

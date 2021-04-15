@@ -1,5 +1,5 @@
 {
-    "mapType":"europa",
+    "mapType": "europa",
     "keyProvinces": [
         "ROM",
         "NAP",
@@ -38,6 +38,7 @@
     ],
     "nationInfo": {
         "AUS": {
+            "properName":"Austria-Hungary",
             "color": "brown",
             "cores": [],
             "defeats": [],
@@ -55,6 +56,7 @@
             "troopsDeployed": []
         },
         "ENG": {
+            "properName":"England",
             "color": "red",
             "cores": [],
             "defeats": [],
@@ -70,6 +72,7 @@
             "troopsDeployed": []
         },
         "FRA": {
+            "properName":"France",
             "color": "deepskyblue",
             "cores": [
                 "PAR",
@@ -93,6 +96,7 @@
             ]
         },
         "GER": {
+            "properName":"Germany",
             "color": "orange",
             "cores": [],
             "defeats": [],
@@ -108,6 +112,7 @@
             "troopsDeployed": []
         },
         "ITA": {
+            "properName":"Italy",
             "color": "green",
             "cores": [
                 "ROM",
@@ -124,9 +129,12 @@
                 "SIC"
             ],
             "score": 1,
-            "troopsDeployed": ["ROM"]
+            "troopsDeployed": [
+                "ROM"
+            ]
         },
         "RUS": {
+            "properName":"Russia",
             "color": "white",
             "cores": [],
             "defeats": [],
@@ -142,6 +150,7 @@
             "troopsDeployed": []
         },
         "TUR": {
+            "properName":"The Ottomans",
             "color": "gold",
             "cores": [],
             "defeats": [],
@@ -154,7 +163,6 @@
             ],
             "score": 0,
             "troopsDeployed": []
-
         }
     },
     "provinceInfo": {
@@ -343,7 +351,7 @@
                 "x": "388.36058044433594",
                 "y": "507.0315246582031"
             },
-            "troopPresence": true
+            "troopPresence": false
         },
         "CLU": {
             "neighbors": [
@@ -460,7 +468,7 @@
                 "x": "308.7538757324219",
                 "y": "545.7442626953125"
             },
-            "troopPresence": true
+            "troopPresence": false
         },
         "GRE": {
             "neighbors": [
@@ -621,7 +629,7 @@
                 "x": "370.90155029296875",
                 "y": "564.2580261230469"
             },
-            "troopPresence": false
+            "troopPresence": true
         },
         "MOS": {
             "neighbors": [

@@ -28,8 +28,6 @@ async function LoadMap() {
     svgObj.querySelectorAll('#gameMap > path').forEach(element => {
         const provID = element.getAttribute('id');
         allProvIDs.push(provID)
-        console.log(provID);
-        console.log(element);
         element.removeAttribute('style');
         element.classList.add('province');
         if(element.getAttribute("id").split('_').length < 2){
@@ -47,6 +45,7 @@ async function LoadMap() {
             event.preventDefault();
         });
     });
+    document.getElementById('gameArea').style.display = 'block';
     svgObj.appendChild(wrapperGroup);
     const overlay = document.getElementById('gameArea').replaceChild(svgObj, document.getElementById('gameArea').firstChild);
     document.getElementById('gameArea').appendChild(overlay);
@@ -65,8 +64,4 @@ async function LoadStarGraphic(){
     console.log(svgObj);
     starGraphic = svgObj;
     starGraphic.style.pointerEvents = "none";
-}
-async function RefreshGame(){
-    await LoadGameConfiguration();
-
 }

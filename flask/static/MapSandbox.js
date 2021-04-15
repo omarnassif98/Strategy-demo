@@ -1,4 +1,5 @@
 var gameInfo = {
+    "keyProvinces": [],
     "provinceInfo":{},
     "nationInfo":{},
     "inputMode":"",
@@ -108,8 +109,8 @@ function ApplyConfiguration(){
         let pathRect = pathReference.getBBox();
         let [centerX, centerY] = [pathRect.x + pathRect.width/2, pathRect.y + pathRect.height/2];
         let starInstance = starGraphic.cloneNode(deep=true);
-        starInstance.setAttribute('x',centerX)
-        starInstance.setAttribute('y',centerY)
+        starInstance.setAttribute('x',`${centerX - (starGraphic.getAttribute("width")/2)}`)
+        starInstance.setAttribute('y',`${centerY - (starGraphic.getAttribute("height")/2)}`)
         gameInfo.provinceInfo[provID].tokenLocation = {'x': centerX, 'y':centerY};
         instantiatedStars[provID] = starInstance;
         pathReference.parentElement.appendChild(starInstance);
@@ -223,6 +224,7 @@ async function ProvinceSelect(provID, rebase){
         }else{
             EditProvinceNeighbor(provID);
         }
+
     }
 }
 
@@ -249,7 +251,7 @@ function FocusProvince(provID){
     allProvs.forEach(e => {
         if(e.getAttribute('id') != provID){
             e.classList.add("disabledProvince");
-            e.classList.remove("enabledProvince")
+            e.classList.remove("enabledProvince");
         }
     });
     EnableProvinces(whiteList);
@@ -266,7 +268,7 @@ function ResetFocus(){
 
 function ExportJson(){
     WriteAllTokenAreas();
-    var blob = new Blob([JSON.stringify({'nationInfo':gameInfo.nationInfo, 'provinceInfo':gameInfo.provinceInfo})], {type: 'text/plain'});
+    var blob = new Blob([JSON.stringify({'mapType':'roma', 'keyProvinces':gameInfo.keyProvinces, 'nationInfo':gameInfo.nationInfo, 'provinceInfo':gameInfo.provinceInfo})], {type: 'text/plain'});
     var url = window.URL.createObjectURL(blob);
     let temp = document.createElement('a');
     temp.href = url;

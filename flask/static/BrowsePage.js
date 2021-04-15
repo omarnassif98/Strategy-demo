@@ -38,12 +38,12 @@ async function LoadGames(gameGalleryID, endpoint, buttonIsLink = false){
         if(Object.keys(games).length > 0){
             gameGallery.parentNode.style.display = 'block';
         }
-        for(gameName in games){
+        for(let gameName in games){
             if(gameName in listingNodes.public && !buttonIsLink){
                 continue;
             }
             
-            session = games[gameName]
+            let session = games[gameName]
             console.log(session);
             let sessionWrapper = document.createElement('div');
             sessionWrapper.className = 'gameInstance';
