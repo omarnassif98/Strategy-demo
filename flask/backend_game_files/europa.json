@@ -1,1 +1,1479 @@
-{"mapType":"roma","keyProvinces":["ROM","NAP","VEN","TRI","VIE","BUD","SER","BUL","RMN","GRE","IST","ANK","SMY","SEV","WAR","MOS","PET","SWE","NOR","DEN","KIE","MUN","BER","HOL","BEL","BRE","PAR","MAR","SPA","POR","TUN","LON","LVP","EDI"],"nationInfo":{"AUS":{"color":"brown","cores":[],"defeats":[],"properName":"Austria-Hungary","provinces":["TRI","TYR","BOH","VIE","BUD","GAL","SER","ALB"],"score":0,"troopsDeployed":["BUD","TRI","BOH"]},"ENG":{"color":"red","cores":[],"defeats":[],"properName":"England","provinces":["LON","WAL","CLU","EDI","YOR","LVP"],"score":0,"troopsDeployed":[]},"FRA":{"color":"deepskyblue","cores":["PAR","BRE","MAR"],"defeats":[],"properName":"France","provinces":["PAR","BRE","BUR","GAS","PIC","MAR"],"score":3,"troopsDeployed":["PAR","BRE","MAR"]},"GER":{"color":"orange","cores":[],"defeats":[],"properName":"Germany","provinces":["KIE","RUH","MUN","BER","SIL","PRU"],"score":0,"troopsDeployed":["PRU","BER","MUN"]},"ITA":{"color":"green","cores":["ROM","VEN"],"defeats":[],"properName":"Italy","provinces":["ROM","TUS","VEN","PIE","NAP","APU","SIC"],"score":1,"troopsDeployed":["ROM","VEN","NAP"]},"RUS":{"color":"white","cores":[],"defeats":[],"properName":"Russia","provinces":["SEV","UKR","MOS","PET","LVN","WAR"],"score":0,"troopsDeployed":["WAR","MOS","SEV","PET"]},"TUR":{"color":"gold","cores":[],"defeats":[],"properName":"The Ottomans","provinces":["IST","ANK","SMY","ARM","SYR"],"score":0,"troopsDeployed":["SMY","ANK","SYR"]}},"provinceInfo":{"ALB":{"neighbors":["GRE","SER","TRI","S_ADR","S_ION"],"owner":"AUS","tokenLocation":{"x":"659.4880981445312","y":"652.0370483398438"},"troopPresence":false},"ALG":{"neighbors":["TUN","S_WES","SPA","S_MID"],"owner":null,"tokenLocation":{"x":"209.9035358428955","y":"737.7101745605469"},"troopPresence":false},"ANK":{"neighbors":["S_BLA","ARM","SYR","SMY","IST"],"owner":"TUR","tokenLocation":{"x":"951.4239196777344","y":"648.2214660644531"},"troopPresence":true},"APU":{"neighbors":["S_ION","ALB","S_ADR","VEN","ROM","NAP"],"owner":"ITA","tokenLocation":{"x":"584.05419921875","y":"650.3861389160156"},"troopPresence":false},"ARM":{"neighbors":["SYR","SMY","ANK","S_BLA","SEV"],"owner":"TUR","tokenLocation":{"x":"1073.9782104492188","y":"637.20654296875"},"troopPresence":false},"BEL":{"neighbors":["HOL","S_NOR","LON","S_ENG","PIC","BUR","RUH"],"owner":null,"tokenLocation":{"x":"396.8208465576172","y":"441.0197296142578"},"troopPresence":false},"BER":{"neighbors":["S_BAL","PRU","SIL","MUN","KIE"],"owner":"GER","tokenLocation":{"x":"551.402587890625","y":"405.92750549316406"},"troopPresence":true},"BOH":{"neighbors":["VIE","GAL","SIL","MUN","TYR"],"owner":"AUS","tokenLocation":{"x":"579.9825439453125","y":"474.2771453857422"},"troopPresence":true},"BRE":{"neighbors":["S_ENG","PIC","PAR","GAS","S_MID"],"owner":"FRA","tokenLocation":{"x":"283.5526351928711","y":"473.1553192138672"},"troopPresence":true},"BUD":{"neighbors":["RMN","GAL","VIE","TRI","SER","BUL"],"owner":"AUS","tokenLocation":{"x":"685.5834350585938","y":"531.3235321044922"},"troopPresence":true},"BUL":{"neighbors":["S_BLA","RMN","SER","GRE","S_AEG","IST"],"owner":null,"tokenLocation":{"x":"758.0585327148438","y":"622.4998779296875"},"troopPresence":false},"BUR":{"neighbors":["PAR","PIC","BEL","RUH","MUN","SWI","MAR","GAS"],"owner":"FRA","tokenLocation":{"x":"388.36058044433594","y":"507.0315246582031"},"troopPresence":false},"CLU":{"neighbors":["S_NAT","S_NRG","EDI","LVP"],"owner":"ENG","tokenLocation":{"x":"319.19256591796875","y":"271.8072509765625"},"troopPresence":false},"COR":{"neighbors":["S_TYN","S_GOL"],"owner":null,"tokenLocation":{"x":"451.1447296142578","y":"621.584228515625"},"troopPresence":false},"CRE":{"neighbors":["S_EAS","S_AEG","S_ION"],"owner":null,"tokenLocation":{"x":"758.2549438476562","y":"768.1500854492188"},"troopPresence":false},"DEN":{"neighbors":["S_SCA","S_NOR","S_HEL","S_DEN","KIE","S_BAL"],"owner":null,"tokenLocation":{"x":"519.4198455810547","y":"341.38275146484375"},"troopPresence":false},"EDI":{"neighbors":["S_NOR","S_NRG","CLU","LVP","YOR"],"owner":"ENG","tokenLocation":{"x":"342.4432373046875","y":"288.9881591796875"},"troopPresence":false},"FIN":{"neighbors":["PET","SWE","S_BOT","NOR"],"owner":null,"tokenLocation":{"x":"722.3276062011719","y":"162.7740249633789"},"troopPresence":false},"GAL":{"neighbors":["UKR","WAR","RMN","BUD","VIE","BOH","SIL"],"owner":"AUS","tokenLocation":{"x":"696.111572265625","y":"488.2523956298828"},"troopPresence":false},"GAS":{"neighbors":["S_MID","SPA","MAR","BUR","PAR","BRE"],"owner":"FRA","tokenLocation":{"x":"308.7538757324219","y":"545.7442626953125"},"troopPresence":false},"GRE":{"neighbors":["S_AEG","BUL","SER","ALB","S_ION"],"owner":null,"tokenLocation":{"x":"703.2621765136719","y":"695.6783447265625"},"troopPresence":false},"HOL":{"neighbors":["S_HEL","S_NOR","BEL","KIE","RUH"],"owner":null,"tokenLocation":{"x":"430.75157165527344","y":"412.4371643066406"},"troopPresence":false},"ICE":{"neighbors":["S_NAT","S_NRG"],"owner":null,"tokenLocation":{"x":"263.52268981933594","y":"64.30533599853516"},"troopPresence":false},"IRE":{"neighbors":["S_IRI","S_NAT"],"owner":null,"tokenLocation":{"x":"243.247802734375","y":"334.22523498535156"},"troopPresence":false},"IST":{"neighbors":["S_BLA","ANK","SMY","S_AEG","S_STR"],"owner":"TUR","tokenLocation":{"x":"826.2742614746094","y":"658.0715026855469"},"troopPresence":false},"KIE":{"neighbors":["BER","S_BAL","DEN","S_HEL","HOL","RUH","MUN"],"owner":"GER","tokenLocation":{"x":"484.0615539550781","y":"412.94618225097656"},"troopPresence":false},"LON":{"neighbors":["S_NOR","YOR","WAL","S_ENG","BEL"],"owner":"ENG","tokenLocation":{"x":"348.7893829345703","y":"399.88861083984375"},"troopPresence":false},"LVN":{"neighbors":["MOS","PET","S_BOT","S_BAL","PRU","WAR"],"owner":"RUS","tokenLocation":{"x":"722.3775634765625","y":"343.31117248535156"},"troopPresence":false},"LVP":{"neighbors":["EDI","CLU","S_NAT","S_IRI","YOR","WAL"],"owner":"ENG","tokenLocation":{"x":"313.1211395263672","y":"333.0443878173828"},"troopPresence":false},"MAL":{"neighbors":["S_GOL","S_WES"],"owner":null,"tokenLocation":{"x":"323.0260009765625","y":"654.6573181152344"},"troopPresence":false},"MAR":{"neighbors":["BUR","GAS","SPA","S_GOL","PIE","SWI"],"owner":"FRA","tokenLocation":{"x":"370.90155029296875","y":"564.2580261230469"},"troopPresence":true},"MOS":{"neighbors":["PET","SEV","UKR","WAR","LVN"],"owner":"RUS","tokenLocation":{"x":"922.1949157714844","y":"333.38673400878906"},"troopPresence":true},"MUN":{"neighbors":["BOH","SIL","BER","KIE","RUH","SWI","BUR","TYR"],"owner":"GER","tokenLocation":{"x":"493.7241668701172","y":"474.9746398925781"},"troopPresence":true},"NAP":{"neighbors":["S_TYN","SIC","S_ION","APU","ROM"],"owner":"ITA","tokenLocation":{"x":"570.5494384765625","y":"682.3736267089844"},"troopPresence":true},"NOR":{"neighbors":["S_NRG","SWE","S_SCA","S_NOR"],"owner":null,"tokenLocation":{"x":"608.4055786132812","y":"165.92821502685547"},"troopPresence":false},"PAR":{"neighbors":["PIC","BUR","GAS","BRE"],"owner":"FRA","tokenLocation":{"x":"357.5567321777344","y":"490.02540588378906"},"troopPresence":true},"PET":{"neighbors":["S_BAR","FIN","S_BOT","LVN","MOS"],"owner":"RUS","tokenLocation":{"x":"913.3351440429688","y":"155.65291595458984"},"troopPresence":true},"PIC":{"neighbors":["BEL","S_ENG","BRE","PAR","BUR"],"owner":"FRA","tokenLocation":{"x":"362.8648376464844","y":"451.98760986328125"},"troopPresence":false},"PIE":{"neighbors":["SWI","MAR","S_GOL","TUS","VEN","TYR"],"owner":"ITA","tokenLocation":{"x":"455.37628173828125","y":"562.2442932128906"},"troopPresence":false},"POR":{"neighbors":["S_MID","SPA"],"owner":null,"tokenLocation":{"x":"124.0202751159668","y":"607.2503662109375"},"troopPresence":false},"PRU":{"neighbors":["S_BAL","LVN","WAR","SIL","BER"],"owner":"GER","tokenLocation":{"x":"639.0088195800781","y":"388.1041564941406"},"troopPresence":true},"RMN":{"neighbors":[],"owner":null,"tokenLocation":{"x":"765.11181640625","y":"549.017578125"},"troopPresence":false},"ROM":{"neighbors":["TUS","VEN","APU","NAP","S_TYN"],"owner":"ITA","tokenLocation":{"x":"523.5556030273438","y":"629.2121276855469"},"troopPresence":true},"RUH":{"neighbors":["MUN","KIE","HOL","BEL","BUR"],"owner":"GER","tokenLocation":{"x":"459.8710632324219","y":"455.00477600097656"},"troopPresence":false},"SAR":{"neighbors":["S_TYN","S_GOL","S_WES"],"owner":null,"tokenLocation":{"x":"443.732421875","y":"663.9666442871094"},"troopPresence":false},"SER":{"neighbors":["GRE","BUL","RMN","BUD","TRI","ALB"],"owner":"AUS","tokenLocation":{"x":"674.5429382324219","y":"615.2573547363281"},"troopPresence":false},"SEV":{"neighbors":["MOS","UKR","S_BLA","RMN","ARM"],"owner":"RUS","tokenLocation":{"x":"958.5045776367188","y":"503.89393615722656"},"troopPresence":true},"SIC":{"neighbors":["S_TYN","NAP","S_ION"],"owner":"ITA","tokenLocation":{"x":"532.6544494628906","y":"726.1478881835938"},"troopPresence":false},"SIL":{"neighbors":["WAR","GAL","BOH","MUN","BER","PRU"],"owner":"GER","tokenLocation":{"x":"592.3602600097656","y":"445.6690673828125"},"troopPresence":false},"SMY":{"neighbors":[],"owner":"TUR","tokenLocation":{"x":"916.16259765625","y":"693.1901245117188"},"troopPresence":true},"SPA":{"neighbors":["S_WES","ALG","S_MID","POR","GAS","S_GOL"],"owner":null,"tokenLocation":{"x":"227.12459564208984","y":"607.2464904785156"},"troopPresence":false},"SWE":{"neighbors":["NOR","S_SCA","DEN","S_BAL","S_DEN","S_BOT","FIN"],"owner":null,"tokenLocation":{"x":"617.1982116699219","y":"222.66133880615234"},"troopPresence":false},"SWI":{"neighbors":["TYR","PIE","MAR","BUR","MUN"],"owner":null,"tokenLocation":{"x":"449.04066467285156","y":"526.5934143066406"},"troopPresence":false},"SYR":{"neighbors":["ARM","S_EAS","SMY"],"owner":"TUR","tokenLocation":{"x":"1048.4614562988281","y":"726.6514282226562"},"troopPresence":true},"S_ADR":{"neighbors":["APU","VEN","TRI","ALB"],"owner":null,"tokenLocation":{"x":"582.8947143554688","y":"614.5240173339844"},"troopPresence":false},"S_AEG":{"neighbors":["S_EAS","SMY","IST","S_STR","BUL","GRE","S_ION"],"owner":null,"tokenLocation":{"x":"766.5535583496094","y":"712.3106079101562"},"troopPresence":false},"S_BAL":{"neighbors":["S_BOT","LVN","PRU","SWE","BER","DEN","S_DEN","KIE"],"owner":null,"tokenLocation":{"x":"593.8394470214844","y":"345.9031677246094"},"troopPresence":false},"S_BAR":{"neighbors":["PET","NOR","S_NRG"],"owner":null,"tokenLocation":{"x":"848.1415100097656","y":"79.47195756435394"},"troopPresence":false},"S_BLA":{"neighbors":["SEV","ARM","ANK","S_STR","IST","BUL","RMN"],"owner":null,"tokenLocation":{"x":"930.7201538085938","y":"566.9450836181641"},"troopPresence":false},"S_BOT":{"neighbors":["FIN","PET","LVN","SWE","S_BAL"],"owner":null,"tokenLocation":{"x":"697.7220458984375","y":"235.2621078491211"},"troopPresence":false},"S_DEN":{"neighbors":["DEN","S_BAL","S_SCA","SWE"],"owner":null,"tokenLocation":{"x":"532.5754699707031","y":"355.19744873046875"},"troopPresence":false},"S_EAS":{"neighbors":["SYR","SMY","S_AEG","CRE","S_ION"],"owner":null,"tokenLocation":{"x":"861.5371398925781","y":"747.0439147949219"},"troopPresence":false},"S_ENG":{"neighbors":["PIC","BEL","S_NOR","LON","S_IRI","WAL","S_MID","BRE"],"owner":null,"tokenLocation":{"x":"285.88573455810547","y":"434.8948211669922"},"troopPresence":false},"S_GOL":{"neighbors":["MAL","SPA","MAR","COR","PIE","SAR","S_WES"],"owner":null,"tokenLocation":{"x":"369.8891906738281","y":"618.261474609375"},"troopPresence":false},"S_HEL":{"neighbors":["DEN","S_NOR","HOL","KIE"],"owner":null,"tokenLocation":{"x":"463.2156066894531","y":"361.5724792480469"},"troopPresence":false},"S_ION":{"neighbors":["S_EAS","S_AEG","CRE","GRE","ALB","S_ADR","APU","NAP","S_TYN","SIC","TUN"],"owner":null,"tokenLocation":{"x":"596.8523712158203","y":"724.2890319824219"},"troopPresence":false},"S_IRI":{"neighbors":["WAL","LVP","S_NAT","IRE"],"owner":null,"tokenLocation":{"x":"237.51478576660156","y":"377.9919128417969"},"troopPresence":false},"S_MID":{"neighbors":["POR","SPA","GAS","BRE","ALG","S_WES","S_ENG","S_IRI","S_NAT"],"owner":null,"tokenLocation":{"x":"138.67386138439178","y":"583.1202239990234"},"troopPresence":false},"S_NAT":{"neighbors":[],"owner":null,"tokenLocation":{"x":"165.76786649227142","y":"195.5190690755844"},"troopPresence":false},"S_NOR":{"neighbors":["NOR","S_SCA","DEN","S_HEL","HOL","BEL","LON","YOR","EDI","S_NRG"],"owner":null,"tokenLocation":{"x":"413.62835693359375","y":"318.6533432006836"},"troopPresence":false},"S_NRG":{"neighbors":["S_NAT","S_NOR","NOR","EDI","CLU","ICE","S_BAR"],"owner":null,"tokenLocation":{"x":"471.5103302001953","y":"122.26601731777191"},"troopPresence":false},"S_SCA":{"neighbors":["SWE","NOR","S_NOR","DEN","S_DEN"],"owner":null,"tokenLocation":{"x":"520.3135070800781","y":"306.9483642578125"},"troopPresence":false},"S_STR":{"neighbors":["IST","S_BLA","S_AEG"],"owner":null,"tokenLocation":{"x":"805.5598754882812","y":"656.2080383300781"},"troopPresence":false},"S_TYN":{"neighbors":["SIC","S_ION","NAP","ROM","TUS","COR","SAR","S_GOL","S_WES","TUN"],"owner":null,"tokenLocation":{"x":"507.6264343261719","y":"668.5801086425781"},"troopPresence":false},"S_WES":{"neighbors":["S_GOL","MAL","SPA","ALG","S_MID","TUN","S_TYN","SAR"],"owner":null,"tokenLocation":{"x":"286.5856170654297","y":"687.8448791503906"},"troopPresence":false},"TRI":{"neighbors":["SER","ALB","S_ADR","VEN","TYR","VIE","BUD"],"owner":"AUS","tokenLocation":{"x":"594.6373901367188","y":"579.2279968261719"},"troopPresence":true},"TUN":{"neighbors":["S_ION","S_WES","S_TYN","ALG"],"owner":null,"tokenLocation":{"x":"445.3111572265625","y":"752.3410339355469"},"troopPresence":false},"TUS":{"neighbors":["ROM","VEN","S_TYN","S_GOL","PIE"],"owner":"ITA","tokenLocation":{"x":"497.75743103027344","y":"599.3914794921875"},"troopPresence":false},"TYR":{"neighbors":["MUN","BOH","VIE","TRI","VEN","PIE","SWI"],"owner":"AUS","tokenLocation":{"x":"524.1038208007812","y":"525.9534912109375"},"troopPresence":false},"UKR":{"neighbors":["MOS","SEV","RMN","GAL","WAR"],"owner":"RUS","tokenLocation":{"x":"806.8992919921875","y":"467.3373260498047"},"troopPresence":false},"VEN":{"neighbors":["ROM","TUS","APU","S_ADR","TRI","TYR","PIE"],"owner":"ITA","tokenLocation":{"x":"511.5209197998047","y":"585.9645690917969"},"troopPresence":true},"VIE":{"neighbors":["BUD","GAL","BOH","TYR","TRI"],"owner":"AUS","tokenLocation":{"x":"611.9950256347656","y":"509.3099060058594"},"troopPresence":false},"WAL":{"neighbors":["S_IRI","LVP","YOR","LON","S_ENG"],"owner":"ENG","tokenLocation":{"x":"290.03651428222656","y":"385.32208251953125"},"troopPresence":false},"WAR":{"neighbors":["UKR","MOS","LVN","PRU","SIL","GAL"],"owner":"RUS","tokenLocation":{"x":"681.8891296386719","y":"427.90478515625"},"troopPresence":true},"YOR":{"neighbors":["S_NOR","EDI","LVP","WAL","LON"],"owner":"ENG","tokenLocation":{"x":"347.85487365722656","y":"355.61431884765625"},"troopPresence":false}}}
+{
+    "mapType": "europa",
+    "keyProvinces": [
+        "ROM",
+        "NAP",
+        "VEN",
+        "TRI",
+        "VIE",
+        "BUD",
+        "SER",
+        "BUL",
+        "RMN",
+        "GRE",
+        "IST",
+        "ANK",
+        "SMY",
+        "SEV",
+        "WAR",
+        "MOS",
+        "PET",
+        "SWE",
+        "NOR",
+        "DEN",
+        "KIE",
+        "MUN",
+        "BER",
+        "HOL",
+        "BEL",
+        "BRE",
+        "PAR",
+        "MAR",
+        "SPA",
+        "POR",
+        "TUN",
+        "LON",
+        "LVP",
+        "EDI"
+    ],
+    "nationInfo": {
+        "AUS": {
+            "color": "brown",
+            "cores": [],
+            "defeats": [],
+            "properName": "Austria-Hungary",
+            "provinces": [
+                "TRI",
+                "TYR",
+                "BOH",
+                "VIE",
+                "BUD",
+                "GAL",
+                "SER",
+                "ALB"
+            ],
+            "score": 0,
+            "troopsDeployed": [
+                "BUD",
+                "TRI",
+                "BOH"
+            ]
+        },
+        "ENG": {
+            "color": "red",
+            "cores": [],
+            "defeats": [],
+            "properName": "England",
+            "provinces": [
+                "LON",
+                "WAL",
+                "CLU",
+                "EDI",
+                "YOR",
+                "LVP"
+            ],
+            "score": 0,
+            "troopsDeployed": []
+        },
+        "FRA": {
+            "color": "deepskyblue",
+            "cores": [
+                "PAR",
+                "BRE",
+                "MAR"
+            ],
+            "defeats": [],
+            "properName": "France",
+            "provinces": [
+                "PAR",
+                "BRE",
+                "BUR",
+                "GAS",
+                "PIC",
+                "MAR"
+            ],
+            "score": 3,
+            "troopsDeployed": [
+                "PAR",
+                "BRE",
+                "MAR"
+            ]
+        },
+        "GER": {
+            "color": "orange",
+            "cores": [],
+            "defeats": [],
+            "properName": "Germany",
+            "provinces": [
+                "KIE",
+                "RUH",
+                "MUN",
+                "BER",
+                "SIL",
+                "PRU"
+            ],
+            "score": 0,
+            "troopsDeployed": [
+                "PRU",
+                "BER",
+                "MUN"
+            ]
+        },
+        "ITA": {
+            "color": "green",
+            "cores": [
+                "ROM",
+                "VEN"
+            ],
+            "defeats": [],
+            "properName": "Italy",
+            "provinces": [
+                "ROM",
+                "TUS",
+                "VEN",
+                "PIE",
+                "NAP",
+                "APU",
+                "SIC"
+            ],
+            "score": 1,
+            "troopsDeployed": [
+                "ROM",
+                "VEN",
+                "NAP"
+            ]
+        },
+        "RUS": {
+            "color": "white",
+            "cores": [],
+            "defeats": [],
+            "properName": "Russia",
+            "provinces": [
+                "SEV",
+                "UKR",
+                "MOS",
+                "PET",
+                "LVN",
+                "WAR"
+            ],
+            "score": 0,
+            "troopsDeployed": [
+                "WAR",
+                "MOS",
+                "SEV",
+                "PET"
+            ]
+        },
+        "TUR": {
+            "color": "gold",
+            "cores": [],
+            "defeats": [],
+            "properName": "The Ottomans",
+            "provinces": [
+                "IST",
+                "ANK",
+                "SMY",
+                "ARM",
+                "SYR"
+            ],
+            "score": 0,
+            "troopsDeployed": [
+                "SMY",
+                "ANK",
+                "SYR"
+            ]
+        }
+    },
+    "provinceInfo": {
+        "ALB": {
+            "neighbors": [
+                "GRE",
+                "SER",
+                "TRI",
+                "S_ADR",
+                "S_ION"
+            ],
+            "owner": "AUS",
+            "tokenLocation": {
+                "x": "659.4880981445312",
+                "y": "652.0370483398438"
+            },
+            "troopPresence": false
+        },
+        "ALG": {
+            "neighbors": [
+                "TUN",
+                "S_WES",
+                "SPA",
+                "S_MID"
+            ],
+            "owner": null,
+            "tokenLocation": {
+                "x": "209.9035358428955",
+                "y": "737.7101745605469"
+            },
+            "troopPresence": false
+        },
+        "ANK": {
+            "neighbors": [
+                "S_BLA",
+                "ARM",
+                "SYR",
+                "SMY",
+                "IST"
+            ],
+            "owner": "TUR",
+            "tokenLocation": {
+                "x": "951.4239196777344",
+                "y": "648.2214660644531"
+            },
+            "troopPresence": true
+        },
+        "APU": {
+            "neighbors": [
+                "S_ION",
+                "ALB",
+                "S_ADR",
+                "VEN",
+                "ROM",
+                "NAP"
+            ],
+            "owner": "ITA",
+            "tokenLocation": {
+                "x": "584.05419921875",
+                "y": "650.3861389160156"
+            },
+            "troopPresence": false
+        },
+        "ARM": {
+            "neighbors": [
+                "SYR",
+                "SMY",
+                "ANK",
+                "S_BLA",
+                "SEV"
+            ],
+            "owner": "TUR",
+            "tokenLocation": {
+                "x": "1073.9782104492188",
+                "y": "637.20654296875"
+            },
+            "troopPresence": false
+        },
+        "BEL": {
+            "neighbors": [
+                "HOL",
+                "S_NOR",
+                "LON",
+                "S_ENG",
+                "PIC",
+                "BUR",
+                "RUH"
+            ],
+            "owner": null,
+            "tokenLocation": {
+                "x": "396.8208465576172",
+                "y": "441.0197296142578"
+            },
+            "troopPresence": false
+        },
+        "BER": {
+            "neighbors": [
+                "S_BAL",
+                "PRU",
+                "SIL",
+                "MUN",
+                "KIE"
+            ],
+            "owner": "GER",
+            "tokenLocation": {
+                "x": "551.402587890625",
+                "y": "405.92750549316406"
+            },
+            "troopPresence": true
+        },
+        "BOH": {
+            "neighbors": [
+                "VIE",
+                "GAL",
+                "SIL",
+                "MUN",
+                "TYR"
+            ],
+            "owner": "AUS",
+            "tokenLocation": {
+                "x": "579.9825439453125",
+                "y": "474.2771453857422"
+            },
+            "troopPresence": true
+        },
+        "BRE": {
+            "neighbors": [
+                "S_ENG",
+                "PIC",
+                "PAR",
+                "GAS",
+                "S_MID"
+            ],
+            "owner": "FRA",
+            "tokenLocation": {
+                "x": "283.5526351928711",
+                "y": "473.1553192138672"
+            },
+            "troopPresence": true
+        },
+        "BUD": {
+            "neighbors": [
+                "RMN",
+                "GAL",
+                "VIE",
+                "TRI",
+                "SER",
+                "BUL"
+            ],
+            "owner": "AUS",
+            "tokenLocation": {
+                "x": "685.5834350585938",
+                "y": "531.3235321044922"
+            },
+            "troopPresence": true
+        },
+        "BUL": {
+            "neighbors": [
+                "S_BLA",
+                "RMN",
+                "SER",
+                "GRE",
+                "S_AEG",
+                "IST"
+            ],
+            "owner": null,
+            "tokenLocation": {
+                "x": "758.0585327148438",
+                "y": "622.4998779296875"
+            },
+            "troopPresence": false
+        },
+        "BUR": {
+            "neighbors": [
+                "PAR",
+                "PIC",
+                "BEL",
+                "RUH",
+                "MUN",
+                "SWI",
+                "MAR",
+                "GAS"
+            ],
+            "owner": "FRA",
+            "tokenLocation": {
+                "x": "388.36058044433594",
+                "y": "507.0315246582031"
+            },
+            "troopPresence": false
+        },
+        "CLU": {
+            "neighbors": [
+                "S_NAT",
+                "S_NRG",
+                "EDI",
+                "LVP"
+            ],
+            "owner": "ENG",
+            "tokenLocation": {
+                "x": "319.19256591796875",
+                "y": "271.8072509765625"
+            },
+            "troopPresence": false
+        },
+        "COR": {
+            "neighbors": [
+                "S_TYN",
+                "S_GOL"
+            ],
+            "owner": null,
+            "tokenLocation": {
+                "x": "451.1447296142578",
+                "y": "621.584228515625"
+            },
+            "troopPresence": false
+        },
+        "CRE": {
+            "neighbors": [
+                "S_EAS",
+                "S_AEG",
+                "S_ION"
+            ],
+            "owner": null,
+            "tokenLocation": {
+                "x": "758.2549438476562",
+                "y": "768.1500854492188"
+            },
+            "troopPresence": false
+        },
+        "DEN": {
+            "neighbors": [
+                "S_SCA",
+                "S_NOR",
+                "S_HEL",
+                "S_DEN",
+                "KIE",
+                "S_BAL"
+            ],
+            "owner": null,
+            "tokenLocation": {
+                "x": "519.4198455810547",
+                "y": "341.38275146484375"
+            },
+            "troopPresence": false
+        },
+        "EDI": {
+            "neighbors": [
+                "S_NOR",
+                "S_NRG",
+                "CLU",
+                "LVP",
+                "YOR"
+            ],
+            "owner": "ENG",
+            "tokenLocation": {
+                "x": "342.4432373046875",
+                "y": "288.9881591796875"
+            },
+            "troopPresence": false
+        },
+        "FIN": {
+            "neighbors": [
+                "PET",
+                "SWE",
+                "S_BOT",
+                "NOR"
+            ],
+            "owner": null,
+            "tokenLocation": {
+                "x": "722.3276062011719",
+                "y": "162.7740249633789"
+            },
+            "troopPresence": false
+        },
+        "GAL": {
+            "neighbors": [
+                "UKR",
+                "WAR",
+                "RMN",
+                "BUD",
+                "VIE",
+                "BOH",
+                "SIL"
+            ],
+            "owner": "AUS",
+            "tokenLocation": {
+                "x": "696.111572265625",
+                "y": "488.2523956298828"
+            },
+            "troopPresence": false
+        },
+        "GAS": {
+            "neighbors": [
+                "S_MID",
+                "SPA",
+                "MAR",
+                "BUR",
+                "PAR",
+                "BRE"
+            ],
+            "owner": "FRA",
+            "tokenLocation": {
+                "x": "308.7538757324219",
+                "y": "545.7442626953125"
+            },
+            "troopPresence": false
+        },
+        "GRE": {
+            "neighbors": [
+                "S_AEG",
+                "BUL",
+                "SER",
+                "ALB",
+                "S_ION"
+            ],
+            "owner": null,
+            "tokenLocation": {
+                "x": "703.2621765136719",
+                "y": "695.6783447265625"
+            },
+            "troopPresence": false
+        },
+        "HOL": {
+            "neighbors": [
+                "S_HEL",
+                "S_NOR",
+                "BEL",
+                "KIE",
+                "RUH"
+            ],
+            "owner": null,
+            "tokenLocation": {
+                "x": "430.75157165527344",
+                "y": "412.4371643066406"
+            },
+            "troopPresence": false
+        },
+        "ICE": {
+            "neighbors": [
+                "S_NAT",
+                "S_NRG"
+            ],
+            "owner": null,
+            "tokenLocation": {
+                "x": "263.52268981933594",
+                "y": "64.30533599853516"
+            },
+            "troopPresence": false
+        },
+        "IRE": {
+            "neighbors": [
+                "S_IRI",
+                "S_NAT"
+            ],
+            "owner": null,
+            "tokenLocation": {
+                "x": "243.247802734375",
+                "y": "334.22523498535156"
+            },
+            "troopPresence": false
+        },
+        "IST": {
+            "neighbors": [
+                "S_BLA",
+                "ANK",
+                "SMY",
+                "S_AEG",
+                "S_STR"
+            ],
+            "owner": "TUR",
+            "tokenLocation": {
+                "x": "826.2742614746094",
+                "y": "658.0715026855469"
+            },
+            "troopPresence": false
+        },
+        "KIE": {
+            "neighbors": [
+                "BER",
+                "S_BAL",
+                "DEN",
+                "S_HEL",
+                "HOL",
+                "RUH",
+                "MUN"
+            ],
+            "owner": "GER",
+            "tokenLocation": {
+                "x": "484.0615539550781",
+                "y": "412.94618225097656"
+            },
+            "troopPresence": false
+        },
+        "LON": {
+            "neighbors": [
+                "S_NOR",
+                "YOR",
+                "WAL",
+                "S_ENG",
+                "BEL"
+            ],
+            "owner": "ENG",
+            "tokenLocation": {
+                "x": "348.7893829345703",
+                "y": "399.88861083984375"
+            },
+            "troopPresence": false
+        },
+        "LVN": {
+            "neighbors": [
+                "MOS",
+                "PET",
+                "S_BOT",
+                "S_BAL",
+                "PRU",
+                "WAR"
+            ],
+            "owner": "RUS",
+            "tokenLocation": {
+                "x": "722.3775634765625",
+                "y": "343.31117248535156"
+            },
+            "troopPresence": false
+        },
+        "LVP": {
+            "neighbors": [
+                "EDI",
+                "CLU",
+                "S_NAT",
+                "S_IRI",
+                "YOR",
+                "WAL"
+            ],
+            "owner": "ENG",
+            "tokenLocation": {
+                "x": "313.1211395263672",
+                "y": "333.0443878173828"
+            },
+            "troopPresence": false
+        },
+        "MAL": {
+            "neighbors": [
+                "S_GOL",
+                "S_WES"
+            ],
+            "owner": null,
+            "tokenLocation": {
+                "x": "323.0260009765625",
+                "y": "654.6573181152344"
+            },
+            "troopPresence": false
+        },
+        "MAR": {
+            "neighbors": [
+                "BUR",
+                "GAS",
+                "SPA",
+                "S_GOL",
+                "PIE",
+                "SWI"
+            ],
+            "owner": "FRA",
+            "tokenLocation": {
+                "x": "370.90155029296875",
+                "y": "564.2580261230469"
+            },
+            "troopPresence": true
+        },
+        "MOS": {
+            "neighbors": [
+                "PET",
+                "SEV",
+                "UKR",
+                "WAR",
+                "LVN"
+            ],
+            "owner": "RUS",
+            "tokenLocation": {
+                "x": "922.1949157714844",
+                "y": "333.38673400878906"
+            },
+            "troopPresence": true
+        },
+        "MUN": {
+            "neighbors": [
+                "BOH",
+                "SIL",
+                "BER",
+                "KIE",
+                "RUH",
+                "SWI",
+                "BUR",
+                "TYR"
+            ],
+            "owner": "GER",
+            "tokenLocation": {
+                "x": "493.7241668701172",
+                "y": "474.9746398925781"
+            },
+            "troopPresence": true
+        },
+        "NAP": {
+            "neighbors": [
+                "S_TYN",
+                "SIC",
+                "S_ION",
+                "APU",
+                "ROM"
+            ],
+            "owner": "ITA",
+            "tokenLocation": {
+                "x": "570.5494384765625",
+                "y": "682.3736267089844"
+            },
+            "troopPresence": true
+        },
+        "NOR": {
+            "neighbors": [
+                "S_NRG",
+                "SWE",
+                "S_SCA",
+                "S_NOR"
+            ],
+            "owner": null,
+            "tokenLocation": {
+                "x": "608.4055786132812",
+                "y": "165.92821502685547"
+            },
+            "troopPresence": false
+        },
+        "PAR": {
+            "neighbors": [
+                "PIC",
+                "BUR",
+                "GAS",
+                "BRE"
+            ],
+            "owner": "FRA",
+            "tokenLocation": {
+                "x": "357.5567321777344",
+                "y": "490.02540588378906"
+            },
+            "troopPresence": true
+        },
+        "PET": {
+            "neighbors": [
+                "S_BAR",
+                "FIN",
+                "S_BOT",
+                "LVN",
+                "MOS"
+            ],
+            "owner": "RUS",
+            "tokenLocation": {
+                "x": "913.3351440429688",
+                "y": "155.65291595458984"
+            },
+            "troopPresence": true
+        },
+        "PIC": {
+            "neighbors": [
+                "BEL",
+                "S_ENG",
+                "BRE",
+                "PAR",
+                "BUR"
+            ],
+            "owner": "FRA",
+            "tokenLocation": {
+                "x": "362.8648376464844",
+                "y": "451.98760986328125"
+            },
+            "troopPresence": false
+        },
+        "PIE": {
+            "neighbors": [
+                "SWI",
+                "MAR",
+                "S_GOL",
+                "TUS",
+                "VEN",
+                "TYR"
+            ],
+            "owner": "ITA",
+            "tokenLocation": {
+                "x": "455.37628173828125",
+                "y": "562.2442932128906"
+            },
+            "troopPresence": false
+        },
+        "POR": {
+            "neighbors": [
+                "S_MID",
+                "SPA"
+            ],
+            "owner": null,
+            "tokenLocation": {
+                "x": "124.0202751159668",
+                "y": "607.2503662109375"
+            },
+            "troopPresence": false
+        },
+        "PRU": {
+            "neighbors": [
+                "S_BAL",
+                "LVN",
+                "WAR",
+                "SIL",
+                "BER"
+            ],
+            "owner": "GER",
+            "tokenLocation": {
+                "x": "639.0088195800781",
+                "y": "388.1041564941406"
+            },
+            "troopPresence": true
+        },
+        "RMN": {
+            "neighbors": [],
+            "owner": null,
+            "tokenLocation": {
+                "x": "765.11181640625",
+                "y": "549.017578125"
+            },
+            "troopPresence": false
+        },
+        "ROM": {
+            "neighbors": [
+                "TUS",
+                "VEN",
+                "APU",
+                "NAP",
+                "S_TYN"
+            ],
+            "owner": "ITA",
+            "tokenLocation": {
+                "x": "523.5556030273438",
+                "y": "629.2121276855469"
+            },
+            "troopPresence": true
+        },
+        "RUH": {
+            "neighbors": [
+                "MUN",
+                "KIE",
+                "HOL",
+                "BEL",
+                "BUR"
+            ],
+            "owner": "GER",
+            "tokenLocation": {
+                "x": "459.8710632324219",
+                "y": "455.00477600097656"
+            },
+            "troopPresence": false
+        },
+        "SAR": {
+            "neighbors": [
+                "S_TYN",
+                "S_GOL",
+                "S_WES"
+            ],
+            "owner": null,
+            "tokenLocation": {
+                "x": "443.732421875",
+                "y": "663.9666442871094"
+            },
+            "troopPresence": false
+        },
+        "SER": {
+            "neighbors": [
+                "GRE",
+                "BUL",
+                "RMN",
+                "BUD",
+                "TRI",
+                "ALB"
+            ],
+            "owner": "AUS",
+            "tokenLocation": {
+                "x": "674.5429382324219",
+                "y": "615.2573547363281"
+            },
+            "troopPresence": false
+        },
+        "SEV": {
+            "neighbors": [
+                "MOS",
+                "UKR",
+                "S_BLA",
+                "RMN",
+                "ARM"
+            ],
+            "owner": "RUS",
+            "tokenLocation": {
+                "x": "958.5045776367188",
+                "y": "503.89393615722656"
+            },
+            "troopPresence": true
+        },
+        "SIC": {
+            "neighbors": [
+                "S_TYN",
+                "NAP",
+                "S_ION"
+            ],
+            "owner": "ITA",
+            "tokenLocation": {
+                "x": "532.6544494628906",
+                "y": "726.1478881835938"
+            },
+            "troopPresence": false
+        },
+        "SIL": {
+            "neighbors": [
+                "WAR",
+                "GAL",
+                "BOH",
+                "MUN",
+                "BER",
+                "PRU"
+            ],
+            "owner": "GER",
+            "tokenLocation": {
+                "x": "592.3602600097656",
+                "y": "445.6690673828125"
+            },
+            "troopPresence": false
+        },
+        "SMY": {
+            "neighbors": [],
+            "owner": "TUR",
+            "tokenLocation": {
+                "x": "916.16259765625",
+                "y": "693.1901245117188"
+            },
+            "troopPresence": true
+        },
+        "SPA": {
+            "neighbors": [
+                "S_WES",
+                "ALG",
+                "S_MID",
+                "POR",
+                "GAS",
+                "S_GOL"
+            ],
+            "owner": null,
+            "tokenLocation": {
+                "x": "227.12459564208984",
+                "y": "607.2464904785156"
+            },
+            "troopPresence": false
+        },
+        "SWE": {
+            "neighbors": [
+                "NOR",
+                "S_SCA",
+                "DEN",
+                "S_BAL",
+                "S_DEN",
+                "S_BOT",
+                "FIN"
+            ],
+            "owner": null,
+            "tokenLocation": {
+                "x": "617.1982116699219",
+                "y": "222.66133880615234"
+            },
+            "troopPresence": false
+        },
+        "SWI": {
+            "neighbors": [
+                "TYR",
+                "PIE",
+                "MAR",
+                "BUR",
+                "MUN"
+            ],
+            "owner": null,
+            "tokenLocation": {
+                "x": "449.04066467285156",
+                "y": "526.5934143066406"
+            },
+            "troopPresence": false
+        },
+        "SYR": {
+            "neighbors": [
+                "ARM",
+                "S_EAS",
+                "SMY"
+            ],
+            "owner": "TUR",
+            "tokenLocation": {
+                "x": "1048.4614562988281",
+                "y": "726.6514282226562"
+            },
+            "troopPresence": true
+        },
+        "S_ADR": {
+            "neighbors": [
+                "APU",
+                "VEN",
+                "TRI",
+                "ALB"
+            ],
+            "owner": null,
+            "tokenLocation": {
+                "x": "582.8947143554688",
+                "y": "614.5240173339844"
+            },
+            "troopPresence": false
+        },
+        "S_AEG": {
+            "neighbors": [
+                "S_EAS",
+                "SMY",
+                "IST",
+                "S_STR",
+                "BUL",
+                "GRE",
+                "S_ION"
+            ],
+            "owner": null,
+            "tokenLocation": {
+                "x": "766.5535583496094",
+                "y": "712.3106079101562"
+            },
+            "troopPresence": false
+        },
+        "S_BAL": {
+            "neighbors": [
+                "S_BOT",
+                "LVN",
+                "PRU",
+                "SWE",
+                "BER",
+                "DEN",
+                "S_DEN",
+                "KIE"
+            ],
+            "owner": null,
+            "tokenLocation": {
+                "x": "593.8394470214844",
+                "y": "345.9031677246094"
+            },
+            "troopPresence": false
+        },
+        "S_BAR": {
+            "neighbors": [
+                "PET",
+                "NOR",
+                "S_NRG"
+            ],
+            "owner": null,
+            "tokenLocation": {
+                "x": "848.1415100097656",
+                "y": "79.47195756435394"
+            },
+            "troopPresence": false
+        },
+        "S_BLA": {
+            "neighbors": [
+                "SEV",
+                "ARM",
+                "ANK",
+                "S_STR",
+                "IST",
+                "BUL",
+                "RMN"
+            ],
+            "owner": null,
+            "tokenLocation": {
+                "x": "930.7201538085938",
+                "y": "566.9450836181641"
+            },
+            "troopPresence": false
+        },
+        "S_BOT": {
+            "neighbors": [
+                "FIN",
+                "PET",
+                "LVN",
+                "SWE",
+                "S_BAL"
+            ],
+            "owner": null,
+            "tokenLocation": {
+                "x": "697.7220458984375",
+                "y": "235.2621078491211"
+            },
+            "troopPresence": false
+        },
+        "S_DEN": {
+            "neighbors": [
+                "DEN",
+                "S_BAL",
+                "S_SCA",
+                "SWE"
+            ],
+            "owner": null,
+            "tokenLocation": {
+                "x": "532.5754699707031",
+                "y": "355.19744873046875"
+            },
+            "troopPresence": false
+        },
+        "S_EAS": {
+            "neighbors": [
+                "SYR",
+                "SMY",
+                "S_AEG",
+                "CRE",
+                "S_ION"
+            ],
+            "owner": null,
+            "tokenLocation": {
+                "x": "861.5371398925781",
+                "y": "747.0439147949219"
+            },
+            "troopPresence": false
+        },
+        "S_ENG": {
+            "neighbors": [
+                "PIC",
+                "BEL",
+                "S_NOR",
+                "LON",
+                "S_IRI",
+                "WAL",
+                "S_MID",
+                "BRE"
+            ],
+            "owner": null,
+            "tokenLocation": {
+                "x": "285.88573455810547",
+                "y": "434.8948211669922"
+            },
+            "troopPresence": false
+        },
+        "S_GOL": {
+            "neighbors": [
+                "MAL",
+                "SPA",
+                "MAR",
+                "COR",
+                "PIE",
+                "SAR",
+                "S_WES"
+            ],
+            "owner": null,
+            "tokenLocation": {
+                "x": "369.8891906738281",
+                "y": "618.261474609375"
+            },
+            "troopPresence": false
+        },
+        "S_HEL": {
+            "neighbors": [
+                "DEN",
+                "S_NOR",
+                "HOL",
+                "KIE"
+            ],
+            "owner": null,
+            "tokenLocation": {
+                "x": "463.2156066894531",
+                "y": "361.5724792480469"
+            },
+            "troopPresence": false
+        },
+        "S_ION": {
+            "neighbors": [
+                "S_EAS",
+                "S_AEG",
+                "CRE",
+                "GRE",
+                "ALB",
+                "S_ADR",
+                "APU",
+                "NAP",
+                "S_TYN",
+                "SIC",
+                "TUN"
+            ],
+            "owner": null,
+            "tokenLocation": {
+                "x": "596.8523712158203",
+                "y": "724.2890319824219"
+            },
+            "troopPresence": false
+        },
+        "S_IRI": {
+            "neighbors": [
+                "WAL",
+                "LVP",
+                "S_NAT",
+                "IRE"
+            ],
+            "owner": null,
+            "tokenLocation": {
+                "x": "237.51478576660156",
+                "y": "377.9919128417969"
+            },
+            "troopPresence": false
+        },
+        "S_MID": {
+            "neighbors": [
+                "POR",
+                "SPA",
+                "GAS",
+                "BRE",
+                "ALG",
+                "S_WES",
+                "S_ENG",
+                "S_IRI",
+                "S_NAT"
+            ],
+            "owner": null,
+            "tokenLocation": {
+                "x": "138.67386138439178",
+                "y": "583.1202239990234"
+            },
+            "troopPresence": false
+        },
+        "S_NAT": {
+            "neighbors": [],
+            "owner": null,
+            "tokenLocation": {
+                "x": "165.76786649227142",
+                "y": "195.5190690755844"
+            },
+            "troopPresence": false
+        },
+        "S_NOR": {
+            "neighbors": [
+                "NOR",
+                "S_SCA",
+                "DEN",
+                "S_HEL",
+                "HOL",
+                "BEL",
+                "LON",
+                "YOR",
+                "EDI",
+                "S_NRG"
+            ],
+            "owner": null,
+            "tokenLocation": {
+                "x": "413.62835693359375",
+                "y": "318.6533432006836"
+            },
+            "troopPresence": false
+        },
+        "S_NRG": {
+            "neighbors": [
+                "S_NAT",
+                "S_NOR",
+                "NOR",
+                "EDI",
+                "CLU",
+                "ICE",
+                "S_BAR"
+            ],
+            "owner": null,
+            "tokenLocation": {
+                "x": "471.5103302001953",
+                "y": "122.26601731777191"
+            },
+            "troopPresence": false
+        },
+        "S_SCA": {
+            "neighbors": [
+                "SWE",
+                "NOR",
+                "S_NOR",
+                "DEN",
+                "S_DEN"
+            ],
+            "owner": null,
+            "tokenLocation": {
+                "x": "520.3135070800781",
+                "y": "306.9483642578125"
+            },
+            "troopPresence": false
+        },
+        "S_STR": {
+            "neighbors": [
+                "IST",
+                "S_BLA",
+                "S_AEG"
+            ],
+            "owner": null,
+            "tokenLocation": {
+                "x": "805.5598754882812",
+                "y": "656.2080383300781"
+            },
+            "troopPresence": false
+        },
+        "S_TYN": {
+            "neighbors": [
+                "SIC",
+                "S_ION",
+                "NAP",
+                "ROM",
+                "TUS",
+                "COR",
+                "SAR",
+                "S_GOL",
+                "S_WES",
+                "TUN"
+            ],
+            "owner": null,
+            "tokenLocation": {
+                "x": "507.6264343261719",
+                "y": "668.5801086425781"
+            },
+            "troopPresence": false
+        },
+        "S_WES": {
+            "neighbors": [
+                "S_GOL",
+                "MAL",
+                "SPA",
+                "ALG",
+                "S_MID",
+                "TUN",
+                "S_TYN",
+                "SAR"
+            ],
+            "owner": null,
+            "tokenLocation": {
+                "x": "286.5856170654297",
+                "y": "687.8448791503906"
+            },
+            "troopPresence": false
+        },
+        "TRI": {
+            "neighbors": [
+                "SER",
+                "ALB",
+                "S_ADR",
+                "VEN",
+                "TYR",
+                "VIE",
+                "BUD"
+            ],
+            "owner": "AUS",
+            "tokenLocation": {
+                "x": "594.6373901367188",
+                "y": "579.2279968261719"
+            },
+            "troopPresence": true
+        },
+        "TUN": {
+            "neighbors": [
+                "S_ION",
+                "S_WES",
+                "S_TYN",
+                "ALG"
+            ],
+            "owner": null,
+            "tokenLocation": {
+                "x": "445.3111572265625",
+                "y": "752.3410339355469"
+            },
+            "troopPresence": false
+        },
+        "TUS": {
+            "neighbors": [
+                "ROM",
+                "VEN",
+                "S_TYN",
+                "S_GOL",
+                "PIE"
+            ],
+            "owner": "ITA",
+            "tokenLocation": {
+                "x": "497.75743103027344",
+                "y": "599.3914794921875"
+            },
+            "troopPresence": false
+        },
+        "TYR": {
+            "neighbors": [
+                "MUN",
+                "BOH",
+                "VIE",
+                "TRI",
+                "VEN",
+                "PIE",
+                "SWI"
+            ],
+            "owner": "AUS",
+            "tokenLocation": {
+                "x": "524.1038208007812",
+                "y": "525.9534912109375"
+            },
+            "troopPresence": false
+        },
+        "UKR": {
+            "neighbors": [
+                "MOS",
+                "SEV",
+                "RMN",
+                "GAL",
+                "WAR"
+            ],
+            "owner": "RUS",
+            "tokenLocation": {
+                "x": "806.8992919921875",
+                "y": "467.3373260498047"
+            },
+            "troopPresence": false
+        },
+        "VEN": {
+            "neighbors": [
+                "ROM",
+                "TUS",
+                "APU",
+                "S_ADR",
+                "TRI",
+                "TYR",
+                "PIE"
+            ],
+            "owner": "ITA",
+            "tokenLocation": {
+                "x": "511.5209197998047",
+                "y": "585.9645690917969"
+            },
+            "troopPresence": true
+        },
+        "VIE": {
+            "neighbors": [
+                "BUD",
+                "GAL",
+                "BOH",
+                "TYR",
+                "TRI"
+            ],
+            "owner": "AUS",
+            "tokenLocation": {
+                "x": "611.9950256347656",
+                "y": "509.3099060058594"
+            },
+            "troopPresence": false
+        },
+        "WAL": {
+            "neighbors": [
+                "S_IRI",
+                "LVP",
+                "YOR",
+                "LON",
+                "S_ENG"
+            ],
+            "owner": "ENG",
+            "tokenLocation": {
+                "x": "290.03651428222656",
+                "y": "385.32208251953125"
+            },
+            "troopPresence": false
+        },
+        "WAR": {
+            "neighbors": [
+                "UKR",
+                "MOS",
+                "LVN",
+                "PRU",
+                "SIL",
+                "GAL"
+            ],
+            "owner": "RUS",
+            "tokenLocation": {
+                "x": "681.8891296386719",
+                "y": "427.90478515625"
+            },
+            "troopPresence": true
+        },
+        "YOR": {
+            "neighbors": [
+                "S_NOR",
+                "EDI",
+                "LVP",
+                "WAL",
+                "LON"
+            ],
+            "owner": "ENG",
+            "tokenLocation": {
+                "x": "347.85487365722656",
+                "y": "355.61431884765625"
+            },
+            "troopPresence": false
+        }
+    }
+}

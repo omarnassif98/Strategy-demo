@@ -102,21 +102,6 @@ function ApplyConfiguration(){
         }
     }
 
-    allProvIDs.forEach(provID => {
-        console.log(`${provID} is a key province`)     
-        if  (gameInfo.provinceInfo[provID]){
-        let pathReference = document.getElementById(provID);
-        let pathRect = pathReference.getBBox();
-        let [centerX, centerY] = [pathRect.x + pathRect.width/2, pathRect.y + pathRect.height/2];
-        let starInstance = starGraphic.cloneNode(deep=true);
-        starInstance.setAttribute('x',`${centerX - (starGraphic.getAttribute("width")/2)}`)
-        starInstance.setAttribute('y',`${centerY - (starGraphic.getAttribute("height")/2)}`)
-        gameInfo.provinceInfo[provID].tokenLocation = {'x': centerX, 'y':centerY};
-        instantiatedStars[provID] = starInstance;
-        pathReference.parentElement.appendChild(starInstance);
-    }
-    });
-
     for(nationID in gameInfo.nationInfo){
         gameInfo.nationInfo[nationID].provinces.forEach(provID => {            
             UpdateMap(nationID, provID);

@@ -31,7 +31,7 @@ function SendMessage(inputfield, target){
     if(target == 'all'){
         SendToSocketServer('broadcastMessage', {'message':message})
     }else{
-        SendToSocketServer('sendMessage', {'message':message, 'target':'FRA'})
+        SendToSocketServer('sendMessage', {'message':message, 'target':chatFocused})
     }
     AppendToChat(target, message, gameInfo.playingAs);
     inputfield.value = ''

@@ -44,6 +44,7 @@ class GameSession:
         if participantData["data"]['nation'] in self.gameSettings["remaining"]:
             self.participants[participantData["uid"]] = participantData["data"]
             self.gameSettings["remaining"].remove(participantData['data']["nation"])
+            print(self.gameSettings["remaining"])
             if(len(self.gameSettings["remaining"]) == 0):
                 self.BeginGame()
                 AlertOfNewRound(self.gameName)
