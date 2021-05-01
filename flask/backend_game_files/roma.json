@@ -670,7 +670,7 @@
                 "LEP",
                 "S_GOS"
             ],
-            "owner": "CAR",
+            "owner": "None",
             "tokenLocation": {
                 "x": "358.7431182861328",
                 "y": "554.5029296875"

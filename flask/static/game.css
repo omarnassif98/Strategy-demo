@@ -41,6 +41,7 @@
     position: absolute;
     right: 0;
     left: 20em;
+    bottom: 0;
 }
 #overlayArea{
     width: 100%;

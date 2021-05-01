@@ -3,7 +3,8 @@
 {% block header %}
     <title>Game</title>
     <link rel="stylesheet" href={{url_for('static', filename='game.css')}}>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous"></script>    <script src={{url_for('static', filename='Helper.js')}}></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous"></script> 
+    <script src={{url_for('static', filename='helper.js')}}></script>
     <script src={{url_for('static', filename='UIManager.js')}}></script>
     <script src={{url_for('static', filename='GameLogic.js')}}></script>
     <script src={{url_for('static', filename='ServerConnectivity.js')}}></script>
@@ -30,21 +31,9 @@
         <div id='overlayArea'>       
             <div id="backdrop" style="display: none;">
                 <div id ='overlayBox'>
-                    <div id='actionMenu' style="display: none;">    
-                        <div id ="subscreen1" style="display: none;">
-                            <h1 >ACTION</h1>
-                            <button id="attack" class="selfDefiningBtn">Occupy</button>
-                            <a href="javascript:RevealSubscreen(1)"><button>Support Offense</button></a>
-                            <button id="supportDfns" class="selfDefiningBtn">Support Defence</button>
-                            <button id="cancel" class="selfDefiningBtn">Cancel</button>
-                        </div>
-                        <div id ="subscreen2" style="display: none;">
-                            <h1 id="instructions">Who to support?</h1>
-                            <button id="supportAtk ITA" class="selfDefiningBtn">Italy</button>
-                            <button id="supportAtk FRA" class="selfDefiningBtn">France</button>
-                            <button id="supportAtk SER" class="selfDefiningBtn">Serbia</button>
-                            <a href="javascript:RevealSubscreen(0)"><button>Back</button></a>
-                        </div>
+                    <div id="actionMenu">
+                        <h3 id="actionPrompt">Prompt</h3>
+                        <span>Actions go here</span>
                     </div>
                     <div id="PreGame" style="display: none;">
                         <span>Game has not begun yet</span>

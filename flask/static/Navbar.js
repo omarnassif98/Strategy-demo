@@ -35,9 +35,8 @@ document.addEventListener('click', function(event){
 
 firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
-      database.ref('users/'+user.uid).get().then(function(snapshot){
-        if(snapshot.exists()){
-            sessionStorage.setItem('userName', snapshot.val().username);
+        if(user.displayName){
+            sessionStorage.setItem('userName', user.displayName);
             AddProfileDropdown();
             var loginEvent = new Event('authComplete');
             document.dispatchEvent(loginEvent);
@@ -46,9 +45,6 @@ firebase.auth().onAuthStateChanged(function(user) {
           document.getElementById('firebaseui-auth-container').style.display = 'none';
           document.getElementById('profileSetup').style.display = 'block';
         }
-      }).catch(function(error){
-        console.log(error);
-    });
     }else{
       var noAuth = new Event('noAuth');
       document.dispatchEvent(noAuth);
@@ -74,20 +70,18 @@ function ClearDropdown(){
 function AddProfileDropdown(){
     document.getElementById('loginDropdown').style.display = 'none';
     document.getElementById('profileDropdown').style.display = 'block';
-    document.getElementById('user').innerHTML = sessionStorage.getItem('userName');
+    document.getElementById('profileDisplayName').innerHTML = firebase.auth().currentUser.displayName;
 }
 
 function UpdateInputProperty(element){
   console.log(element.value);
-  let accompanyingButton = document.getElementById('b_' + element.name);
+  let accompanyingButton = element.parentElement.getElementsByTagName('button')[0];
   accompanyingButton.disabled = (element.value.length == 0);
 }
 
-function SubmitProfile(buttonTag){
-    console.log(document.getElementById(buttonTag));
-    database.ref('users/'+ firebase.auth().currentUser.uid).set({username:document.getElementById(buttonTag.split('_')[1]).value}).then(function(){
-      document.getElementById(buttonTag).parentElement.style.display = 'none'
-      sessionStorage.setItem('userName', document.getElementById(buttonTag.split('_')[1]).value);
-      AddProfileDropdown()
+function SubmitProfile(wrapper){
+    firebase.auth().currentUser.updateProfile({displayName:document.getElementById('usernameEntry').value}).then(function(){
+      wrapper.style.display = 'none';
+      AddProfileDropdown();
     });
 }

@@ -200,7 +200,7 @@ async function CreateGame(form){
     let res = await ResourceRequest(window.origin + '/game-create', 'POST', jsonData);
     console.log('Got response ' + res);
     if(res==201){
-        window.location = window.origin + '/game/' + data.get('sessionName');
+        database.ref('pre_game_listings/' + jsonData['gameName']).set({'mapType':data.get('mapType'), 'participants':{[firebase.auth().currentUser.uid]:data.get('nationSelect')}}).then(function(){window.location = window.origin + '/game/' + data.get('sessionName')});
     }
 }
 

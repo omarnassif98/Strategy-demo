@@ -1,8 +1,10 @@
-async function SendCommandsToServer(buttonRef){
+async function SendCommandsToServer(){
     console.log('SENDING ORDERS');
+    let turnNumb = gameInfo.turnNumb
+    let queuedMoves = {...gameInfo.queuedMoves}
     let res = await ResourceRequest(baseURL + '/clientDeliver', 'POST', {'uid': firebase.auth().currentUser.uid, 'turn':gameInfo.turnNumb, 'session': gameName, 'moves':gameInfo.queuedMoves});
     if(res == 201){
-        buttonRef.style.disabled = true;
+        database.ref('active_game_data/' + gameName + "/orders/" + turnNumb + '/' + gameInfo.playingAs).set(queuedMoves)
     }
 }
 
@@ -14,10 +16,7 @@ async function LoadGameConfiguration(auth){
         resJSON = JSON.parse(await ResourceRequest(baseURL +  '/game/' + gameName + '/data'));
     }
     console.log(resJSON);
-    if(gameInfo.turnNumb != resJSON.turnNumb){
-        gameInfo = {...gameInfo, ...resJSON};
-    }
-    
+    gameInfo = {...gameInfo, ...resJSON};    
 }
 
 async function LoadMap() {

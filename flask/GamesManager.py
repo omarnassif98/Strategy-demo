@@ -1,11 +1,51 @@
 from flask import request, jsonify
 from flask_socketio import send, emit, join_room, leave_room
 from webapp import app, socketApp
+import FirebaseManger
+from FirebaseManger import *
 import webapp
 import json
 from os import path
+from threading import Thread
+
 print('Game manager is online')
 
+def SetupExistingGames():
+    print('Setting up existing active games')
+    listings = GetActiveListings()
+    print(listings)
+    if not listings:
+        return
+    for gameName in listings:
+        gameListing = listings[gameName]
+        gameData = GetActiveGameData(gameName)
+        print(gameData)
+        gamesInSession[gameName] = GameSession({'mapType':gameListing['mapType']}, gameName)
+        for uid in gameListing['participants']:
+            #TODO still gotta register usernames
+            AddPlayerToGame(gameName,{'uid':uid, 'data':{'nation':gameListing['participants'][uid]}}, False)
+        if len(gameListing['participants']) < len(GetRoster(gameListing['mapType'])):
+            print('Starting game prematurely')
+            gamesInSession[gameName].BeginGame()
+        for i in range(len(gameData)):
+            if not gameData[i]:
+                continue
+            for sourceProv in gameData[i]['standard']:
+                print('servicing ' + sourceProv + ', ' + gameData[i]['standard'][sourceProv])
+                gamesInSession[gameName].MoveTroop(sourceProv, gameData[i]['standard'][sourceProv])
+            try:
+                #TODO Resolve locksteps
+                for sourceProv in gameData[i]['lockstep']:
+                    lockMove = gameData[i]['lockstep'][sourceProv]['lockMove']
+                    if lockMove == 'create':
+                        gamesInSession[gameName].CreateTroop(sourceProv)
+                gamesInSession[gameName].CullDefeats()
+                pass
+            except:
+                pass
+        gamesInSession[gameName].mapData['turnNumb'] = gameListing['turn']
+
+        
 def GetDataFromFile(fname):
     with open(path.join(path.dirname(__file__), 'backend_game_files/' + fname)) as f:
         return json.load(f)
@@ -19,6 +59,10 @@ def GetRosters():
 def GetRoster(mapType):
     return metaMaps[mapType]["roster"].copy()
 
+
+
+Thread(target=SetupExistingGames).start()
+
 class GameSession:
 
     def __init__(self, gameSettings, gameName):
@@ -31,9 +75,7 @@ class GameSession:
         self.mapData['lockStep'] = False
         self.participants = {}
         self.TurnManager = {}
-        
-
-
+    
     def BeginGame(self):
         self.BeginNewTurn()
 
@@ -41,6 +83,8 @@ class GameSession:
         return self.gameSettings["remaining"]
     
     def AddParticipant(self, participantData):
+        print('ADDING ' + str(participantData))
+        print(self.gameSettings["remaining"])
         if participantData["data"]['nation'] in self.gameSettings["remaining"]:
             self.participants[participantData["uid"]] = participantData["data"]
             self.gameSettings["remaining"].remove(participantData['data']["nation"])
@@ -53,7 +97,6 @@ class GameSession:
             print('Remaining:')
             print(self.gameSettings['remaining'])
             return -2
-
 
     def AttachSocketToUser(self, uid, socket):
         self.participants[uid]['socket'] = socket
@@ -72,7 +115,7 @@ class GameSession:
     
     def BeginNewTurn(self):
         if self.mapData['lockStep'] == True:
-            requiredMoves = [nation for nation in self.mapData['nationInfo'] if self.mapData['nationInfo'][nation]['score'] != len(self.mapData['nationInfo'][nation]['troopsDeployed']) or len(self.mapData['nationInfo'][nation]['defeats']) > 0 ]
+            requiredMoves = [self.GetPlayerNation(uid) for uid in self.participants.keys() if self.mapData['nationInfo'][self.GetPlayerNation(uid)]['score'] != len(self.mapData['nationInfo'][self.GetPlayerNation(uid)]['troopsDeployed']) or len(self.mapData['nationInfo'][self.GetPlayerNation(uid)]['defeats']) > 0 ]
             self.TurnManager = {"expectingFrom":requiredMoves, "QueuedMoves":{}}
             print('We locksteppin\'')
             print(requiredMoves)
@@ -80,6 +123,7 @@ class GameSession:
         else:
             self.TurnManager = {"expectingFrom":list([self.GetPlayerNation(uid) for uid in self.participants.keys()]), "QueuedMoves":{}}
             self.mapData['turnNumb'] += 1
+            print('Advancing turn')
             AlertOfNewRound(self.gameName)
 
     def QueueMove(self, uid, queuedMoves):
@@ -88,36 +132,69 @@ class GameSession:
         self.TurnManager['QueuedMoves'][nationTag] = queuedMoves
         if nationTag in self.TurnManager['expectingFrom']:
             self.TurnManager["expectingFrom"].remove(nationTag)
-        print(len(self.TurnManager["expectingFrom"]))
+        print('still expecting', len(self.TurnManager["expectingFrom"]), 'moves')
         if len(self.TurnManager["expectingFrom"]) == 0:
+            print('ALL MOVES QUEUED')
             self.ExecuteQueuedMoves()
+    
     def ExecuteQueuedMoves(self):
         if self.mapData['lockStep'] == True:
             self.ResolveLockStep()
         else:
             self.ResolveSkirmshes()
 
-    def ResolveLockStep(self):
-        for nationID in self.TurnManager['QueuedMoves']:
-            for provID in self.TurnManager['QueuedMoves'][nationID]:
-                action = self.TurnManager['QueuedMoves'][nationID][provID]
-                if action['lockMove'] == 'retreat':
-                    self.mapData['nationInfo'][nationID]['defeats'].remove(provID)
-                    self.mapData['nationInfo'][nationID]['troopsDeployed'].remove(provID)
-                    self.mapData['nationInfo'][nationID]['troopsDeployed'].append(action['destProv'])
-                    self.mapData['provinceInfo'][action['destProv']]['owner'] = nationID
-                    self.mapData['provinceInfo'][action['destProv']]['troopPresence'] = True
-                elif action['lockMove'] == 'create':
-                    self.mapData['nationInfo'][nationID]['troopsDeployed'].append(provID)
-                    self.mapData['provinceInfo'][provID]['owner'] = nationID
-                elif action['lockMove'] == 'destroy':
-                    self.mapData['nationInfo'][nationID]['troopsDeployed'].remove(provID)
-                    self.mapData['provinceInfo'][provID]['owner'] = None
+    def CreateTroop(self, provID):
+        nationID = self.mapData['provinceInfo'][provID]['owner']
+        print(nationID + ' is deploying troop to ' + provID)
+        self.mapData['nationInfo'][nationID]['troopsDeployed'].append(provID)
+        self.mapData['provinceInfo'][provID]['troopPresence'] = True
+
+    def TransferProvOwnership(self, newNationID, provID):
+        previouseNationID = self.mapData['provinceInfo'][provID]['owner']
+        try:
+            self.mapData['nationInfo'][previouseNationID]['provinces'].remove(provID)
+            self.UndeployFromProvince(previouseNationID, provID)
+        except:
+            pass
+        self.mapData['provinceInfo'][provID]['owner'] = newNationID
+        self.CreateTroop(provID)
+        if len(provID.split('_')) == 1:
+            self.mapData['nationInfo'][newNationID]['provinces'].append(provID)
+    
+    def RemoveTroopFromProv(self, provID):
+        nationID = self.mapData['provinceInfo'][provID]['owner']
+        self.mapData['provinceInfo'][provID]['troopPresence'] = False
+        self.UndeployFromProvince(nationID, provID)
+
+    def UndeployFromProvince(self, nationID, provID):
+        self.mapData['nationInfo'][nationID]['troopsDeployed'].remove(provID)
+
+    def CullDefeats(self):
+        self.mapData['lockStep'] = False
         for nationID in self.mapData['nationInfo']:
             while len(self.mapData['nationInfo'][nationID]['defeats']) > 0:
                 provID = self.mapData['nationInfo'][nationID]['defeats'].pop()
-                self.mapData['nationInfo'][nationID]['troopsDeployed'].remove(provID)
-                self.mapData['provinceInfo'][provID]['owner'] = None
+                self.UndeployFromProvince(nationID, provID)
+
+    def ResolveLockStep(self):
+        resolvedLockMoves = {}
+        for nationID in self.TurnManager['QueuedMoves']:
+            for provID in self.TurnManager['QueuedMoves'][nationID]:
+                action = self.TurnManager['QueuedMoves'][nationID][provID]
+                resolvedLockMoves[provID] = {'lockMove':action['lockMove']}
+                if action['lockMove'] == 'retreat':
+                    #self.UndeployFromProvince(nationID, provID)
+                    #No need for the above, removal handled by culling 
+                    self.CreateTroop(action['destProv'])
+                    resolvedLockMoves[provID]['destProv'] = action['destProv'] 
+                elif action['lockMove'] == 'create':
+                    self.CreateTroop(provID)
+                elif action['lockMove'] == 'destroy':
+                    self.RemoveTroopFromProv(provID)
+        UpdateResolvedMoves
+        Thread(target=UpdateResolvedMoves, args=(self.gameName, self.mapData['turnNumb'], resolvedLockMoves, False,)).start()
+        self.CullDefeats()
+        self.BeginNewTurn()
 
     def ResolveSkirmshes(self):
         #before executing the moves, skirmishes must be constructed
@@ -185,7 +262,7 @@ class GameSession:
         moveChains = []
         chainStarts = {}
         chainEnds = {}
-
+        
         for provinceID in skirmishLedger:
             localSkirmishLedger = skirmishLedger[provinceID]
             defencePower = localSkirmishLedger['defence']
@@ -250,6 +327,7 @@ class GameSession:
                 except:
                     pass
         print(moveChains)
+        actualMoves = {}
         for moveChain in moveChains:
             print(moveChain)
             try:
@@ -257,9 +335,11 @@ class GameSession:
                 while True:
                     sourceTuple = moveChain.pop()
                     print('popping chain', sourceTuple)
+
                     if sourceTuple[1] > skirmishLedger[destinationTuple[0]]['defence']:
                         print('moving')
                         self.MoveTroop(sourceTuple[0], destinationTuple[0])
+                        actualMoves[sourceTuple[0]] = destinationTuple[0]
                     else:
                         #The attack fails and it defends against those behind it on the chain
                         #Note that defence was 0 until now
@@ -272,36 +352,34 @@ class GameSession:
                 print(ex)
                 print('eyyo wtf dog?')
                 continue
+        Thread(target=UpdateResolvedMoves, args=(self.gameName, self.mapData['turnNumb'], actualMoves,)).start()
         self.BeginNewTurn()
 
 
 
     def MoveTroop(self, fromProv, toProv):
         source = self.mapData['provinceInfo'][fromProv]
+        movingNationID = source['owner']
+        movingNation = self.mapData['nationInfo'][movingNationID]
         destination = self.mapData['provinceInfo'][toProv]
-        movingNation = self.mapData['nationInfo'][source['owner']]
+        destinationNationID = destination['owner']
+        if destination['troopPresence'] == True:
+            try:
+                destinationNation = self.mapData['nationInfo'][movingNationID]
+                self.mapData['nationInfo'][destinationNationID]['defeats'].append(toProv)
+                self.mapData['lockStep'] = True
+                if toProv in self.mapData['keyProvinces']:
+                    destinationNation['score'] -= 1
+            except:
+                pass
 
-        movingNation['troopsDeployed'].remove(fromProv)
-        movingNation['troopsDeployed'].append(toProv)
-        print(source['owner'] + ' is moving ' + fromProv + ' to ' + toProv)
+        print(movingNationID + ' is moving ' + fromProv + ' to ' + toProv)
+        self.RemoveTroopFromProv(fromProv)
+        self.TransferProvOwnership(movingNationID, toProv)
         if toProv in self.mapData['keyProvinces']:
                 movingNation['score'] += 1
-        if destination['owner'] in self.mapData['nationInfo']:
-            overrunNation = self.mapData['nationInfo'][destination['owner']]
-            overrunNation['provinces'].remove(toProv)
-            if toProv in self.mapData['keyProvinces']:
-                overrunNation['score'] -= 1
-            if self.mapData['provinceInfo'][toProv]['troopPresence'] == True:
-                self.mapData['nationInfo'][destination['owner']]['defeats'].append(toProv)
                 self.mapData['lockStep'] = True
-        
-        destination['owner'] = source['owner']
-        if len(toProv.split('_')) == 1:
-            movingNation['provinces'].append(toProv)
-        source['troopPresence'] = False
-        destination['troopPresence'] = True
-        
-        
+
 gamesForBrowsepage = {}
 gamesInSession = {}
 playerSessions = {}
@@ -323,7 +401,7 @@ def CreateGame():
     if(body['gameName'] not in gamesInSession):
         gamesInSession[body["gameName"]] = GameSession(body["gameSettings"], body["gameName"])
         gamesForBrowsepage[body["gameName"]] = {"host":body['participantData']['data']['username'], 'remaining':gamesInSession[body["gameName"]].gameSettings["remaining"]}
-        AddPlayerToGame(body['gameName'], body['participantData'])
+        AddPlayerToGame(body['gameName'], body['participantData'])        
         return '', 201
     else:
         return '', 204
@@ -366,13 +444,8 @@ def GetUserGames(user):
     except:
         return '', 204
 
-@app.route('/game/<gameName>/advance')
-def ExecuteNextTurn(gameName):
-    gamesInSession[gameName].ExecuteQueuedMoves()
-    return '', 201
 
-
-def AddPlayerToGame(sessionName, data):
+def AddPlayerToGame(sessionName, data, updateFirebase = True):
     uid = data['uid']
     if(uid not in playerSessions):
         playerSessions[uid] = {}
@@ -381,6 +454,9 @@ def AddPlayerToGame(sessionName, data):
         rem = gamesInSession[sessionName].AddParticipant(data)
         if rem == 0:
             KickGameOff(sessionName)
+            print(updateFirebase)
+            if updateFirebase:
+                Thread(target=ActivateGameListing, args=(sessionName,)).start()
         elif rem < 0:
             return '', 204
         return '', 201
@@ -390,17 +466,20 @@ def AddPlayerToGame(sessionName, data):
 
 @app.route('/game/<gameName>/begin')
 def KickGameOff(gameName):
+    #STRICTLY FOR TESTING
+    #Remove upon release
     gamesInSession[gameName].BeginGame()
     del gamesForBrowsepage[gameName]
+    Thread(target=ActivateGameListing, args=(gameName,)).start()
     return 'kicked off game ' + gameName
 
 ##############################################################
 
 @socketApp.on('hook-game')
 def roomJoin(data):
-    print('welcome to ' + data['room'] + ', ' + request.sid)
     join_room(data['room'])
     gamesInSession[data['room']].AttachSocketToUser(data['uid'], request.sid)
+    print('welcome to ' + data['room'] + ', ' + request.sid)
 
 @socketApp.on('sendMessage')
 def sendMessage(data):

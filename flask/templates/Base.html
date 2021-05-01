@@ -3,9 +3,10 @@
     {% block header %}
     {% endblock %}
     <link rel="stylesheet" href={{url_for('static', filename='navbar.css')}}>
-    <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-database.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-analytics.js"></script>
     <script src="https://www.gstatic.com/firebasejs/ui/4.7.3/firebase-ui-auth.js"></script>
     <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.7.3/firebase-ui-auth.css" />
     <script src={{url_for('static', filename='FirebaseInitializer.js')}}></script>
@@ -30,7 +31,7 @@
                     <br>
                     <input type="text" id="usernameEntry" name="usernameEntry" class="lineInput" placeholder="Enter Username" oninput="UpdateInputProperty(this)">
                     <br>
-                    <button id="b_usernameEntry" class="inputDependant" onclick="SubmitProfile(this.id)" disabled>Continue</button>
+                    <button onclick="SubmitProfile(this.parentElement)" disabled>Continue</button>
                 </div>
                 <div id="firebaseui-auth-container"></div>
             </div>
@@ -38,7 +39,7 @@
         <div id="profileDropdown" onclick="RevealDropdown(this)" style="display: none; float: right;">
             <span>Profile</span>
             <div class="dropdownContent hugRight">
-                <span id="user">UserInfo</span>
+                <span id="profileDisplayName">UserInfo</span>
             </div>
         </div>
     </div>    
