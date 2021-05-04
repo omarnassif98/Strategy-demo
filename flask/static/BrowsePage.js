@@ -130,7 +130,7 @@ async function JoinGameScreen(sessionName, remaining){
     }
     let res = await ResourceRequest(window.origin + '/game-join', 'POST', joinData);
     if(res == 201){
-        window.location = window.origin + '/game/' + sessionName;
+        database.ref('pre_game_listings/' + joinData['gameName'] + '/participants/' + firebase.auth().currentUser.uid).set(choice).then(function(){window.location = window.origin + '/game/' + sessionName});
     }
 }
 

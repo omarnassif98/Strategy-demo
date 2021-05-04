@@ -1,6 +1,5 @@
 function ResourceRequest(url, method = 'GET', data = {}){
     let contentHeader = (Object.keys(data).length > 0) ? 'application/json':'text/plain';
-    console.log(data);
     return new Promise ((resolve) => {
         const req = new XMLHttpRequest();
         req.open(method, url);

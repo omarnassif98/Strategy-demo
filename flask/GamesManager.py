@@ -39,13 +39,24 @@ def SetupExistingGames():
                     lockMove = gameData[i]['lockstep'][sourceProv]['lockMove']
                     if lockMove == 'create':
                         gamesInSession[gameName].CreateTroop(sourceProv)
+                    elif lockMove == 'retreat':
+                        gamesInSession[gameName].CreateTroop(gameData[i]['lockstep'][sourceProv]['destProv'])
+                    elif lockMove == 'destroy':
+                        gamesInSession[gameName].RemoveTroopFromProv(sourceProv)
                 gamesInSession[gameName].CullDefeats()
-                pass
+                
             except:
                 pass
         gamesInSession[gameName].mapData['turnNumb'] = gameListing['turn']
+        gamesInSession[gameName].mapData['lockStep'] = gameListing['lockstep']
+        print('LOCK = ' + str(gameListing['lockstep']))
+        if gameListing['lockstep']:
+            gamesInSession[gameName].TurnManager['expectingFrom'] = [gamesInSession[gameName].GetPlayerNation(uid) for uid in gamesInSession[gameName].participants.keys() if gamesInSession[gameName].mapData['nationInfo'][gamesInSession[gameName].GetPlayerNation(uid)]['score'] != len(gamesInSession[gameName].mapData['nationInfo'][gamesInSession[gameName].GetPlayerNation(uid)]['troopsDeployed']) or len(gamesInSession[gameName].mapData['nationInfo'][gamesInSession[gameName].GetPlayerNation(uid)]['defeats']) > 0 ]
+            print('Game lockstepped, expecting from ' + str(gamesInSession[gameName].TurnManager['expectingFrom']))
 
-        
+
+Thread(target=SetupExistingGames, args=()).start()
+
 def GetDataFromFile(fname):
     with open(path.join(path.dirname(__file__), 'backend_game_files/' + fname)) as f:
         return json.load(f)
@@ -61,7 +72,7 @@ def GetRoster(mapType):
 
 
 
-Thread(target=SetupExistingGames).start()
+
 
 class GameSession:
 
@@ -118,6 +129,7 @@ class GameSession:
             requiredMoves = [self.GetPlayerNation(uid) for uid in self.participants.keys() if self.mapData['nationInfo'][self.GetPlayerNation(uid)]['score'] != len(self.mapData['nationInfo'][self.GetPlayerNation(uid)]['troopsDeployed']) or len(self.mapData['nationInfo'][self.GetPlayerNation(uid)]['defeats']) > 0 ]
             self.TurnManager = {"expectingFrom":requiredMoves, "QueuedMoves":{}}
             print('We locksteppin\'')
+            print('Waiting for ' + str(requiredMoves))
             print(requiredMoves)
             AlertOfNewRound(self.gameName)
         else:
@@ -145,7 +157,6 @@ class GameSession:
 
     def CreateTroop(self, provID):
         nationID = self.mapData['provinceInfo'][provID]['owner']
-        print(nationID + ' is deploying troop to ' + provID)
         self.mapData['nationInfo'][nationID]['troopsDeployed'].append(provID)
         self.mapData['provinceInfo'][provID]['troopPresence'] = True
 
@@ -172,13 +183,13 @@ class GameSession:
     def CullDefeats(self):
         self.mapData['lockStep'] = False
         for nationID in self.mapData['nationInfo']:
-            while len(self.mapData['nationInfo'][nationID]['defeats']) > 0:
-                provID = self.mapData['nationInfo'][nationID]['defeats'].pop()
-                self.UndeployFromProvince(nationID, provID)
+            self.mapData['nationInfo'][nationID]['defeats'].clear()
 
     def ResolveLockStep(self):
         resolvedLockMoves = {}
         for nationID in self.TurnManager['QueuedMoves']:
+            print('LOCK MOVES FOR ' + nationID)
+            print(str(self.TurnManager['QueuedMoves'][nationID]))
             for provID in self.TurnManager['QueuedMoves'][nationID]:
                 action = self.TurnManager['QueuedMoves'][nationID][provID]
                 resolvedLockMoves[provID] = {'lockMove':action['lockMove']}
@@ -190,9 +201,10 @@ class GameSession:
                 elif action['lockMove'] == 'create':
                     self.CreateTroop(provID)
                 elif action['lockMove'] == 'destroy':
-                    self.RemoveTroopFromProv(provID)
-        UpdateResolvedMoves
-        Thread(target=UpdateResolvedMoves, args=(self.gameName, self.mapData['turnNumb'], resolvedLockMoves, False,)).start()
+                    #self.RemoveTroopFromProv(provID)
+                    #Troop already undeployed
+                    print(provID + ' overrun, all presence of ' + nationID + ' destroyed')
+        Thread(target=UpdateResolvedMoves, args=(self.gameName, self.mapData['turnNumb'], resolvedLockMoves, True, False)).start()
         self.CullDefeats()
         self.BeginNewTurn()
 
@@ -252,7 +264,7 @@ class GameSession:
                 if skirmishLedger[support['destProv']]['defence'] > 0: 
                     skirmishLedger[support['destProv']]['defence'] += 1
             except:
-                #if the supported province is not on the ledger, defence doesn't even matter
+                #if the supported province is not the site of a skirmish, defence doesn't even matter
                 print('unnecessary support for ' + support['destProv'])
                 continue
         
@@ -274,16 +286,30 @@ class GameSession:
                 attack = attacks[attackingNation]
                 if attack['strength'] > maxStrength:
                     maxStrength = attack['strength']
+                    try:
+                        print('Attack has been overpowered... Attempting to add defence to ' + overpoweringProvince)
+                        skirmishLedger[overpoweringProvince]['defence'] = 1
+                    except:
+                        pass
                     overpoweringProvince = attack['fromProv']
                     print(attackingNation + ' is the greatest threat to ' + provinceID)
                     bounceFlag = False
                 elif attack['strength'] == maxStrength:
                     try:
                         skirmishLedger[overpoweringProvince]['defence'] = 1
+                    except:
+                        pass
+                    try:
                         skirmishLedger[attack['fromProv']]['defence'] = 1
                     except:
                         pass
                     bounceFlag = True
+                else:
+                    try:
+                        print('Attack failed... Attempting to add defence to ' + attack['fromProv'])
+                        skirmishLedger[attack['fromProv']]['defence'] = 1
+                    except:
+                        pass
             if maxStrength > defencePower and bounceFlag == False:
                 if provinceID in chainStarts:
                     print('adding ' + overpoweringProvince + 'to start of a list')
@@ -352,7 +378,7 @@ class GameSession:
                 print(ex)
                 print('eyyo wtf dog?')
                 continue
-        Thread(target=UpdateResolvedMoves, args=(self.gameName, self.mapData['turnNumb'], actualMoves,)).start()
+        Thread(target=UpdateResolvedMoves, args=(self.gameName, self.mapData['turnNumb'], actualMoves, False, self.mapData['lockStep'])).start()
         self.BeginNewTurn()
 
 
@@ -376,8 +402,9 @@ class GameSession:
         print(movingNationID + ' is moving ' + fromProv + ' to ' + toProv)
         self.RemoveTroopFromProv(fromProv)
         self.TransferProvOwnership(movingNationID, toProv)
-        if toProv in self.mapData['keyProvinces']:
+        if toProv in self.mapData['keyProvinces'] and movingNationID != destinationNationID:
                 movingNation['score'] += 1
+                print('ADDING +1 to ' + movingNationID)
                 self.mapData['lockStep'] = True
 
 gamesForBrowsepage = {}

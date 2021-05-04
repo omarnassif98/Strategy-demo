@@ -24,11 +24,12 @@ def ActivateGameListing(gameTitle):
     print('SHOULD BE DELETED')
     db.reference('active_game_listings/' + gameTitle).set(data)
 
-def UpdateResolvedMoves(gameTitle, turnNumb, resolvedMoves, standard = True):
+def UpdateResolvedMoves(gameTitle, turnNumb, resolvedMoves, currentlyLockstep, nextLockstep):
     print('Attempting update on ' + gameTitle + ', turn')
     print(resolvedMoves)
-    moveType = 'standard' if standard else 'lockstep'
-    if standard:
+    moveType = 'lockstep' if currentlyLockstep else 'standard'
+    db.reference('active_game_listings/' + gameTitle + '/lockstep').set(nextLockstep)
+    if not nextLockstep:
         db.reference('active_game_listings/' + gameTitle + '/turn').set(turnNumb+1)
     if resolvedMoves:
         db.reference('active_game_data/' + gameTitle + '/resolved_moves/' + str(turnNumb) + '/' + moveType).set(resolvedMoves)

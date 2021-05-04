@@ -1,10 +1,10 @@
 from flask import render_template, send_from_directory
 from webapp import app
-print('File server online')
+print('View manager online')
 
 @app.route('/')
 def Landing():
-    return render_template('Landing.html')
+    return render_template('landing.html')
 
 @app.route('/browse')
 def Login():
