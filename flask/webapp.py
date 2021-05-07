@@ -6,5 +6,5 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
 socketApp = SocketIO(app)
 print('Webapp up')
-import GamesManager
+import Game
 import ViewManager

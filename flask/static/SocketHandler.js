@@ -1,11 +1,7 @@
 console.log('Socket script is running');
 var socket = io()
 
-document.addEventListener('authComplete', function(){
-    Connect(firebase.auth().currentUser.uid);
-});
-
-function Connect(){
+function ConnectSocket(gameName){
     socket = io.connect(location.origin, {transports: ['websocket']});
     socket.on('connect', () => {
         console.log(socket.id);

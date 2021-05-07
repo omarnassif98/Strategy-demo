@@ -123,7 +123,8 @@
             "color": "green",
             "cores": [
                 "ROM",
-                "VEN"
+                "VEN",
+                "NAP"
             ],
             "defeats": [],
             "properName": "Italy",
@@ -198,7 +199,7 @@
                 "x": "659.4880981445312",
                 "y": "652.0370483398438"
             },
-            "troopPresence": false
+            "troopPresence": null
         },
         "ALG": {
             "neighbors": [
@@ -212,7 +213,7 @@
                 "x": "209.9035358428955",
                 "y": "737.7101745605469"
             },
-            "troopPresence": false
+            "troopPresence": null
         },
         "ANK": {
             "neighbors": [
@@ -227,7 +228,7 @@
                 "x": "951.4239196777344",
                 "y": "648.2214660644531"
             },
-            "troopPresence": true
+            "troopPresence": "TUR"
         },
         "APU": {
             "neighbors": [
@@ -243,7 +244,7 @@
                 "x": "584.05419921875",
                 "y": "650.3861389160156"
             },
-            "troopPresence": false
+            "troopPresence": null
         },
         "ARM": {
             "neighbors": [
@@ -258,7 +259,7 @@
                 "x": "1073.9782104492188",
                 "y": "637.20654296875"
             },
-            "troopPresence": false
+            "troopPresence": null
         },
         "BEL": {
             "neighbors": [
@@ -275,7 +276,7 @@
                 "x": "396.8208465576172",
                 "y": "441.0197296142578"
             },
-            "troopPresence": false
+            "troopPresence": null
         },
         "BER": {
             "neighbors": [
@@ -290,7 +291,7 @@
                 "x": "551.402587890625",
                 "y": "405.92750549316406"
             },
-            "troopPresence": true
+            "troopPresence": "GER"
         },
         "BOH": {
             "neighbors": [
@@ -305,7 +306,7 @@
                 "x": "579.9825439453125",
                 "y": "474.2771453857422"
             },
-            "troopPresence": true
+            "troopPresence": "AUS"
         },
         "BRE": {
             "neighbors": [
@@ -320,7 +321,7 @@
                 "x": "283.5526351928711",
                 "y": "473.1553192138672"
             },
-            "troopPresence": true
+            "troopPresence": "FRA"
         },
         "BUD": {
             "neighbors": [
@@ -336,7 +337,7 @@
                 "x": "685.5834350585938",
                 "y": "531.3235321044922"
             },
-            "troopPresence": true
+            "troopPresence": "AUS"
         },
         "BUL": {
             "neighbors": [
@@ -352,7 +353,7 @@
                 "x": "758.0585327148438",
                 "y": "622.4998779296875"
             },
-            "troopPresence": false
+            "troopPresence": null
         },
         "BUR": {
             "neighbors": [
@@ -370,7 +371,7 @@
                 "x": "388.36058044433594",
                 "y": "507.0315246582031"
             },
-            "troopPresence": false
+            "troopPresence": null
         },
         "CLU": {
             "neighbors": [
@@ -384,7 +385,7 @@
                 "x": "319.19256591796875",
                 "y": "271.8072509765625"
             },
-            "troopPresence": false
+            "troopPresence": null
         },
         "COR": {
             "neighbors": [
@@ -396,7 +397,7 @@
                 "x": "451.1447296142578",
                 "y": "621.584228515625"
             },
-            "troopPresence": false
+            "troopPresence": null
         },
         "CRE": {
             "neighbors": [
@@ -409,7 +410,7 @@
                 "x": "758.2549438476562",
                 "y": "768.1500854492188"
             },
-            "troopPresence": false
+            "troopPresence": null
         },
         "DEN": {
             "neighbors": [
@@ -425,7 +426,7 @@
                 "x": "519.4198455810547",
                 "y": "341.38275146484375"
             },
-            "troopPresence": false
+            "troopPresence": null
         },
         "EDI": {
             "neighbors": [
@@ -440,7 +441,7 @@
                 "x": "342.4432373046875",
                 "y": "288.9881591796875"
             },
-            "troopPresence": false
+            "troopPresence": null
         },
         "FIN": {
             "neighbors": [
@@ -454,7 +455,7 @@
                 "x": "722.3276062011719",
                 "y": "162.7740249633789"
             },
-            "troopPresence": false
+            "troopPresence": null
         },
         "GAL": {
             "neighbors": [
@@ -471,7 +472,7 @@
                 "x": "696.111572265625",
                 "y": "488.2523956298828"
             },
-            "troopPresence": false
+            "troopPresence": null
         },
         "GAS": {
             "neighbors": [
@@ -487,7 +488,7 @@
                 "x": "308.7538757324219",
                 "y": "545.7442626953125"
             },
-            "troopPresence": false
+            "troopPresence": null
         },
         "GRE": {
             "neighbors": [
@@ -502,7 +503,7 @@
                 "x": "703.2621765136719",
                 "y": "695.6783447265625"
             },
-            "troopPresence": false
+            "troopPresence": null
         },
         "HOL": {
             "neighbors": [
@@ -517,7 +518,7 @@
                 "x": "430.75157165527344",
                 "y": "412.4371643066406"
             },
-            "troopPresence": false
+            "troopPresence": null
         },
         "ICE": {
             "neighbors": [
@@ -529,7 +530,7 @@
                 "x": "263.52268981933594",
                 "y": "64.30533599853516"
             },
-            "troopPresence": false
+            "troopPresence": null
         },
         "IRE": {
             "neighbors": [
@@ -541,7 +542,7 @@
                 "x": "243.247802734375",
                 "y": "334.22523498535156"
             },
-            "troopPresence": false
+            "troopPresence": null
         },
         "IST": {
             "neighbors": [
@@ -556,7 +557,7 @@
                 "x": "826.2742614746094",
                 "y": "658.0715026855469"
             },
-            "troopPresence": false
+            "troopPresence": null
         },
         "KIE": {
             "neighbors": [
@@ -573,7 +574,7 @@
                 "x": "484.0615539550781",
                 "y": "412.94618225097656"
             },
-            "troopPresence": false
+            "troopPresence": null
         },
         "LON": {
             "neighbors": [
@@ -588,7 +589,7 @@
                 "x": "348.7893829345703",
                 "y": "399.88861083984375"
             },
-            "troopPresence": false
+            "troopPresence": null
         },
         "LVN": {
             "neighbors": [
@@ -604,7 +605,7 @@
                 "x": "722.3775634765625",
                 "y": "343.31117248535156"
             },
-            "troopPresence": false
+            "troopPresence": null
         },
         "LVP": {
             "neighbors": [
@@ -620,7 +621,7 @@
                 "x": "313.1211395263672",
                 "y": "333.0443878173828"
             },
-            "troopPresence": false
+            "troopPresence": null
         },
         "MAL": {
             "neighbors": [
@@ -632,7 +633,7 @@
                 "x": "323.0260009765625",
                 "y": "654.6573181152344"
             },
-            "troopPresence": false
+            "troopPresence": null
         },
         "MAR": {
             "neighbors": [
@@ -648,7 +649,7 @@
                 "x": "370.90155029296875",
                 "y": "564.2580261230469"
             },
-            "troopPresence": true
+            "troopPresence": "FRA"
         },
         "MOS": {
             "neighbors": [
@@ -663,7 +664,7 @@
                 "x": "922.1949157714844",
                 "y": "333.38673400878906"
             },
-            "troopPresence": true
+            "troopPresence": "RUS"
         },
         "MUN": {
             "neighbors": [
@@ -681,7 +682,7 @@
                 "x": "493.7241668701172",
                 "y": "474.9746398925781"
             },
-            "troopPresence": true
+            "troopPresence": "GER"
         },
         "NAP": {
             "neighbors": [
@@ -696,7 +697,7 @@
                 "x": "570.5494384765625",
                 "y": "682.3736267089844"
             },
-            "troopPresence": true
+            "troopPresence": "ITA"
         },
         "NOR": {
             "neighbors": [
@@ -710,7 +711,7 @@
                 "x": "608.4055786132812",
                 "y": "165.92821502685547"
             },
-            "troopPresence": false
+            "troopPresence": null
         },
         "PAR": {
             "neighbors": [
@@ -724,7 +725,7 @@
                 "x": "357.5567321777344",
                 "y": "490.02540588378906"
             },
-            "troopPresence": true
+            "troopPresence": "FRA"
         },
         "PET": {
             "neighbors": [
@@ -739,7 +740,7 @@
                 "x": "913.3351440429688",
                 "y": "155.65291595458984"
             },
-            "troopPresence": true
+            "troopPresence": "RUS"
         },
         "PIC": {
             "neighbors": [
@@ -754,7 +755,7 @@
                 "x": "362.8648376464844",
                 "y": "451.98760986328125"
             },
-            "troopPresence": false
+            "troopPresence": null
         },
         "PIE": {
             "neighbors": [
@@ -770,7 +771,7 @@
                 "x": "455.37628173828125",
                 "y": "562.2442932128906"
             },
-            "troopPresence": false
+            "troopPresence": null
         },
         "POR": {
             "neighbors": [
@@ -782,7 +783,7 @@
                 "x": "124.0202751159668",
                 "y": "607.2503662109375"
             },
-            "troopPresence": false
+            "troopPresence": null
         },
         "PRU": {
             "neighbors": [
@@ -797,7 +798,7 @@
                 "x": "639.0088195800781",
                 "y": "388.1041564941406"
             },
-            "troopPresence": true
+            "troopPresence": "GER"
         },
         "RMN": {
             "neighbors": [],
@@ -806,7 +807,7 @@
                 "x": "765.11181640625",
                 "y": "549.017578125"
             },
-            "troopPresence": false
+            "troopPresence": null
         },
         "ROM": {
             "neighbors": [
@@ -821,7 +822,7 @@
                 "x": "523.5556030273438",
                 "y": "629.2121276855469"
             },
-            "troopPresence": true
+            "troopPresence": "ITA"
         },
         "RUH": {
             "neighbors": [
@@ -836,7 +837,7 @@
                 "x": "459.8710632324219",
                 "y": "455.00477600097656"
             },
-            "troopPresence": false
+            "troopPresence": null
         },
         "SAR": {
             "neighbors": [
@@ -849,7 +850,7 @@
                 "x": "443.732421875",
                 "y": "663.9666442871094"
             },
-            "troopPresence": false
+            "troopPresence": null
         },
         "SER": {
             "neighbors": [
@@ -865,7 +866,7 @@
                 "x": "674.5429382324219",
                 "y": "615.2573547363281"
             },
-            "troopPresence": false
+            "troopPresence": null
         },
         "SEV": {
             "neighbors": [
@@ -880,7 +881,7 @@
                 "x": "958.5045776367188",
                 "y": "503.89393615722656"
             },
-            "troopPresence": true
+            "troopPresence": "RUS"
         },
         "SIC": {
             "neighbors": [
@@ -893,7 +894,7 @@
                 "x": "532.6544494628906",
                 "y": "726.1478881835938"
             },
-            "troopPresence": false
+            "troopPresence": null
         },
         "SIL": {
             "neighbors": [
@@ -909,7 +910,7 @@
                 "x": "592.3602600097656",
                 "y": "445.6690673828125"
             },
-            "troopPresence": false
+            "troopPresence": null
         },
         "SMY": {
             "neighbors": [],
@@ -918,7 +919,7 @@
                 "x": "916.16259765625",
                 "y": "693.1901245117188"
             },
-            "troopPresence": true
+            "troopPresence": "TUR"
         },
         "SPA": {
             "neighbors": [
@@ -934,7 +935,7 @@
                 "x": "227.12459564208984",
                 "y": "607.2464904785156"
             },
-            "troopPresence": false
+            "troopPresence": null
         },
         "SWE": {
             "neighbors": [
@@ -951,7 +952,7 @@
                 "x": "617.1982116699219",
                 "y": "222.66133880615234"
             },
-            "troopPresence": false
+            "troopPresence": null
         },
         "SWI": {
             "neighbors": [
@@ -966,7 +967,7 @@
                 "x": "449.04066467285156",
                 "y": "526.5934143066406"
             },
-            "troopPresence": false
+            "troopPresence": null
         },
         "SYR": {
             "neighbors": [
@@ -979,7 +980,7 @@
                 "x": "1048.4614562988281",
                 "y": "726.6514282226562"
             },
-            "troopPresence": true
+            "troopPresence": "TUR"
         },
         "S_ADR": {
             "neighbors": [
@@ -993,7 +994,7 @@
                 "x": "582.8947143554688",
                 "y": "614.5240173339844"
             },
-            "troopPresence": false
+            "troopPresence": null
         },
         "S_AEG": {
             "neighbors": [
@@ -1010,7 +1011,7 @@
                 "x": "766.5535583496094",
                 "y": "712.3106079101562"
             },
-            "troopPresence": false
+            "troopPresence": null
         },
         "S_BAL": {
             "neighbors": [
@@ -1028,7 +1029,7 @@
                 "x": "593.8394470214844",
                 "y": "345.9031677246094"
             },
-            "troopPresence": false
+            "troopPresence": null
         },
         "S_BAR": {
             "neighbors": [
@@ -1041,7 +1042,7 @@
                 "x": "848.1415100097656",
                 "y": "79.47195756435394"
             },
-            "troopPresence": false
+            "troopPresence": null
         },
         "S_BLA": {
             "neighbors": [
@@ -1058,7 +1059,7 @@
                 "x": "930.7201538085938",
                 "y": "566.9450836181641"
             },
-            "troopPresence": false
+            "troopPresence": null
         },
         "S_BOT": {
             "neighbors": [
@@ -1073,7 +1074,7 @@
                 "x": "697.7220458984375",
                 "y": "235.2621078491211"
             },
-            "troopPresence": false
+            "troopPresence": null
         },
         "S_DEN": {
             "neighbors": [
@@ -1087,7 +1088,7 @@
                 "x": "532.5754699707031",
                 "y": "355.19744873046875"
             },
-            "troopPresence": false
+            "troopPresence": null
         },
         "S_EAS": {
             "neighbors": [
@@ -1102,7 +1103,7 @@
                 "x": "861.5371398925781",
                 "y": "747.0439147949219"
             },
-            "troopPresence": false
+            "troopPresence": null
         },
         "S_ENG": {
             "neighbors": [
@@ -1120,7 +1121,7 @@
                 "x": "285.88573455810547",
                 "y": "434.8948211669922"
             },
-            "troopPresence": false
+            "troopPresence": null
         },
         "S_GOL": {
             "neighbors": [
@@ -1137,7 +1138,7 @@
                 "x": "369.8891906738281",
                 "y": "618.261474609375"
             },
-            "troopPresence": false
+            "troopPresence": null
         },
         "S_HEL": {
             "neighbors": [
@@ -1151,7 +1152,7 @@
                 "x": "463.2156066894531",
                 "y": "361.5724792480469"
             },
-            "troopPresence": false
+            "troopPresence": null
         },
         "S_ION": {
             "neighbors": [
@@ -1172,7 +1173,7 @@
                 "x": "596.8523712158203",
                 "y": "724.2890319824219"
             },
-            "troopPresence": false
+            "troopPresence": null
         },
         "S_IRI": {
             "neighbors": [
@@ -1186,7 +1187,7 @@
                 "x": "237.51478576660156",
                 "y": "377.9919128417969"
             },
-            "troopPresence": false
+            "troopPresence": null
         },
         "S_MID": {
             "neighbors": [
@@ -1205,7 +1206,7 @@
                 "x": "138.67386138439178",
                 "y": "583.1202239990234"
             },
-            "troopPresence": false
+            "troopPresence": null
         },
         "S_NAT": {
             "neighbors": [],
@@ -1214,7 +1215,7 @@
                 "x": "165.76786649227142",
                 "y": "195.5190690755844"
             },
-            "troopPresence": false
+            "troopPresence": null
         },
         "S_NOR": {
             "neighbors": [
@@ -1234,7 +1235,7 @@
                 "x": "413.62835693359375",
                 "y": "318.6533432006836"
             },
-            "troopPresence": false
+            "troopPresence": null
         },
         "S_NRG": {
             "neighbors": [
@@ -1251,7 +1252,7 @@
                 "x": "471.5103302001953",
                 "y": "122.26601731777191"
             },
-            "troopPresence": false
+            "troopPresence": null
         },
         "S_SCA": {
             "neighbors": [
@@ -1266,7 +1267,7 @@
                 "x": "520.3135070800781",
                 "y": "306.9483642578125"
             },
-            "troopPresence": false
+            "troopPresence": null
         },
         "S_STR": {
             "neighbors": [
@@ -1279,7 +1280,7 @@
                 "x": "805.5598754882812",
                 "y": "656.2080383300781"
             },
-            "troopPresence": false
+            "troopPresence": null
         },
         "S_TYN": {
             "neighbors": [
@@ -1299,7 +1300,7 @@
                 "x": "507.6264343261719",
                 "y": "668.5801086425781"
             },
-            "troopPresence": false
+            "troopPresence": null
         },
         "S_WES": {
             "neighbors": [
@@ -1317,7 +1318,7 @@
                 "x": "286.5856170654297",
                 "y": "687.8448791503906"
             },
-            "troopPresence": false
+            "troopPresence": null
         },
         "TRI": {
             "neighbors": [
@@ -1334,7 +1335,7 @@
                 "x": "594.6373901367188",
                 "y": "579.2279968261719"
             },
-            "troopPresence": true
+            "troopPresence": "AUS"
         },
         "TUN": {
             "neighbors": [
@@ -1348,7 +1349,7 @@
                 "x": "445.3111572265625",
                 "y": "752.3410339355469"
             },
-            "troopPresence": false
+            "troopPresence": null
         },
         "TUS": {
             "neighbors": [
@@ -1363,7 +1364,7 @@
                 "x": "497.75743103027344",
                 "y": "599.3914794921875"
             },
-            "troopPresence": false
+            "troopPresence": null
         },
         "TYR": {
             "neighbors": [
@@ -1380,7 +1381,7 @@
                 "x": "524.1038208007812",
                 "y": "525.9534912109375"
             },
-            "troopPresence": false
+            "troopPresence": null
         },
         "UKR": {
             "neighbors": [
@@ -1395,7 +1396,7 @@
                 "x": "806.8992919921875",
                 "y": "467.3373260498047"
             },
-            "troopPresence": false
+            "troopPresence": null
         },
         "VEN": {
             "neighbors": [
@@ -1412,7 +1413,7 @@
                 "x": "511.5209197998047",
                 "y": "585.9645690917969"
             },
-            "troopPresence": true
+            "troopPresence": "ITA"
         },
         "VIE": {
             "neighbors": [
@@ -1427,7 +1428,7 @@
                 "x": "611.9950256347656",
                 "y": "509.3099060058594"
             },
-            "troopPresence": false
+            "troopPresence": null
         },
         "WAL": {
             "neighbors": [
@@ -1442,7 +1443,7 @@
                 "x": "290.03651428222656",
                 "y": "385.32208251953125"
             },
-            "troopPresence": false
+            "troopPresence": null
         },
         "WAR": {
             "neighbors": [
@@ -1458,7 +1459,7 @@
                 "x": "681.8891296386719",
                 "y": "427.90478515625"
             },
-            "troopPresence": true
+            "troopPresence": "RUS"
         },
         "YOR": {
             "neighbors": [
@@ -1473,7 +1474,7 @@
                 "x": "347.85487365722656",
                 "y": "355.61431884765625"
             },
-            "troopPresence": false
+            "troopPresence": null
         }
     }
 }

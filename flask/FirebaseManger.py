@@ -14,7 +14,7 @@ def GetActiveListings():
     return db.reference('active_game_listings').get()
 
 def GetActiveGameData(gameName):
-    return db.reference('active_game_data/' + gameName + '/resolved_moves').get()
+    return db.reference('active_game_data/' + gameName + '/orders').get()
 
 def ActivateGameListing(gameTitle):
     ref = db.reference('pre_game_listings/' + gameTitle)
@@ -24,12 +24,9 @@ def ActivateGameListing(gameTitle):
     print('SHOULD BE DELETED')
     db.reference('active_game_listings/' + gameTitle).set(data)
 
-def UpdateResolvedMoves(gameTitle, turnNumb, resolvedMoves, currentlyLockstep, nextLockstep):
+def UpdateResolvedMoves(gameTitle, turnNumb, currentlyLockstep, nextLockstep):
     print('Attempting update on ' + gameTitle + ', turn')
-    print(resolvedMoves)
     moveType = 'lockstep' if currentlyLockstep else 'standard'
     db.reference('active_game_listings/' + gameTitle + '/lockstep').set(nextLockstep)
     if not nextLockstep:
         db.reference('active_game_listings/' + gameTitle + '/turn').set(turnNumb+1)
-    if resolvedMoves:
-        db.reference('active_game_data/' + gameTitle + '/resolved_moves/' + str(turnNumb) + '/' + moveType).set(resolvedMoves)
