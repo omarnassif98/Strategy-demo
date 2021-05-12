@@ -51,7 +51,7 @@ async function RefreshGame(){
         delete instantiatedPlans[prov]
     }
     planDestinations = []
-    ApplyConfiguration();
+    ApplyConfiguration(gameInfo.nationInfo, gameInfo.provinceInfo);
     gameInfo.queuedMoves = {}
 }
 

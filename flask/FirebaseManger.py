@@ -19,14 +19,22 @@ def GetActiveGameData(gameName):
 def ActivateGameListing(gameTitle):
     ref = db.reference('pre_game_listings/' + gameTitle)
     data = ref.get()
-    data['turn'] = 0
+    data['turn'] = 1
     ref.delete()
-    print('SHOULD BE DELETED')
     db.reference('active_game_listings/' + gameTitle).set(data)
 
-def UpdateResolvedMoves(gameTitle, turnNumb, currentlyLockstep, nextLockstep):
+def UpdateActiveGame(gameTitle, turnNumb, currentlyLockstep, nextLockstep):
     print('Attempting update on ' + gameTitle + ', turn')
     moveType = 'lockstep' if currentlyLockstep else 'standard'
     db.reference('active_game_listings/' + gameTitle + '/lockstep').set(nextLockstep)
     if not nextLockstep:
         db.reference('active_game_listings/' + gameTitle + '/turn').set(turnNumb+1)
+
+def ArchiveGame(gameTitle, resolvedMoves, winner, participants):
+    data = db.reference('active_game_data/' + gameTitle).get()
+    data['participants'] = {uid:participants[uid]['nation'] for uid in participants}
+    data['resolved_moves'] = resolvedMoves
+    archiveID = db.reference('archived_game_data').push(data)
+    for participantUID in participants:
+        db.reference('user_data/' + participantUID + '/archive_game_history').push({'gameName': gameTitle, 'playedAs':participants[participantUID], 'winner':winner})
+    db.reference('active_game_data/' + gameTitle).delete()

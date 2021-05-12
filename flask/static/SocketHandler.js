@@ -13,7 +13,7 @@ function ConnectSocket(gameName){
     socket.on('bcastMessage', (data) => {
         AppendToChat('all', data.message, data.sender);
     })
-    socket.on('newRound', () => {
+    socket.on('game_progress', () => {
         console.log('refreshing');
         RefreshGame()
     })

@@ -7,8 +7,8 @@
     <script src={{url_for('static', filename='helper.js')}}></script>
     <script src={{url_for('static', filename='UIManager.js')}}></script>
     <script src={{url_for('static', filename='ServerConnectivity.js')}}></script>
-    <script src={{url_for('static', filename='MapManager.js')}}></script>
     <script src={{url_for('static', filename='SocketHandler.js')}}></script>
+    <script src={{url_for('static', filename='MapManager.js')}}></script>
     <script src={{url_for('static', filename='GameManager.js')}}></script>
     <script src={{url_for('static', filename='InputManager.js')}}></script>
 {% endblock %}
@@ -25,7 +25,7 @@
         </ul>
         <div id='inputArea'>
             <textarea id="textInput"></textarea>
-            <button onclick="SendMessage(document.getElementById('textInput'), document.getElementById('otherPlayers').value)">Send Message</button>
+            <button disabled onclick="SendMessage(document.getElementById('textInput'), document.getElementById('otherPlayers').value)">Send Message</button>
         </div>
     </div>
     <div id='gameArea' style="display: none;">

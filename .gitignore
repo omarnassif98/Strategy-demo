@@ -1,0 +1,4 @@
+flask/firebase-admin-sdk.json
+.vscode/
+data/certbot/**
+*.pyc

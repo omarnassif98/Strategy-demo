@@ -159,12 +159,12 @@ async function NameCheck(input, submitButton){
     input.parentNode.lastElementChild.innerHTML = 'Checking';
     let res = await ResourceRequest(window.origin + '/game-check/' + input.value);
     console.log(res);
-    if(res == 201){
+    if(res==201){
         input.parentNode.lastElementChild.innerHTML = 'Name available'
         input.style.borderColor = 'yellowgreen';
         submitButton.disabled = false;
     }else{
-        input.parentNode.lastElementChild.innerHTML = 'Name taken';
+        input.parentNode.lastElementChild.innerHTML = 'Name taken (' + input.value + ')';
         input.style.borderColor = 'orange'
     }
 }
